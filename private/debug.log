@@ -1,0 +1,13 @@
+2021-01-17 13:14:07	can not create pdo connection. PDO create error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it.
+
+2021-01-17 13:24:50	can not create pdo connection. PDO create error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it.
+
+2021-01-17 13:36:52	getAllBooks execute returned false: 
+2021-01-17 13:36:56	getAllUsers execute returned false: 
+2021-01-17 13:37:03	getAllBooks execute returned false: 
+2021-01-17 13:38:25	getAllBooks execute returned false: 
+2021-01-17 13:38:27	getAllBooks execute returned false: 
+2021-01-17 13:38:29	getAllBooks execute returned false: 
+2021-01-17 13:38:32	getAllUsers execute returned false: 
+2021-01-17 13:45:44	getAllUsers execute returned false: 
+2021-01-17 13:45:54	getAllUsers execute returned false: 

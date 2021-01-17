@@ -4,14 +4,23 @@ include(_ROOT_PATH . DIRECTORY_SEPARATOR . 'private' . DIRECTORY_SEPARATOR . 'co
 
 function getdbconnector()
 {
-    $pdo = false;
-    try {
-        $pdo = new PDO('mysql:host=' . host . ';dbname=' . dbname, user, pass);
-    } catch (PDOException $e) {
-        showDebugMessage("can not create pdo connection. PDO create error: " . $e->getMessage());
-        return false;
-    }
-    return $pdo;
+$dsn = "pgsql:host=".host.";port=5432;dbname=".dbname.";user=".user.";password=".pass."";
+var_dump($dsn);
+$conn=false;
+try{
+ // create a PostgreSQL database connection
+ $conn = new PDO($dsn);
+ 
+ // display a message if connected to the PostgreSQL successfully
+ if($conn){
+ echo "Connected to the <strong>".dbname."</strong> database successfully!";
+ }
+}catch (PDOException $e){
+ // report error message
+ echo $e->getMessage();
+}
+return $conn;
+
 }
 
 /**
@@ -61,11 +70,12 @@ function getUserType($login, $password, $checkPassword)
     $dbc = getdbconnector();
     $type = false;
     if ($dbc != false) {
+        
         try {
             if ($checkPassword) {
                 $stmt = $dbc->prepare('SELECT type from users WHERE login=:login AND password=:password  AND active=1');
                 $stmt->bindValue(':password', $password);
-            } else
+            } else  
                 $stmt = $dbc->prepare('SELECT type from users WHERE login=:login AND active=1');
 
             $stmt->bindValue(':login', $login);
@@ -122,10 +132,10 @@ function getAllUsers()
     $dbc = getdbconnector();
     $users = false;
     if ($dbc != false) {
-
+//todo:
         try {
-            $sql = 'SELECT users.id AS id, name, surname, login, YEAR(CURDATE()) - YEAR(birthday) AS age, type, 
-            (select count(*) from borrows where borrows.`user-id` =users.id) as numOfBorrowedByUser
+            $sql = 'SELECT users.id AS id, name, surname, login, date_part(\'year\', CURRENT_DATE) - date_part(\'year\', birthday) AS age, type, 
+            (select count(*) from borrows where borrows."user-id" =users.id) as numOfBorrowedByUser
             FROM users
             LEFT JOIN borrows 
             ON users.id=borrows.`user-id`
@@ -133,11 +143,14 @@ function getAllUsers()
             GROUP BY users.id
             ORDER BY id';
 
+var_dump($sql);
             $stmt = $dbc->prepare($sql);
             if ($stmt->execute() == false) {
+                var_dump($stmt->execute());
                 showDebugMessage("getAllUsers execute returned false: ");
                 $users = false;
             } else {
+                var_dump($stmt->execute());
                 $users = $stmt->fetchAll(PDO::FETCH_ASSOC); //pusta tablica, jesli nie ma uzytkownikow
             }
             $dbc = null;
