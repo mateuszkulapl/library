@@ -1,0 +1,42 @@
+2021-01-17 13:14:07	can not create pdo connection. PDO create error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it.
+
+2021-01-17 13:24:50	can not create pdo connection. PDO create error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it.
+
+2021-01-17 13:36:52	getAllBooks execute returned false: 
+2021-01-17 13:36:56	getAllUsers execute returned false: 
+2021-01-17 13:37:03	getAllBooks execute returned false: 
+2021-01-17 13:38:25	getAllBooks execute returned false: 
+2021-01-17 13:38:27	getAllBooks execute returned false: 
+2021-01-17 13:38:29	getAllBooks execute returned false: 
+2021-01-17 13:38:32	getAllUsers execute returned false: 
+2021-01-17 13:45:44	getAllUsers execute returned false: 
+2021-01-17 13:45:54	getAllUsers execute returned false: 
+2021-01-18 17:09:46	getAllUsers execute returned false: 
+2021-01-18 17:12:12	getAllUsers execute returned false: 
+2021-01-18 17:12:24	getAllUsers execute returned false: 
+2021-01-18 17:13:10	getAllUsers execute returned false: 
+2021-01-18 17:13:13	getAllUsers execute returned false: 
+2021-01-18 17:13:13	getAllUsers execute returned false: 
+2021-01-18 17:13:14	getAllUsers execute returned false: 
+2021-01-18 17:13:17	getAllUsers execute returned false: 
+2021-01-18 17:32:05	deleteBookBorrows execute returned false: 
+2021-01-18 17:32:09	deleteBookBorrows execute returned false: 
+2021-01-18 17:32:10	deleteBookBorrows execute returned false: 
+2021-01-18 17:32:18	deleteUserBorrows execute returned false: 
+2021-01-18 17:33:11	cannot insert book.
+2021-01-18 18:25:34	cannot insert book.
+2021-01-18 18:30:58	cannot insert user. login: sobcs
+2021-01-18 18:30:58	can not add user
+2021-01-18 18:31:55	cannot insert user. login: sobcs
+2021-01-18 18:31:55	can not add user
+2021-01-18 18:35:19	cannot insert user. login: sobcs
+2021-01-18 18:35:19	can not add user
+2021-01-18 18:39:46	cannot insert user. login: sobcs
+2021-01-18 18:39:46	can not add user
+2021-01-18 18:44:07	cannot insert user. login: sobcs
+2021-01-18 18:44:07	can not add user
+2021-01-18 18:56:57	deleteUserBorrows execute returned false: 
+2021-01-18 18:57:27	cannot insert user. login: krupix
+2021-01-18 18:57:27	can not add user
+2021-01-18 19:03:35	cannot insert book.
+2021-01-18 19:40:38	deleteUserBorrows execute returned false: 
