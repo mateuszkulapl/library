@@ -16,6 +16,7 @@ function login()
                 $_SESSION['userId'] = getUserId($login);
                 redirectToHomePage("Zalogowano","ok");
             } else {
+                echo "bledne";
                 redirectToLoginPage("Nieprawidłowy login lub hasło");
             }
         }

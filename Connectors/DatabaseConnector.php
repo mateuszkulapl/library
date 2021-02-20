@@ -5,15 +5,18 @@ include(_ROOT_PATH . DIRECTORY_SEPARATOR . 'private' . DIRECTORY_SEPARATOR . 'co
 function getdbconnector()
 {
 $dsn = "pgsql:host=".host.";port=5432;dbname=".dbname.";user=".user.";password=".pass."";
-var_dump($dsn);
+//var_dump($dsn);
 $conn=false;
 try{
  // create a PostgreSQL database connection
  $conn = new PDO($dsn);
- 
  // display a message if connected to the PostgreSQL successfully
  if($conn){
- echo "Connected to the <strong>".dbname."</strong> database successfully!";
+ //echo "Connected to the <strong>".dbname."</strong> database successfully!";
+ }
+ else
+ {
+     echo "error";
  }
 }catch (PDOException $e){
  // report error message
@@ -29,22 +32,29 @@ return $conn;
  *@param string $password zahaszowane haslo
  *@return bool czy poprawne haslo.
  */
-function checkPassword($login, $password)
+function checkPassword($login, $password, $pracownik=false)
 {
+    
     $dbc = getdbconnector();
     if ($dbc != false) {
         $approved = false;
         try {
-            $stmt = $dbc->prepare('SELECT count(*) AS "numOfUsers" from users WHERE login=:login AND password=:password  AND active=1');
+            $stmt = $dbc->prepare('SELECT count(*) AS "numOfUsers" from :tableTabe WHERE login=:login AND haslo=:password  AND active=1');
+            if($pracownik)
+            $stmt->bindValue(':tableTabe', 'Pracownik');
+            else
+            $stmt->bindValue(':tableTabe', 'czytelnicy');
             $stmt->bindValue(':login', $login);
-            $stmt->bindValue(':password', $password,);
+            $stmt->bindValue(':password', $password);
 
+            var_dump($stmt);
             if ($stmt->execute() == false) {
                 $dbc = null;
                 return false;
             } else {
                 $row = $stmt->fetch();
                 $numOfUsers = $row["numOfUsers"];
+                echo "num: ".$numOfUsers;
                 if ($numOfUsers == 1);
                 $approved = true;
             }
@@ -73,17 +83,44 @@ function getUserType($login, $password, $checkPassword)
         
         try {
             if ($checkPassword) {
-                $stmt = $dbc->prepare('SELECT type from users WHERE login=:login AND password=:password  AND active=1');
+                $stmt = $dbc->prepare('SELECT id_czytelnik from czytelnicy WHERE login=:login AND haslo=:password');
                 $stmt->bindValue(':password', $password);
             } else  
-                $stmt = $dbc->prepare('SELECT type from users WHERE login=:login AND active=1');
+                $stmt = $dbc->prepare('SELECT id_czytelnik from czytelnicy WHERE login=:login');
+            
+            $stmt->bindValue(':login', $login);
+           
+            if ($stmt->execute() == false) {
+                $type = false;
+            } else {
+                if ($stmt->rowCount() > 0)
+                    $type = 'reader';
+            }
+            $dbc = null;
+        } catch (PDOException $e) {
+            showDebugMessage("can not check usertype. DB query error: " . $e->getMessage());
+            return false;
+        }
+    }
+    if($type!=false)
+    return $type;
+    $dbc = getdbconnector();
+    $type = false;
+    if ($dbc != false) {
+        
+        try {
+            if ($checkPassword) {
+                $stmt = $dbc->prepare('SELECT id_pracownicy from pracownik WHERE login=:login AND haslo=:password');
+                $stmt->bindValue(':password', $password);
+            } else  
+                $stmt = $dbc->prepare('SELECT id_pracownicy from pracownik WHERE login=:login');
 
             $stmt->bindValue(':login', $login);
             if ($stmt->execute() == false) {
                 $type = false;
             } else {
                 if ($stmt->rowCount() > 0)
-                    $type = $stmt->fetch(PDO::FETCH_ASSOC)["type"];
+                    $type = 'admin';
             }
             $dbc = null;
         } catch (PDOException $e) {
@@ -373,28 +410,23 @@ function deleteBook($bookId)
 
 
 /**
- *pobieranie listy uzytkownikow
- *@param int $userId ud uzytkownika dla ktorego w tabeli zostanie zwrocona liczba wypozyczonych ksiazek
- *@return false/string typ użytkownika.
+ *pobieranie listy ksiazek
  */
-function getAllBooks($userId=0)
+function getAllBooks()
 {
     $dbc = getdbconnector();
     $books = false;
     if ($dbc != false) {
 
         try {
-            $sql = 'SELECT books.id AS id, title, author, publishingHouse, year, inventory, `books`.`image`,
-            COUNT(borrows.id) as numOfBorrowed,
-            inventory-COUNT(borrows.id) as numOfAvailable,
-            (select count(*) from borrows where borrows.`user-id` = :userId AND borrows.`book-id`=books.id) as numOfBorrowedByUser
-            FROM books
-            LEFT JOIN BORROWS
-            ON BOOKS.id=borrows.`book-id`
-            GROUP BY `books`.`id` ORDER BY title ASC, year DESC';
+            $sql = 'SELECT ksiazki.id_ksiazka, ksiazki.tytul, ksiazki.opis, wydawnictwo.nazwa AS wydawnictwo, ksiazki.rok_wydania, kategoria.nazwa AS kategoria
+            FROM ksiazki
+            LEFT JOIN kategoria ON ksiazki.id_kategoria=kategoria.id_kategoria
+            LEFT JOIN wydawnictwo ON ksiazki.id_wydawnictwa=wydawnictwo.id_wydawnictwo
+            ORDER BY ksiazki.id_ksiazka ASC';
 
             $stmt = $dbc->prepare($sql);
-            $stmt->bindValue(':userId', $userId);
+            //$stmt->bindValue(':userId', $userId);
             if ($stmt->execute() == false) {
                 showDebugMessage("getAllBooks execute returned false: ");
                 $books = false;
@@ -410,6 +442,108 @@ function getAllBooks($userId=0)
     return $books;
 }
 
+/**
+ *pobieranie listy autorow ksiazki
+ *@param int $id_ksiazka 
+ */
+function getBookAuthors($id_ksiazka=0)
+{
+    $dbc = getdbconnector();
+    $bookAuthors = false;
+    if ($dbc != false) {
+
+        try {
+            $sql = 'SELECT autorzyksiazek.id_autor, autorzy.imie,autorzy.nazwisko
+            FROM autorzyksiazek
+            LEFT JOIN autorzy ON autorzyksiazek.id_autor=autorzy.id_autor
+            WHERE autorzyksiazek.id_ksiazka=:id_ksiazka';
+
+            $stmt = $dbc->prepare($sql);
+            $stmt->bindValue(':id_ksiazka', $id_ksiazka);
+            //var_dump($stmt);
+            //$stmt->bindValue(':userId', $userId);
+            if ($stmt->execute() == false) {
+                showDebugMessage("getBookAuthors execute returned false: ");
+                $bookAuthors = false;
+            } else {
+                $bookAuthors = $stmt->fetchAll(PDO::FETCH_ASSOC); //pusta tablica, jesli nie ma uzytkownikow
+            }
+            $dbc = null;
+        } catch (PDOException $e) {
+            showDebugMessage("can not get getBookAuthors from db. DB query error: " . $e->getMessage());
+            return false;
+        }
+    }
+    return $bookAuthors;
+}
+
+/**
+ *pobieranie statystyk ksiazki
+ *@param int $id_ksiazka 
+ */
+function getBookStats($id_ksiazka=0)
+{
+    $dbc = getdbconnector();
+    $bookStats = false;
+    $bookStats['liczba_egzemplarzy'] = false;
+    $bookStats['liczba_dostepnych_egzemplarzy'] = false;
+    //liczba wszystkich
+    if ($dbc != false) {
+        try {
+            $sql = 'SELECT COUNT(egzemplarz.id_egzemplarza) AS liczba_egzemplarzy
+            FROM egzemplarz
+            WHERE egzemplarz.id_ksiazka=:id_ksiazka
+            AND egzemplarz.wycofany!=true';
+
+            $stmt = $dbc->prepare($sql);
+            $stmt->bindValue(':id_ksiazka', $id_ksiazka);
+            if ($stmt->execute() == false) {
+                showDebugMessage("getBookStats execute returned false: ");
+            } else {
+                $row = $stmt->fetch();
+                $bookStats['liczba_egzemplarzy'] = $row["liczba_egzemplarzy"];
+            }
+            $dbc = null;
+        } catch (PDOException $e) {
+            showDebugMessage("can not get getBookStats from db. DB query error: " . $e->getMessage());
+            
+            //return false;
+        }
+    }
+$dbc = getdbconnector();
+if ($dbc != false) {
+    try {
+        $sql = 'SELECT COUNT(egzemplarz.id_egzemplarza) AS liczba_dostepnych_egzemplarzy
+        FROM egzemplarz
+        LEFT JOIN wypozyczenia ON egzemplarz.id_egzemplarza=wypozyczenia.id_egzemplarza
+        WHERE egzemplarz.id_ksiazka=:id_ksiazka
+        AND egzemplarz.wycofany!=true
+        AND (
+            wypozyczenia.data_oddania >= NOW()
+            OR
+            wypozyczenia.id_egzemplarza IS NULL
+            )';
+
+        $stmt = $dbc->prepare($sql);
+        $stmt->bindValue(':id_ksiazka', $id_ksiazka);
+        if ($stmt->execute() == false) {
+            showDebugMessage("getBookStats execute returned false: ");
+        } else {
+            $row = $stmt->fetch();
+            $bookStats['liczba_dostepnych_egzemplarzy'] = $row["liczba_dostepnych_egzemplarzy"];
+        }
+        $dbc = null;
+    } catch (PDOException $e) {
+        showDebugMessage("can not get getBookStats from db. DB query error: " . $e->getMessage());
+        
+        //return false;
+    }
+}
+
+
+
+    return $bookStats;
+}
 
 
 /**

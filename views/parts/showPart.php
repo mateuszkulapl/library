@@ -24,6 +24,7 @@ function showHead($title = null, $description = null, $robots = "index")
         <link rel="stylesheet" href="./views/styles/style.css">
     </head>
     <?php
+    renderAlerts();
 }
 /**
  *wyswietla header, jeśli co najmniej jeden parametr nie jest równy null

@@ -16,6 +16,7 @@
         <?php
 
         if ($booksList == false) {
+            echo "Brak książek.";
         } else {
             if (!(count($booksList) > 0)) {
                 echo "Brak książek.";
@@ -24,44 +25,57 @@
                 <table id="list" class="full-width simple-border th-small-pd">
                     <thead class="invert">
                         <th>Lp</th>
-                        <th>Zdjęcie</th>
                         <th>Tytuł</th>
                         <th>Autorzy</th>
-                        <th>Wydawnictwo</th>
+                        <th>Gatunek</th>
                         <th>Rok wydania</th>
+                        <th>Wydawnictwo</th>
                         <th>Liczba egzemplarzy</th>
                         <th>Akcja</th>
                     </thead>
                     <tbody>
                         <?php
                         $index = 0;
-                        foreach ($booksList as $book) {;
+                        foreach ($booksList as $book) {
+                            $bookStats=getBookStats($book['id_ksiazka']);
                         ?>
                             <tr>
                                 <td><?php echo ++$index; ?></td>
-                                <td><?php if (file_exists($book['image'])) {
-        echo '<img src="'.$book["image"].'" height=50>';
-    }?></td>
-                                <td><?php echo $book['title'] ?></td>
-                                <td><?php echo str_replace(", ", "<br>", $book['author']); ?></td>
-                                <td><?php echo $book['publishingHouse'] ?></td>
-                                <td><?php echo $book['year'] ?></td>
-                                <td><?php echo $book['numOfAvailable'] . '/' . $book['inventory'] ?></td>
-                                <td><?php if ($isAdmin) {
-                                    ?><a href="?action=book-edit&bookId=<?php echo $book['id']; ?>">Edytuj</a>
+                                <td><?php echo $book['tytul'] ?></td>
+                                
+                                <td><?php $authors=getBookAuthors($book['id_ksiazka']); 
+                                $authorsString="";
+                                
+                                foreach ($authors as $author) {
+                                    $authorsString.=$author['imie']." ".$author['nazwisko'].", ";
+                                }
+                                $authorsString=trim($authorsString,', ');
+                                echo ($authorsString);                                
+                                ?></td>
+
+                                <td><?php echo $book['kategoria'] ?></td>
+                                <td><?php echo $book['rok_wydania'] ?></td>
+                                <td><?php echo $book['wydawnictwo'] ?></td>
+                                <td><?php echo "Dostępne: 
+                                ".$bookStats['liczba_dostepnych_egzemplarzy']." z ".$bookStats['liczba_egzemplarzy'];
+                                ?></td>
+                                <td>
+                                <a href="<?php echo "?action=book?id=".$book['id_ksiazka']; ?>">Szczegóły</a>
+                                <?php if ($isAdmin) {
+                                    ?><a href="?action=book-edit&bookId=<?php echo $book['id_ksiazka']; ?>">Edytuj</a>
                                     <?php
                                     }
-                                    if ($isAdmin) { ?><a href="?action=book-delete&bookId=<?php echo $book['id']; ?>">Usuń</a>
+                                    if ($isAdmin) { ?><a href="?action=book-delete&bookId=<?php echo $book['id_ksiazka']; ?>">Usuń</a>
                                         <?php
                                     }
-                                    if ($isReader && $book['inventory'] > 0) {
+                                    /*if ($isReader && $bookStats['liczba_dostepnych_egzemplarzy'] > 0) {
                                         if ($book['numOfBorrowedByUser'] < 1) {
-                                        ?><a href="?action=book-borrow&bookId=<?php echo $book['id']; ?>">Pożycz</a>
+                                        ?><a href="?action=book-borrow&bookId=<?php echo $book['id_ksiazka']; ?>">Pożycz</a>
                                     <?php
                                         } else {
                                             echo "Masz wypożyczoną " . $book['numOfBorrowedByUser'] . "szt.";
                                         }
-                                    } ?>
+                                    }*/ ?>
                                 </td>
                             </tr>
                         <?php

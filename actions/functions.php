@@ -1,6 +1,51 @@
 <?php
 
 /**
+ * Dodaje alert do tabeli z alertami
+ *
+ * @param string $wiadomosć wyświetlana
+ * @param string $type rodzaj wiadomości (info/warning/success/error)
+ * @param boolean $showOnlyInDebugMode wiadomosc zostanie wyświetlona tylko w trybie debugowania
+ * @param boolean $backtrace
+ * @return void
+ */
+function addAlert($message, $type = "info", $showOnlyInDebugMode = false, $backtrace = null)
+{
+    require_once _ROOT_PATH . DIRECTORY_SEPARATOR . 'class'.DIRECTORY_SEPARATOR . 'Alert.php';
+    $newAlert = new Alert($message, $type, $showOnlyInDebugMode, $backtrace);
+    if (isset($_SESSION['alerts']))
+        $alerts = unserialize($_SESSION['alerts']);
+    else
+        $alerts = [];
+    array_push($alerts, $newAlert);
+    $_SESSION['alerts'] = serialize($alerts);
+}
+
+function renderAlerts()
+{
+    if (isset($_SESSION['alerts'])) {
+        require_once _ROOT_PATH . DIRECTORY_SEPARATOR . 'class'.DIRECTORY_SEPARATOR . 'Alert.php';
+        $alerts = unserialize($_SESSION['alerts']);
+        if (count($alerts) > 0) {
+?>
+            <div id="alerts">
+                <?php
+                foreach ($alerts as $index => $alert) {
+                    $alert->render($index);
+                }
+                ?>
+            </div>
+            <script>
+                addAllertCloseButtonListener();
+            </script>
+<?php
+        }
+        unset($_SESSION['alerts']);
+    }
+}
+
+
+/**
  *przekierowanie do strony logowania z opcjonalna wiadomoscia.
  *@param null|string $message wiadomosc wyswietlana na stronie logowania po przekierowaniu.
  *@param null|string $messageType typ wiadomosci powodujacy okreslony kolor (warning/alert/ok)
