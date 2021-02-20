@@ -12,9 +12,9 @@ try{
  $conn = new PDO($dsn);
  
  // display a message if connected to the PostgreSQL successfully
- if($conn){
- echo "Connected to the <strong>".dbname."</strong> database successfully!";
- }
+//  if($conn){
+//  echo "Connected to the <strong>".dbname."</strong> database successfully!";
+//  }
 }catch (PDOException $e){
  // report error message
  echo $e->getMessage();
@@ -371,6 +371,31 @@ function deleteBook($bookId)
     return $deleted;
 }
 
+function deleteGenre($genreId)
+{
+    // deleteBookBorrows($bookId);
+    $dbc = getdbconnector();
+    $deleted = false;
+    if ($dbc != false) {
+        try {
+            $sql = 'DELETE FROM kategoria WHERE id_kategoria=:id'; //UPDATE books SET ACTIVE=0 WHERE...
+            $stmt = $dbc->prepare($sql);
+            $stmt->bindValue(':id', $genreId);
+            if ($stmt->execute() == false) {
+                showDebugMessage("deleteGenre execute returned false: ");
+                $deleted = false;
+            } else {
+                $deleted = true;
+            }
+            $dbc = null;
+        } catch (PDOException $e) {
+            showDebugMessage("can not delete book from db. DB query error: " . $e->getMessage());
+            return false;
+        }
+    }
+    return $deleted;
+}
+
 
 /**
  *pobieranie listy uzytkownikow
@@ -410,6 +435,31 @@ function getAllBooks($userId=0)
         }
     }
     return $books;
+}
+
+
+function getAllGenres()
+{
+    $dbc = getdbconnector();
+    $genres = false;
+    if($dbc != false) {
+            try {
+                $sql = 'SELECT * FROM kategoria ORDER BY nazwa';
+                $stmt = $dbc->prepare($sql);
+                if($stmt->execute()==false) {
+                    showDebugMessage("getAllGenres execute returned false: ");
+                    $genres = false;
+                } else {
+                    $genres = $stmt -> fetchAll(PDO::FETCH_ASSOC);
+                }
+                $dbc = null;
+            }catch (PDOException $e) {
+                showDebugMessage("can not get all genres from Db:". $e->getMessage());
+                return false;
+            }
+    }
+
+    return $genres;
 }
 
 
@@ -460,7 +510,29 @@ function insertBook($title, $author, $publishingHouse, $year, $inventory, $uploa
     return $done;
 }
 
+function insertGenre($title) {
+    $dbc = getdbconnector();
+    $done= false;
+    if($dbc != false) {
+        try {
+            $sql = "INSERT INTO kategoria (nazwa)VALUES( :nazwa)";
+            $stmt = $dbc->prepare($sql);
+            
+            $stmt-> bindValue(':nazwa', $title);
 
+            if($stmt-> execute() == false) {
+                showDebugMessage("cannot insert book.");
+            }else {
+                $done = true;
+            }
+        } catch(PDOException $e) {
+            showDebugMessage("can not insert genre. DB query error:". $e->getMessage());
+        }
+        $dbc = null;
+    }
+        return $done;
+
+}
 
 
 /**
@@ -529,6 +601,31 @@ function updateBook($id, $title, $author, $publishingHouse, $year, $inventory, $
     return $done;
 }
 
+function updateGenre($id, $nazwa) {
+
+    $dbc = getdbconnector();
+    $done = false;
+    if($dbc != false) {
+        try {
+            $sql = 'UPDATE kategoria SET nazwa = :nazwa WHERE id_kategoria = :id';
+            $stmt = $dbc -> prepare($sql);
+            $stmt-> bindValue(':id', $id);
+            $stmt -> bindValue(':nazwa', $nazwa);
+            if ($stmt->execute() == false) {
+                showDebugMessage("cannot update genre id: " . $id);
+            } else {
+                $done = true;
+            }
+        } catch (PDOException $e) {
+            showDebugMessage("can not update book. DB query error: " . $e->getMessage());
+        }
+        $dbc = null;
+        
+    }
+   
+return $done;
+    
+}
 /**
  *pobieranie wszystkich danych uzytkownika
  *@return false/string false jesli nie znaleziono/ user
@@ -562,8 +659,35 @@ function getBook($bookId)
     }
     return $user;
 }
+function getGenre($genreId)
+{
+    $dbc = getdbconnector();
+    $user = false;
+    if ($dbc != false) {
+        try {
+            $sql = 'SELECT * FROM kategoria WHERE id_kategoria=:id';
 
-
+            $stmt = $dbc->prepare($sql);
+            $stmt->bindValue(':id', $genreId);
+            if ($stmt->execute() == false) {
+                showDebugMessage("getGenre execute returned false: ");
+                $user = false;
+            } else {
+                $rowCount = $stmt->rowCount();
+                if ($rowCount == 1)
+                    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+                else {
+                    showDebugMessage('getGenre query returned ' . $rowCount . ' row(s) for book id=' . $bookId . '. ');
+                }
+            }
+            $dbc = null;
+        } catch (PDOException $e) {
+            showDebugMessage("can not getGenre from db. DB query error: " . $e->getMessage());
+            return false;
+        }
+    }
+    return $user;
+}
 /**
  *usuwanie ksiazki
  *@return bool czy usuwanie sie powiodlo

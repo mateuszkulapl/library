@@ -51,7 +51,10 @@ function getAllowedSites()
     if (isset($_SESSION['type'])) {
         if ($_SESSION['type'] == "admin") {
 
+
             array_push($allowedPages, array('page' => 'home', 'name' => 'Strona główna'));
+            array_push($allowedPages, array('page' => 'genre-list', 'name' => 'Lista Gatunków'));
+            array_push($allowedPages, array('page' => 'add-genre', 'name' => 'Dodaj Gatunek'));
             array_push($allowedPages, array('page' => 'books-list', 'name' => 'Lista książek'));
             array_push($allowedPages, array('page' => 'book-add', 'name' => 'Dodaj książkę'));
             array_push($allowedPages, array('page' => 'users-list', 'name' => 'Lista użytkowników'));
@@ -138,6 +141,19 @@ function redirectToBooksList($message = null, $messageType = null)
     }
     header("HTTP/1.1 404 Not Found");
     header("Location: index.php?action=books-list");
+    exit();
+}
+
+function redirectToGenreList($message = null, $messageType = null)
+{
+    if ($message) {
+        $_SESSION['message'] = $message;
+        if ($messageType)
+            $_SESSION['messageType'] = $messageType;
+        session_write_close();
+    }
+    header("HTTP/1.1 404 Not Found");
+    header("Location: index.php?action=genre-list");
     exit();
 }
 

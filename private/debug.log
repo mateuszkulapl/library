@@ -40,3 +40,16 @@
 2021-01-18 18:57:27	can not add user
 2021-01-18 19:03:35	cannot insert book.
 2021-01-18 19:40:38	deleteUserBorrows execute returned false: 
+2021-02-20 15:15:45	cannot insert book.
+2021-02-20 15:16:14	cannot insert book.
+2021-02-20 15:16:22	cannot insert book.
+2021-02-20 15:19:18	cannot insert book.
+2021-02-20 15:19:19	cannot insert book.
+2021-02-20 15:19:21	cannot insert book.
+2021-02-20 15:19:24	cannot insert book.
+2021-02-20 15:19:27	cannot insert book.
+2021-02-20 15:19:31	cannot insert book.
+2021-02-20 15:20:29	cannot insert book.
+2021-02-20 15:20:35	cannot insert book.
+2021-02-20 15:21:48	cannot insert book.
+2021-02-20 18:20:06	deleteBookBorrows execute returned false: 

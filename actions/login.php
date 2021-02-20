@@ -14,7 +14,7 @@ function login()
             if($userTypeFromFB !=false) {
                 $_SESSION['type']=$userTypeFromFB;
                 $_SESSION['userId'] = getUserId($login);
-                // redirectToHomePage("Zalogowano","ok");
+                redirectToHomePage("Zalogowano","ok");
             } else {
                 // redirectToLoginPage("Nieprawidłowy login lub hasło");
             }
