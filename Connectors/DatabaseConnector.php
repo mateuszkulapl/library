@@ -841,21 +841,34 @@ function bookABook($bookId, $userId)
  *pobieranie listy uzytkownikow
  *@return false/string typ użytkownika.
  */
-function getBorrowedBooks($userId)
+function getBorrowedBooks($id_czytelnik =null)
 {
     $dbc = getdbconnector();
     $books = false;
     if ($dbc != false) {
 
         try {
-            $sql = 'SELECT borrows.id, books.title, books.author, books.publishingHouse, books.year
-            FROM borrows
-            LEFT JOIN BOOKS
-            ON borrows."book-id"=books."id"
-            WHERE borrows."user-id"=:userId ORDER BY title ASC';
-
+            $sql = 'SELECT wypozyczenia.id_wypozyczenie, ksiazki.tytul,ksiazki.id_ksiazka, czytelnicy.login
+            FROM wypozyczenia
+            LEFT JOIN egzemplarz
+            ON wypozyczenia.id_egzemplarza=egzemplarz.id_egzemplarza
+            LEFT JOIN ksiazki
+            ON egzemplarz.id_ksiazka=ksiazki.id_ksiazka
+            LEFT JOIN czytelnicy
+            ON wypozyczenia.id_czytelnik=czytelnicy.id_czytelnik 
+            WHERE ';
+            if($id_czytelnik!=null)
+            {
+                $sql.=" wypozyczenia.id_czytelnik=:id_czytelnik AND";
+            }
+            $sql.=' wypozyczenia.data_oddania = NULL
+            ORDER BY wypozyczenia.id_wypozyczenie ASC';
             $stmt = $dbc->prepare($sql);
-            $stmt->bindValue(':userId', $userId);
+            if($id_czytelnik!=null)
+            {
+                $stmt->bindValue(':id_czytelnik', $id_czytelnik);
+            }
+
             if ($stmt->execute() == false) {
                 showDebugMessage("getBorrowedBooks execute returned false: ");
                 $books = false;
@@ -870,6 +883,55 @@ function getBorrowedBooks($userId)
     }
     return $books;
 }
+
+
+
+/**
+ *pobieranie listy rezerwacji dla wszystkich użytkowników lub jednego
+ *@return false/string typ użytkownika.
+ */
+function getRezerwacje($id_czytelnik=null)
+{
+    $dbc = getdbconnector();
+    $rezerwacje = false;
+    if ($dbc != false) {
+
+        try {
+            $sql = 'SELECT rezerwacja.id_rezerwacja,ksiazki.id_ksiazka, ksiazki.tytul
+            FROM rezerwacja
+            LEFT JOIN ksiazki
+            ON rezerwacja.id_ksiazka=ksiazki.id_ksiazka
+            LEFT JOIN czytelnicy
+            ON rezerwacja.id_czytelnik=czytelnicy.id_czytelnik 
+            WHERE';
+
+            if($id_czytelnik!=null)
+            {
+                $sql.=" rezerwacja.id_czytelnik=:id_czytelnik AND";
+            }
+            $sql.=' rezerwacja.usuniety!=true
+            ORDER BY rezerwacja.id_rezerwacja ASC';
+            $stmt = $dbc->prepare($sql);
+            if($id_czytelnik!=null)
+            {
+                $stmt->bindValue(':id_czytelnik', $id_czytelnik);
+            }
+         
+            if ($stmt->execute() == false) {
+                showDebugMessage("getRezerwacje execute returned false: ");
+                $books = false;
+            } else {
+                $rezerwacje = $stmt->fetchAll(PDO::FETCH_ASSOC); //pusta tablica, jesli nie ma rezerwacji
+            }
+            $dbc = null;
+        } catch (PDOException $e) {
+            showDebugMessage("can not get rezerwacje books from db. DB query error: " . $e->getMessage());
+            return false;
+        }
+    }
+    return $rezerwacje;
+}
+
 
 
 /**

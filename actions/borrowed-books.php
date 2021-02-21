@@ -12,5 +12,9 @@ else
 $userId=$_SESSION['userId'];
 $booksList=getBorrowedBooks($userId);
 
+
+$rezerwacje=null;
+$rezerwacje=getRezerwacje($userId);
+
 $message = getMessage();
 $messageType = getMessageType();

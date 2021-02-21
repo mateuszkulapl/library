@@ -5,10 +5,10 @@
 
 <body>
     <?php
-if($user!=null)
-showHeader("Książki wypożyczone przez:".$user['name']." ".$user['surname'], "login: ".$user['login']); 
-else
-showHeader("Wypożyczone książki"); ?>
+    if ($user != null)
+        showHeader("Książki wypożyczone przez:" . $user['name'] . " " . $user['surname'], "login: " . $user['login']);
+    else
+        showHeader("Wypożyczone książki"); ?>
 
     <?php
     showButtons('borrowed-books');
@@ -17,11 +17,8 @@ showHeader("Wypożyczone książki"); ?>
 
     ?>
     <div class="center">
-
+        <h3>Wypożyczone książki</h3>
         <?php
-
-
-
         if ($booksList == false) {
             echo "Brak książek.";
         } else {
@@ -59,6 +56,47 @@ showHeader("Wypożyczone książki"); ?>
             }
         }
         ?>
+
+        </br>
+        <h3>Zarezerwowane książki</h3>
+        <?php
+
+        if ($rezerwacje == false) {
+            echo "Brak książek.";
+        } else {
+            if (!(count($rezerwacje) > 0)) {
+                echo "Brak książek.";
+            } else {
+        ?>
+                <table id="list" class=" list min-width */full-width*/ simple-border th-small-pd">
+                    <thead class="invert">
+                        <th>Lp</th>
+                        <th>Tytuł</th>
+                        <th>Akcja</th>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $index = 0;
+                        foreach ($rezerwacje as $rezerwacja) {;
+                        ?>
+                            <tr>
+                                <td><?php echo ++$index; ?></td>
+                                <td><?php echo $rezerwacja['tytul'] ?></td>
+                                <td>
+                                    <a class="button" href="?action=book&bookId=<?php echo $rezerwacja['id_ksiazka']; ?>">Sczegóły książki</a>
+                                    <!--todo:anuluj <a href="?action=book-return&borrowId=<?php echo $book['id']; ?>">Oddaj</a>-->
+                                </td>
+                            </tr>
+                        <?php
+                        } ?>
+                    </tbody>
+                </table>
+        <?php
+            }
+        }
+        ?>
+
+
     </div>
 </body>
 

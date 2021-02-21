@@ -261,7 +261,7 @@ table.full-width {
   width: 100%;
 }
 
-#list a {
+#list a, .list a {
   background: #3f51b5;
   color: #fff;
   text-decoration: none;
@@ -272,7 +272,7 @@ table.full-width {
   display: block;
 }
 
-#list a:hover {
+#list a:hover,.list a:hover {
   background: #2196f3;
 }
 
@@ -335,7 +335,7 @@ table {
   margin: auto;
 }
 
-table.book-info,table.egz-info {
+table.book-info,table.egz-info, table.min-width {
   width: 600px;
   max-width: 90%;
 }

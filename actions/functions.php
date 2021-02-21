@@ -53,10 +53,7 @@ function renderAlerts()
 function redirectToLoginPage($message = null, $messageType = null)
 {
     if ($message) {
-        $_SESSION['message'] = $message;
-        if ($messageType)
-            $_SESSION['messageType'] = $messageType;
-        session_write_close();
+        addAlert($message,$messageType);
     }
     header("HTTP/1.1 301 Moved Permanently");
     header("Location: index.php?action=login");
@@ -68,8 +65,6 @@ function redirectToBookPage($bookId, $message = null, $messageType = null)
     if ($message) {
         addAlert($message,$messageType);
     }
-    echo "redirexct";
-    var_dump("bookId");
     header("HTTP/1.1 301 Moved Permanently");
     header("Location: index.php?action=book&bookId=$bookId");
     exit();
@@ -83,13 +78,9 @@ function redirectToBookPage($bookId, $message = null, $messageType = null)
 function redirectToHomePage403($message = null, $messageType = null)
 {
     if ($message) {
-        $_SESSION['message'] = $message;
-        if ($messageType)
-            $_SESSION['messageType'] = $messageType;
-        session_write_close();
+        addAlert($message,$messageType);
     } else {
-        $_SESSION['message'] = "Nie masz uprawnień do tej strony.";
-        $_SESSION['messageType'] = "error";
+        addAlert("Nie masz uprawnień do tej strony.","error");
     }
     header("HTTP/1.1 403 Forbidden");
     header("Location: index.php?action=home");

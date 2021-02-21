@@ -69,7 +69,7 @@
                 <?php
                 } else {
                     echo "<h4>Brak dostępnych książek.</h4>";
-                    echo "Możesz zarezerwować książkę, będziesz $numerWKolejce. w kolejce oczekujących.";
+                    echo "<b>Możesz zarezerwować książkę, będziesz $numerWKolejce. w kolejce oczekujących</b>.";
                 ?>
                 <div class="buttons">
                     <a href="?action=book-book&bookId=<?php echo $bookDetails['id_ksiazka']; ?>" class="button rezerwuj">Rezerwuj</a>
