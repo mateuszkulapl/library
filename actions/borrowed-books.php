@@ -10,6 +10,8 @@ $user=getUser($userId);
 }
 else
 $userId=$_SESSION['userId'];
+
+
 $booksList=getBorrowedBooks($userId);
 
 

@@ -107,7 +107,7 @@ function getAllowedSites()
         } else {
             if ($_SESSION['type'] == "reader") {
                 array_push($allowedPages, array('page' => 'books-list', 'name' => 'Zobacz książki'));
-                array_push($allowedPages, array('page' => 'borrowed-books', 'name' => 'Wypożyczone książki'));
+                array_push($allowedPages, array('page' => 'borrowed-books', 'name' => 'Twoje książki'));
             }
         }
     }

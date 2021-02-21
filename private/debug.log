@@ -97,3 +97,11 @@
 2021-02-21 20:35:19	getBorrowedBooks execute returned false: 
 2021-02-21 20:35:19	getRezerwacje execute returned false: 
 2021-02-21 20:38:00	getBorrowedBooks execute returned false: 
+2021-02-21 20:50:13	getUser execute returned false: 
+2021-02-21 20:50:21	getUser execute returned false: 
+2021-02-21 20:51:06	get user query returned 0 row(s) for user id=1. 
+2021-02-21 20:57:58	getRezerwacje execute returned false: 
+2021-02-21 20:58:34	getRezerwacje execute returned false: 
+2021-02-21 20:59:52	getRezerwacje execute returned false: 
+2021-02-21 21:01:16	getRezerwacje execute returned false: 
+2021-02-21 21:01:39	getRezerwacje execute returned false: 

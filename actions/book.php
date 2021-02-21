@@ -12,7 +12,7 @@ $bookDetails=getBook($bookId);
 $bookStats=getBookStats($bookId);
 
 $bookEgzemplarze=getEgzemplarze($bookId);
-
+$bookRezerwacje=getRezerwacje(null,$bookId);
 
 $message = getMessage();
 $messageType = getMessageType();

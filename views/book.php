@@ -53,32 +53,32 @@
                 <td><?php echo $bookStats['liczba_rezerwacji']; ?></td>
             </tr>
         </table>
-        
-            <?php
 
-            //przycisk rezerwuj
-            if ($bookStats['liczba_egzemplarzy'] > 0) {
-                $numerWKolejce = -1 * ($bookStats['liczba_egzemplarzy_w_bibliotece'] - $bookStats['liczba_rezerwacji'] - 1);
+        <?php
 
-                if ($numerWKolejce <= 0) {
-            ?>
-                    Książki są dostępne</br>Możesz dokonać rezerwacji</br>
-                    <div class="buttons">
-                    <a href="?action=book-book&bookId=<?php echo $bookDetails['id_ksiazka']; ?>" class="button rezerwuj">Rezerwuj</a>
-                </div>
-                <?php
-                } else {
-                    echo "<h4>Brak dostępnych książek.</h4>";
-                    echo "<b>Możesz zarezerwować książkę, będziesz $numerWKolejce. w kolejce oczekujących</b>.";
-                ?>
+        //przycisk rezerwuj
+        if ($bookStats['liczba_egzemplarzy'] > 0) {
+            $numerWKolejce = -1 * ($bookStats['liczba_egzemplarzy_w_bibliotece'] - $bookStats['liczba_rezerwacji'] - 1);
+
+            if ($numerWKolejce <= 0) {
+        ?>
+                Książki są dostępne</br>Możesz dokonać rezerwacji</br>
                 <div class="buttons">
                     <a href="?action=book-book&bookId=<?php echo $bookDetails['id_ksiazka']; ?>" class="button rezerwuj">Rezerwuj</a>
                 </div>
             <?php
-
-                }
-            }
+            } else {
+                echo "<h4>Brak dostępnych książek.</h4>";
+                echo "<b>Możesz zarezerwować książkę, będziesz $numerWKolejce. w kolejce oczekujących</b>.";
             ?>
+                <div class="buttons">
+                    <a href="?action=book-book&bookId=<?php echo $bookDetails['id_ksiazka']; ?>" class="button rezerwuj">Rezerwuj</a>
+                </div>
+        <?php
+
+            }
+        }
+        ?>
         <?php
 
         if ($bookEgzemplarze) {
@@ -132,10 +132,40 @@
         <?php
         } else {
 
-        ?><h2>Brak egzemplarzy</h2><?php
-                                }
+        ?>
+            <h2>Brak egzemplarzy</h2>
+        <?php
+        }
+        if ($bookRezerwacje) {
+            ?>
+                <h2>Rezerwacje</h2>
+    
+                <table class="egz-info">
+                    <thead>
+                        <th>Id</th>
+                        <th>Użytkownik</th>
+                    </thead>
+                    <tbody>
+                        <?php
+                        foreach ($bookRezerwacje as $rezerwacja) {
+                            echo "<tr>";
+                            echo "<td>" . $rezerwacja['id_rezerwacja'] . "</td>";
+                            echo "<td>" . $rezerwacja['login'] . "</td>";
+                            echo "</tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
+    
+            <?php
+            } else {
+    
+            ?>
+                <h2>Brak rezerwacji</h2>
+            <?php
+            }
 
-                                    ?>
+        ?>
 
     </div>
 </body>

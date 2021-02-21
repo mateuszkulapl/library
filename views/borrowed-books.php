@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <?php require_once(_ROOT_PATH . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'parts' . DIRECTORY_SEPARATOR  . 'showPart.php'); ?>
 <html lang="pl">
-<?php showHead("Wyświetl wypożyczone książki", "Zobacz wypożyczone książki", "noindex"); ?>
+<?php showHead("Wyświetl Twoje książki", "Zobacz wypożyczone i zarezerwowane książki", "noindex"); ?>
 
 <body>
     <?php
     if ($user != null)
-        showHeader("Książki wypożyczone przez:" . $user['name'] . " " . $user['surname'], "login: " . $user['login']);
+        showHeader("Książki wypożyczone przez użytkownika<br>" . $user['login']);
     else
         showHeader("Wypożyczone książki"); ?>
 

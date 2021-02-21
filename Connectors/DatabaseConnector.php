@@ -218,7 +218,7 @@ function getUser($userId)
     $user = false;
     if ($dbc != false) {
         try {
-            $sql = 'SELECT * FROM users WHERE active=1 AND id=:id';
+            $sql = 'SELECT * FROM czytelnicy WHERE id_czytelnik=:id';
 
             $stmt = $dbc->prepare($sql);
             $stmt->bindValue(':id', $userId);
@@ -890,14 +890,14 @@ function getBorrowedBooks($id_czytelnik =null)
  *pobieranie listy rezerwacji dla wszystkich użytkowników lub jednego
  *@return false/string typ użytkownika.
  */
-function getRezerwacje($id_czytelnik=null)
+function getRezerwacje($id_czytelnik=null,$id_ksiazka=null)
 {
     $dbc = getdbconnector();
     $rezerwacje = false;
     if ($dbc != false) {
 
         try {
-            $sql = 'SELECT rezerwacja.id_rezerwacja,ksiazki.id_ksiazka, ksiazki.tytul
+            $sql = 'SELECT rezerwacja.id_rezerwacja,ksiazki.id_ksiazka, ksiazki.tytul, czytelnicy.login
             FROM rezerwacja
             LEFT JOIN ksiazki
             ON rezerwacja.id_ksiazka=ksiazki.id_ksiazka
@@ -909,17 +909,25 @@ function getRezerwacje($id_czytelnik=null)
             {
                 $sql.=" rezerwacja.id_czytelnik=:id_czytelnik AND";
             }
-            $sql.=' rezerwacja.usuniety!=true
-            ORDER BY rezerwacja.id_rezerwacja ASC';
+            $sql.=' rezerwacja.usuniety!=true';
+
+            if($id_ksiazka!=null)
+            {
+                $sql.=" AND rezerwacja.id_ksiazka=:id_ksiazka ";
+            }
+            $sql.=' ORDER BY rezerwacja.id_rezerwacja ASC';
             $stmt = $dbc->prepare($sql);
             if($id_czytelnik!=null)
             {
                 $stmt->bindValue(':id_czytelnik', $id_czytelnik);
             }
-         
+            if($id_ksiazka!=null)
+            {
+                $stmt->bindValue(':id_ksiazka', $id_ksiazka);
+            }
+
             if ($stmt->execute() == false) {
                 showDebugMessage("getRezerwacje execute returned false: ");
-                $books = false;
             } else {
                 $rezerwacje = $stmt->fetchAll(PDO::FETCH_ASSOC); //pusta tablica, jesli nie ma rezerwacji
             }
