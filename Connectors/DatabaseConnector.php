@@ -663,26 +663,33 @@ function updateBook($id, $title, $author, $publishingHouse, $year, $inventory, $
 }
 
 /**
- *pobieranie wszystkich danych uzytkownika
+ *pobieranie wszystkich danych ksiazki
  *@return false/string false jesli nie znaleziono/ user
  */
 function getBook($bookId)
 {
     $dbc = getdbconnector();
     $user = false;
+    $bookDetails=null;
     if ($dbc != false) {
         try {
-            $sql = 'SELECT * FROM books WHERE id=:id';
+            $sql = 'SELECT ksiazki.id_ksiazka, ksiazki.tytul, ksiazki.opis, wydawnictwo.nazwa AS wydawnictwo, ksiazki.rok_wydania, kategoria.nazwa AS kategoria
+            FROM ksiazki
+            
+            LEFT JOIN kategoria ON ksiazki.id_kategoria=kategoria.id_kategoria
+            LEFT JOIN wydawnictwo ON ksiazki.id_wydawnictwa=wydawnictwo.id_wydawnictwo
+            WHERE id_ksiazka=:id_ksiazka
+            ORDER BY ksiazki.id_ksiazka ASC';
 
             $stmt = $dbc->prepare($sql);
-            $stmt->bindValue(':id', $bookId);
+            $stmt->bindValue(':id_ksiazka', $bookId);
             if ($stmt->execute() == false) {
                 showDebugMessage("getBook execute returned false: ");
-                $user = false;
+                $bookDetails = null;
             } else {
                 $rowCount = $stmt->rowCount();
                 if ($rowCount == 1)
-                    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+                    $bookDetails = $stmt->fetch(PDO::FETCH_ASSOC);
                 else {
                     showDebugMessage('getBook query returned ' . $rowCount . ' row(s) for book id=' . $bookId . '. ');
                 }
@@ -693,7 +700,44 @@ function getBook($bookId)
             return false;
         }
     }
-    return $user;
+    return $bookDetails;
+}
+
+/**
+ *pobieranie wszystkich egzemplarzy danej ksiazki
+ *@return null/array null jesli nie znaleziono/ tablica egzemplarzy 
+ */
+function getEgzemplarze($bookId, $wyswietlWycofane=false)
+{
+    $dbc = getdbconnector();
+    $egzemplarze=null;
+    if ($dbc != false) {
+        try {
+            $sql = 'SELECT egzemplarz.id_egzemplarza, egzemplarz.id_ksiazka, wypozyczenia.id_wypozyczenie, wypozyczenia.id_czytelnik, wypozyczenia.data_wypozyczenia, wypozyczenia.data_oddania, czytelnicy.login
+            FROM egzemplarz
+            LEFT JOIN wypozyczenia ON egzemplarz.id_egzemplarza=wypozyczenia.id_egzemplarza
+            LEFT JOIN czytelnicy ON wypozyczenia.id_czytelnik=czytelnicy.id_czytelnik
+            WHERE id_ksiazka=:id_ksiazka';
+            if($wyswietlWycofane!=true)
+                $sql.=' AND egzemplarz.wycofany!=true';
+
+             $sql.=' ORDER BY egzemplarz.id_egzemplarza ASC';
+
+            $stmt = $dbc->prepare($sql);
+            $stmt->bindValue(':id_ksiazka', $bookId);
+            if ($stmt->execute() == false) {
+                showDebugMessage("getEgzemplarze execute returned false: ");
+                $egzemplarze = null;
+            } else {
+                $egzemplarze = $stmt->fetchAll(PDO::FETCH_ASSOC); 
+            }
+            $dbc = null;
+        } catch (PDOException $e) {
+            showDebugMessage("can not getEgzemplarze from db. DB query error: " . $e->getMessage());
+            return false;
+        }
+    }
+    return $egzemplarze;
 }
 
 

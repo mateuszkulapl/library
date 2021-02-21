@@ -8,7 +8,7 @@
     <?php
     if ($message)
         showMessage($message, $messageType);
-    showButtons('login');
+    //showButtons('login');
     ?>
     <div class="center">
         <form action="index.php?action=login" method="post">

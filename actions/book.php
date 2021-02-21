@@ -1,13 +1,17 @@
 <?php
 redirectIfNotLoggedIn();
 
-require_once(_ROOT_PATH . DIRECTORY_SEPARATOR . 'Connectors' . DIRECTORY_SEPARATOR . 'BooksConnector.php');
 
-$figureImageSrc = uploadDir . 'default.jpg';
-$figureFigcaption = 'Brak pliku graficznego';
+$bookId=null;
+if (isset($_GET['bookId'])) {
+    $bookId = $_GET['bookId'];
+}
 
-$books=getBooks();
 
+$bookDetails=getBook($bookId);
+$bookStats=getBookStats($bookId);
+
+$bookEgzemplarze=getEgzemplarze($bookId);
 
 
 $message = getMessage();

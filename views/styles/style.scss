@@ -316,3 +316,24 @@ table.full-width {
 }
 
 /*END ALERTS*/
+
+table {
+  display: table;
+  border-collapse: separate;
+  border-spacing: 0px;
+  border-color: gray;
+  text-align: left;
+  th,
+  td {
+    border: 1px solid gray;
+  }
+}
+
+.center>table {
+  margin: auto;
+}
+
+table.book-info,table.egz-info {
+  width: 600px;
+  max-width: 90%;
+}

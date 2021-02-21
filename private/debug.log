@@ -32,3 +32,8 @@
 2021-02-20 21:59:43	getBookStats execute returned false: 
 2021-02-20 21:59:44	getBookStats execute returned false: 
 2021-02-20 23:55:55	getBorrowedBooks execute returned false: 
+2021-02-21 13:09:38	getBook execute returned false: 
+2021-02-21 13:14:07	getBorrowedBooks execute returned false: 
+2021-02-21 14:50:00	getEgzemplarze execute returned false: 
+2021-02-21 14:50:25	getEgzemplarze execute returned false: 
+2021-02-21 14:52:18	getEgzemplarze execute returned false: 

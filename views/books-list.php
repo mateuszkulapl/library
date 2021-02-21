@@ -60,7 +60,7 @@
                                 ".$bookStats['liczba_dostepnych_egzemplarzy']." z ".$bookStats['liczba_egzemplarzy'];
                                 ?></td>
                                 <td>
-                                <a href="<?php echo "?action=book?id=".$book['id_ksiazka']; ?>">Szczegóły</a>
+                                <a href="<?php echo "?action=book&bookId=".$book['id_ksiazka']; ?>">Szczegóły</a>
                                 <?php if ($isAdmin) {
                                     ?><a href="?action=book-edit&bookId=<?php echo $book['id_ksiazka']; ?>">Edytuj</a>
                                     <?php
