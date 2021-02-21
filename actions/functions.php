@@ -63,6 +63,18 @@ function redirectToLoginPage($message = null, $messageType = null)
     exit();
 }
 
+function redirectToBookPage($bookId, $message = null, $messageType = null)
+{
+    if ($message) {
+        addAlert($message,$messageType);
+    }
+    echo "redirexct";
+    var_dump("bookId");
+    header("HTTP/1.1 301 Moved Permanently");
+    header("Location: index.php?action=book&bookId=$bookId");
+    exit();
+}
+
 /**
  *przekierowanie do strony logowania z opcjonalna wiadomoscia  z kodem 403
  *@param null|string $message wiadomosc wyswietlana na stronie logowania po przekierowaniu.
@@ -140,10 +152,7 @@ function appendToSessionVariable($name, $text)
 function redirectToHomePage($message = null, $messageType = null)
 {
     if ($message) {
-        $_SESSION['message'] = $message;
-        if ($messageType)
-            $_SESSION['messageType'] = $messageType;
-        session_write_close();
+        addAlert($message,$messageType);
     }
     header("HTTP/1.1 301 Moved Permanently");
     header("Location: index.php?action=home");
@@ -158,10 +167,7 @@ function redirectToHomePage($message = null, $messageType = null)
 function redirectToUsersList($message = null, $messageType = null)
 {
     if ($message) {
-        $_SESSION['message'] = $message;
-        if ($messageType)
-            $_SESSION['messageType'] = $messageType;
-        session_write_close();
+        addAlert($message,$messageType);
     }
     header("HTTP/1.1 404 Not Found");
     header("Location: index.php?action=users-list");
@@ -176,10 +182,7 @@ function redirectToUsersList($message = null, $messageType = null)
 function redirectToBooksList($message = null, $messageType = null)
 {
     if ($message) {
-        $_SESSION['message'] = $message;
-        if ($messageType)
-            $_SESSION['messageType'] = $messageType;
-        session_write_close();
+        addAlert($message,$messageType);
     }
     header("HTTP/1.1 404 Not Found");
     header("Location: index.php?action=books-list");
@@ -194,10 +197,7 @@ function redirectToBooksList($message = null, $messageType = null)
 function redirectToBorrowedBooksList($message = null, $messageType = null)
 {
     if ($message) {
-        $_SESSION['message'] = $message;
-        if ($messageType)
-            $_SESSION['messageType'] = $messageType;
-        session_write_close();
+        addAlert($message,$messageType);
     }
     header("HTTP/1.1 404 Not Found");
     header("Location: index.php?action=borrowed-books");

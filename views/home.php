@@ -8,6 +8,7 @@ showHead("Home", null, "noindex"); ?>
     showButtons('home');
     if ($message)
         showMessage($message, $messageType);
+
     ?>
 </body>
 

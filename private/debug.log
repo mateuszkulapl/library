@@ -37,3 +37,48 @@
 2021-02-21 14:50:00	getEgzemplarze execute returned false: 
 2021-02-21 14:50:25	getEgzemplarze execute returned false: 
 2021-02-21 14:52:18	getEgzemplarze execute returned false: 
+2021-02-21 18:48:53	getBorrowedBooks execute returned false: 
+2021-02-21 19:55:30	INSERT INTO rezerwacje execute returned false: 
+2021-02-21 19:55:30	can not book a book book2
+2021-02-21 19:56:46	INSERT INTO rezerwacje execute returned false: 
+2021-02-21 19:56:46	can not book a book book1
+2021-02-21 19:56:47	getBook execute returned false: 
+2021-02-21 19:56:47	getBookStats execute returned false: 
+2021-02-21 19:56:47	getBookStats execute returned false: 
+2021-02-21 19:56:47	getBookStats execute returned false: 
+2021-02-21 19:56:47	getEgzemplarze execute returned false: 
+2021-02-21 19:57:14	INSERT INTO rezerwacje execute returned false: 
+2021-02-21 19:57:14	can not book a book book1
+2021-02-21 19:57:15	getBook execute returned false: 
+2021-02-21 19:57:15	getBookStats execute returned false: 
+2021-02-21 19:57:15	getBookStats execute returned false: 
+2021-02-21 19:57:15	getBookStats execute returned false: 
+2021-02-21 19:57:15	getEgzemplarze execute returned false: 
+2021-02-21 19:57:57	INSERT INTO rezerwacje execute returned false: 
+2021-02-21 19:57:57	can not book a book book1
+2021-02-21 19:58:04	INSERT INTO rezerwacje execute returned false: 
+2021-02-21 19:58:04	can not book a book book1
+2021-02-21 19:58:34	INSERT INTO rezerwacje execute returned false: 
+2021-02-21 19:58:34	can not book a book book1
+2021-02-21 19:58:57	INSERT INTO rezerwacje execute returned false: 
+2021-02-21 19:58:57	can not book a book book1
+2021-02-21 19:59:13	INSERT INTO rezerwacje execute returned false: 
+2021-02-21 19:59:13	can not book a book book1
+2021-02-21 19:59:32	INSERT INTO rezerwacje execute returned false: 
+2021-02-21 19:59:32	can not book a book book1
+2021-02-21 20:01:00	INSERT INTO rezerwacje execute returned false: 
+2021-02-21 20:01:00	can not book a book book1
+2021-02-21 20:03:11	INSERT INTO rezerwacja execute returned false: 
+2021-02-21 20:03:11	can not book a book book1
+2021-02-21 20:03:16	INSERT INTO rezerwacja execute returned false: 
+2021-02-21 20:03:16	can not book a book book1
+2021-02-21 20:03:36	getBook execute returned false: 
+2021-02-21 20:03:36	getBookStats execute returned false: 
+2021-02-21 20:03:36	getBookStats execute returned false: 
+2021-02-21 20:03:36	getBookStats execute returned false: 
+2021-02-21 20:03:37	getEgzemplarze execute returned false: 
+2021-02-21 20:03:48	getBook execute returned false: 
+2021-02-21 20:03:48	getBookStats execute returned false: 
+2021-02-21 20:03:48	getBookStats execute returned false: 
+2021-02-21 20:03:48	getBookStats execute returned false: 
+2021-02-21 20:03:49	getEgzemplarze execute returned false: 

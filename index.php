@@ -13,7 +13,7 @@ logout - akcja wylogowania
 image - wyswietlanie obrazka
 book-add - dodwanie obrazka
 */
-$actions = array('home', 'login', 'logout', 'book', 'book-add', 'logout', '404', 'contact', 'users-list', 'user-edit', 'user-add', 'user-delete', 'books-list', 'book-delete' ,'book-edit', 'book-borrow','borrowed-books', 'book-return');
+$actions = array('home', 'login', 'logout', 'book', 'book-add', 'logout', '404', 'contact', 'users-list', 'user-edit', 'user-add', 'user-delete', 'books-list', 'book-delete' ,'book-edit', 'book-borrow','borrowed-books', 'book-return', 'book-book');
 if (isset($_GET['action'])) //sprawdzenie czy w url jest parametr action
 {
     $action = $_GET['action']; //pobranie akcji z parametrow url

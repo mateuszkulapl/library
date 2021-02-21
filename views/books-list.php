@@ -57,7 +57,7 @@
                                 <td><?php echo $book['rok_wydania'] ?></td>
                                 <td><?php echo $book['wydawnictwo'] ?></td>
                                 <td><?php echo "Dostępne: 
-                                ".$bookStats['liczba_dostepnych_egzemplarzy']." z ".$bookStats['liczba_egzemplarzy'];
+                                ".$bookStats['liczba_egzemplarzy_w_bibliotece']." z ".$bookStats['liczba_egzemplarzy'];
                                 ?></td>
                                 <td>
                                 <a href="<?php echo "?action=book&bookId=".$book['id_ksiazka']; ?>">Szczegóły</a>
@@ -68,7 +68,7 @@
                                     if ($isAdmin) { ?><a href="?action=book-delete&bookId=<?php echo $book['id_ksiazka']; ?>">Usuń</a>
                                         <?php
                                     }
-                                    /*if ($isReader && $bookStats['liczba_dostepnych_egzemplarzy'] > 0) {
+                                    /*if ($isReader && $bookStats['liczba_egzemplarzy_w_bibliotece'] > 0) {
                                         if ($book['numOfBorrowedByUser'] < 1) {
                                         ?><a href="?action=book-borrow&bookId=<?php echo $book['id_ksiazka']; ?>">Pożycz</a>
                                     <?php

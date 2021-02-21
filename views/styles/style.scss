@@ -26,15 +26,15 @@ header {
 header h1 {
   margin: 0px;
 }
-nav.buttons {
+.buttons {
   display: flex;
   justify-content: space-evenly;
   margin: 8px auto;
   flex-wrap: wrap;
 }
 
-nav.buttons a,
-input[type="submit"] {
+.buttons a,
+input[type="submit"], a.button {
   background: #2196f3;
   color: #fff;
   text-decoration: none;
@@ -44,14 +44,16 @@ input[type="submit"] {
   cursor: pointer;
 }
 
-nav.buttons a:hover,
-input[type="submit"]:hover {
+.buttons a:hover,
+input[type="submit"]:hover, a.button:hover {
   background: #3f51b5;
 }
-nav.buttons a.active {
+.buttons a.active, a.button:hover {
   background: #3f51b5;
 }
-
+a.button{
+  margin-top:10px;margin-bottom: 10px;
+}
 .center {
   margin: auto;
   text-align: center;
