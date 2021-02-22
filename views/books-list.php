@@ -30,35 +30,45 @@
                         <th>Gatunek</th>
                         <th>Rok wydania</th>
                         <th>Wydawnictwo</th>
-                        <th>Liczba egzemplarzy</th>
+                        <!--<th>Liczba egzemplarzy</th>-->
                         <th>Akcja</th>
                     </thead>
                     <tbody>
                         <?php
                         $index = 0;
                         foreach ($booksList as $book) {
-                            $bookStats=getBookStats($book['id_ksiazka']);
+                            //$bookStats=getBookStats($book['id_ksiazka']);
                         ?>
                             <tr>
                                 <td><?php echo ++$index; ?></td>
                                 <td><?php echo $book['tytul'] ?></td>
                                 
-                                <td><?php $authors=getBookAuthors($book['id_ksiazka']); 
-                                $authorsString="";
+                                <td><?php 
+                                // $authors=getBookAuthors($book['id_ksiazka']); 
+                                // $authorsString="";
                                 
-                                foreach ($authors as $author) {
-                                    $authorsString.=$author['imie']." ".$author['nazwisko'].", ";
-                                }
-                                $authorsString=trim($authorsString,', ');
+                                // foreach ($authors as $author) {
+                                //     $authorsString.=$author['imie']." ".$author['nazwisko'].", ";
+                                // }
+                                // $authorsString=trim($authorsString,', ');
+
+                                $authorsString=$book['autorzy'];
                                 echo ($authorsString);                                
                                 ?></td>
 
                                 <td><?php echo $book['kategoria'] ?></td>
                                 <td><?php echo $book['rok_wydania'] ?></td>
                                 <td><?php echo $book['wydawnictwo'] ?></td>
+                                <?php
+
+/*
+?>
                                 <td><?php echo "Dostępne: 
                                 ".$bookStats['liczba_egzemplarzy_w_bibliotece']." z ".$bookStats['liczba_egzemplarzy'];
                                 ?></td>
+                                <?php
+*/
+                                ?>
                                 <td>
                                 <a href="<?php echo "?action=book&bookId=".$book['id_ksiazka']; ?>">Szczegóły</a>
                                 <?php if ($isAdmin) {

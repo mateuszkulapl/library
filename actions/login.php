@@ -22,7 +22,7 @@ function login()
                 redirectToHomePage("Zalogowano","ok");
             } else {
                 echo "bledne";
-                redirectToLoginPage("Nieprawidłowy login lub hasło");
+                redirectToLoginPage("Nieprawidłowy login lub hasło","error");
             }
         }
     }

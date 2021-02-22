@@ -77,13 +77,15 @@
                     <tbody>
                         <?php
                         $index = 0;
-                        foreach ($rezerwacje as $rezerwacja) {;
+                        foreach ($rezerwacje as $rezerwacja) {
+
                         ?>
                             <tr>
                                 <td><?php echo ++$index; ?></td>
                                 <td><?php echo $rezerwacja['tytul'] ?></td>
                                 <td>
                                     <a class="button" href="?action=book&bookId=<?php echo $rezerwacja['id_ksiazka']; ?>">Sczegóły książki</a>
+                                    <a class="button" href="?action=cancel-book&id_rezerwacja=<?php echo $rezerwacja['id_rezerwacja']; ?>&userId=<?php echo $rezerwacja['id_czytelnik'];?>">Anuluj rezerwację</a>
                                     <!--todo:anuluj <a href="?action=book-return&borrowId=<?php echo $book['id']; ?>">Oddaj</a>-->
                                 </td>
                             </tr>

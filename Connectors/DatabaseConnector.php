@@ -77,9 +77,11 @@ function getUserType($login, $password, $checkPassword)
 
     $dbc = getdbconnector();
     $type = false;
-    $userId=null;
-    $userInfo=array("type"=>$type,
-    "userId"=>$userId);
+    $userId = null;
+    $userInfo = array(
+        "type" => $type,
+        "userId" => $userId
+    );
     if ($dbc != false) {
         try {
             if ($checkPassword) {
@@ -93,8 +95,7 @@ function getUserType($login, $password, $checkPassword)
             if ($stmt->execute() == false) {
                 $type = false;
             } else {
-                if ($stmt->rowCount() ==1)
-                {
+                if ($stmt->rowCount() == 1) {
                     $userInfo['type'] = 'reader';
                     $row = $stmt->fetch();
                     $userInfo['userId'] = $row["id"];
@@ -123,8 +124,7 @@ function getUserType($login, $password, $checkPassword)
             if ($stmt->execute() == false) {
                 $type = false;
             } else {
-                if ($stmt->rowCount() > 0)
-                {
+                if ($stmt->rowCount() > 0) {
                     $userInfo['type'] = 'admin';
                     $row = $stmt->fetch();
                     $userInfo['userId'] = $row["id"];
@@ -179,23 +179,14 @@ function getAllUsers()
     if ($dbc != false) {
         //todo:
         try {
-            $sql = 'SELECT users.id AS id, name, surname, login, date_part(\'year\', CURRENT_DATE) - date_part(\'year\', birthday) AS age, type, 
-            (select count(*) from borrows where borrows."user-id" =users.id) as numOfBorrowedByUser
-            FROM users
-            LEFT JOIN borrows 
-            ON users.id=borrows."user-id"
-            WHERE users.active=1
-            GROUP BY users.id
-            ORDER BY id';
-
-            var_dump($sql);
+            $sql = 'SELECT czytelnicy.id_czytelnik, czytelnicy.login, czytelnicy.haslo,czytelnicy.email,czytelnicy.telefon,czytelnicy.data_urodzenia
+            FROM czytelnicy';
             $stmt = $dbc->prepare($sql);
             if ($stmt->execute() == false) {
                 var_dump($stmt->execute());
                 showDebugMessage("getAllUsers execute returned false: ");
                 $users = false;
             } else {
-                var_dump($stmt->execute());
                 $users = $stmt->fetchAll(PDO::FETCH_ASSOC); //pusta tablica, jesli nie ma uzytkownikow
             }
             $dbc = null;
@@ -427,11 +418,15 @@ function getAllBooks()
     if ($dbc != false) {
 
         try {
-            $sql = 'SELECT ksiazki.id_ksiazka, ksiazki.tytul, ksiazki.opis, wydawnictwo.nazwa AS wydawnictwo, ksiazki.rok_wydania, kategoria.nazwa AS kategoria
-            FROM ksiazki
-            LEFT JOIN kategoria ON ksiazki.id_kategoria=kategoria.id_kategoria
-            LEFT JOIN wydawnictwo ON ksiazki.id_wydawnictwa=wydawnictwo.id_wydawnictwo
-            ORDER BY ksiazki.id_ksiazka ASC';
+            $sql = 'SELECT ksiazki.id_ksiazka, ksiazki.tytul, ksiazki.opis, wydawnictwo.nazwa AS wydawnictwo,
+            ksiazki.rok_wydania, kategoria.nazwa AS kategoria,
+            (SELECT string_agg(autorzy.nazwisko, \', \') AS autorzy FROM autorzyksiazek LEFT JOIN autorzy ON autorzyksiazek.id_autor=autorzy.id_autor
+                        WHERE autorzyksiazek.id_ksiazka=ksiazki.id_ksiazka
+                        ) AS autorzy
+                        FROM ksiazki
+                        LEFT JOIN kategoria ON ksiazki.id_kategoria=kategoria.id_kategoria
+                        LEFT JOIN wydawnictwo ON ksiazki.id_wydawnictwa=wydawnictwo.id_wydawnictwo
+                        ORDER BY ksiazki.id_ksiazka ASC';
 
             $stmt = $dbc->prepare($sql);
             //$stmt->bindValue(':userId', $userId);
@@ -812,28 +807,61 @@ function insertBorrow($bookId, $userId)
 function bookABook($bookId, $userId)
 {
     $borrowed = false;
-        $dbc = getdbconnector();
-    $success=false;
-        if ($dbc != false) {
-            try {
-                $sql = 'INSERT INTO "rezerwacja" ( "id_ksiazka", "id_czytelnik") VALUES ( :bookId, :userId);'; //UPDATE books SET ACTIVE=0 WHERE...
-                $stmt = $dbc->prepare($sql);
-                $stmt->bindValue(':bookId', $bookId);
-                $stmt->bindValue(':userId', $userId);
-                var_dump($sql);
-                if ($stmt->execute() == false) {
-                    showDebugMessage("INSERT INTO rezerwacja execute returned false: ");
-                    $success = false;
-                } else {
-                    $success = true;
-                }
-                $dbc = null;
-            } catch (PDOException $e) {
-                showDebugMessage("can not book a book from db. DB query error: " . $e->getMessage());
-                return false;
+    $dbc = getdbconnector();
+    $success = false;
+    if ($dbc != false) {
+        try {
+            $sql = 'INSERT INTO "rezerwacja" ( "id_ksiazka", "id_czytelnik") VALUES ( :bookId, :userId);'; //UPDATE books SET ACTIVE=0 WHERE...
+            $stmt = $dbc->prepare($sql);
+            $stmt->bindValue(':bookId', $bookId);
+            $stmt->bindValue(':userId', $userId);
+            var_dump($sql);
+            if ($stmt->execute() == false) {
+                showDebugMessage("INSERT INTO rezerwacja execute returned false: ");
+                $success = false;
+            } else {
+                $success = true;
             }
+            $dbc = null;
+        } catch (PDOException $e) {
+            showDebugMessage("can not book a book from db. DB query error: " . $e->getMessage());
+            return false;
         }
-    
+    }
+
+    return $success;
+}
+
+
+
+/**
+ *usuwanie rezerwacji
+ */
+function deleteABookBook($id_rezerwacja)
+{
+    $borrowed = false;
+    $dbc = getdbconnector();
+    $success = false;
+    if ($dbc != false) {
+        try {
+            $sql = 'UPDATE "rezerwacja" SET usuniety=true
+            WHERE id_rezerwacja=:id_rezerwacja;'; //UPDATE books SET ACTIVE=0 WHERE...
+            $stmt = $dbc->prepare($sql);
+            $stmt->bindValue(':id_rezerwacja', $id_rezerwacja);
+            var_dump($sql);
+            if ($stmt->execute() == false) {
+                showDebugMessage("UPDATE rezerwacja execute returned false: ");
+                $success = false;
+            } else {
+                $success = true;
+            }
+            $dbc = null;
+        } catch (PDOException $e) {
+            showDebugMessage("can not DELETE a book a book from db. DB query error: " . $e->getMessage());
+            return false;
+        }
+    }
+
     return $success;
 }
 
@@ -841,7 +869,7 @@ function bookABook($bookId, $userId)
  *pobieranie listy uzytkownikow
  *@return false/string typ użytkownika.
  */
-function getBorrowedBooks($id_czytelnik =null)
+function getBorrowedBooks($id_czytelnik = null)
 {
     $dbc = getdbconnector();
     $books = false;
@@ -857,15 +885,13 @@ function getBorrowedBooks($id_czytelnik =null)
             LEFT JOIN czytelnicy
             ON wypozyczenia.id_czytelnik=czytelnicy.id_czytelnik 
             WHERE ';
-            if($id_czytelnik!=null)
-            {
-                $sql.=" wypozyczenia.id_czytelnik=:id_czytelnik AND";
+            if ($id_czytelnik != null) {
+                $sql .= " wypozyczenia.id_czytelnik=:id_czytelnik AND";
             }
-            $sql.=' wypozyczenia.data_oddania = NULL
+            $sql .= ' wypozyczenia.data_oddania = NULL
             ORDER BY wypozyczenia.id_wypozyczenie ASC';
             $stmt = $dbc->prepare($sql);
-            if($id_czytelnik!=null)
-            {
+            if ($id_czytelnik != null) {
                 $stmt->bindValue(':id_czytelnik', $id_czytelnik);
             }
 
@@ -890,14 +916,14 @@ function getBorrowedBooks($id_czytelnik =null)
  *pobieranie listy rezerwacji dla wszystkich użytkowników lub jednego
  *@return false/string typ użytkownika.
  */
-function getRezerwacje($id_czytelnik=null,$id_ksiazka=null)
+function getRezerwacje($id_czytelnik = null, $id_ksiazka = null)
 {
     $dbc = getdbconnector();
     $rezerwacje = false;
     if ($dbc != false) {
 
         try {
-            $sql = 'SELECT rezerwacja.id_rezerwacja,ksiazki.id_ksiazka, ksiazki.tytul, czytelnicy.login
+            $sql = 'SELECT rezerwacja.id_rezerwacja,ksiazki.id_ksiazka, rezerwacja.id_czytelnik, ksiazki.tytul, czytelnicy.login
             FROM rezerwacja
             LEFT JOIN ksiazki
             ON rezerwacja.id_ksiazka=ksiazki.id_ksiazka
@@ -905,24 +931,20 @@ function getRezerwacje($id_czytelnik=null,$id_ksiazka=null)
             ON rezerwacja.id_czytelnik=czytelnicy.id_czytelnik 
             WHERE';
 
-            if($id_czytelnik!=null)
-            {
-                $sql.=" rezerwacja.id_czytelnik=:id_czytelnik AND";
+            if ($id_czytelnik != null) {
+                $sql .= " rezerwacja.id_czytelnik=:id_czytelnik AND";
             }
-            $sql.=' rezerwacja.usuniety!=true';
+            $sql .= ' rezerwacja.usuniety!=true';
 
-            if($id_ksiazka!=null)
-            {
-                $sql.=" AND rezerwacja.id_ksiazka=:id_ksiazka ";
+            if ($id_ksiazka != null) {
+                $sql .= " AND rezerwacja.id_ksiazka=:id_ksiazka ";
             }
-            $sql.=' ORDER BY rezerwacja.id_rezerwacja ASC';
+            $sql .= ' ORDER BY rezerwacja.id_rezerwacja ASC';
             $stmt = $dbc->prepare($sql);
-            if($id_czytelnik!=null)
-            {
+            if ($id_czytelnik != null) {
                 $stmt->bindValue(':id_czytelnik', $id_czytelnik);
             }
-            if($id_ksiazka!=null)
-            {
+            if ($id_ksiazka != null) {
                 $stmt->bindValue(':id_ksiazka', $id_ksiazka);
             }
 

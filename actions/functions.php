@@ -70,6 +70,16 @@ function redirectToBookPage($bookId, $message = null, $messageType = null)
     exit();
 }
 
+function redirectToRezerwacjePage($userId, $message = null, $messageType = null)
+{
+    if ($message) {
+        addAlert($message,$messageType);
+    }
+    header("HTTP/1.1 301 Moved Permanently");
+    header("Location: index.php?action=borrowed-books&userId=$userId");
+    exit();
+}
+
 /**
  *przekierowanie do strony logowania z opcjonalna wiadomoscia  z kodem 403
  *@param null|string $message wiadomosc wyswietlana na stronie logowania po przekierowaniu.

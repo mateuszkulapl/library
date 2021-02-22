@@ -105,3 +105,33 @@
 2021-02-21 20:59:52	getRezerwacje execute returned false: 
 2021-02-21 21:01:16	getRezerwacje execute returned false: 
 2021-02-21 21:01:39	getRezerwacje execute returned false: 
+2021-02-22 21:40:33	getAllBooks execute returned false: 
+2021-02-22 21:48:41	getAllBooks execute returned false: 
+2021-02-22 21:53:44	getAllBooks execute returned false: 
+2021-02-22 21:53:55	getAllBooks execute returned false: 
+2021-02-22 22:50:54	getAllUsers execute returned false: 
+2021-02-22 23:51:18	UPDATE rezerwacja execute returned false: 
+2021-02-22 23:51:18	can not cancel a book book
+2021-02-22 23:51:19	getBook execute returned false: 
+2021-02-22 23:51:19	getBookStats execute returned false: 
+2021-02-22 23:51:19	getBookStats execute returned false: 
+2021-02-22 23:51:19	getBookStats execute returned false: 
+2021-02-22 23:51:19	getEgzemplarze execute returned false: 
+2021-02-22 23:53:00	getBook execute returned false: 
+2021-02-22 23:53:00	getBookStats execute returned false: 
+2021-02-22 23:53:00	getBookStats execute returned false: 
+2021-02-22 23:53:00	getBookStats execute returned false: 
+2021-02-22 23:53:01	getEgzemplarze execute returned false: 
+2021-02-22 23:53:04	getBook execute returned false: 
+2021-02-22 23:53:04	getBookStats execute returned false: 
+2021-02-22 23:53:05	getBookStats execute returned false: 
+2021-02-22 23:53:05	getBookStats execute returned false: 
+2021-02-22 23:53:05	getEgzemplarze execute returned false: 
+2021-02-22 23:57:58	UPDATE rezerwacja execute returned false: 
+2021-02-22 23:57:58	can not cancel a book book
+2021-02-23 00:00:48	get user query returned 0 row(s) for user id=1. 
+2021-02-23 00:02:27	getUser execute returned false: 
+2021-02-23 00:03:10	getUser execute returned false: 
+2021-02-23 00:04:43	getUser execute returned false: 
+2021-02-23 00:04:53	get user query returned 0 row(s) for user id=1. 
+2021-02-23 00:07:00	getUser execute returned false: 
