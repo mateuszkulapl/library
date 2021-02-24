@@ -1,14 +1,21 @@
 <?php
 redirectIfNotLoggedIn();
 
-require_once(_ROOT_PATH . DIRECTORY_SEPARATOR . 'Connectors' . DIRECTORY_SEPARATOR . 'BooksConnector.php');
+$bookDetails = null;
+$bookStats = null;
+$bookEgzemplarze = null;
+$bookRezerwacje = null;
+$bookId = null;
+if (isset($_GET['bookId'])) {
+    $bookId = $_GET['bookId'];
+    if($bookId>0)
+    {
+    $bookDetails = getBook($bookId);
+    $bookStats = getBookStats($bookId);
 
-$figureImageSrc = uploadDir . 'default.jpg';
-$figureFigcaption = 'Brak pliku graficznego';
-
-$books=getBooks();
-
-
-
+    $bookEgzemplarze = getEgzemplarze($bookId);
+    $bookRezerwacje = getRezerwacje(null, $bookId);
+    }
+}
 $message = getMessage();
 $messageType = getMessageType();

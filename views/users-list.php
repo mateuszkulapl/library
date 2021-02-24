@@ -23,11 +23,10 @@
                 <table id="list" class="full-width simple-border th-small-pd">
                     <thead class="invert">
                         <th>Lp</th>
-                        <th>Imię</th>
-                        <th>Nazwisko</th>
                         <th>Login</th>
-                        <th>Wiek</th>
-                        <th>Uprawnienia</th>
+                        <th>E-mail</th>
+                        <th>Telefon</th>
+                        <th>Data urodzenia</th>
                         <th>Akcja</th>
                     </thead>
                     <tbody>
@@ -37,14 +36,15 @@
                         ?>
                             <tr>
                                 <td><?php echo ++$index; ?></td>
-                                <td><?php echo $user['name'] ?></td>
-                                <td><?php echo $user['surname'] ?></td>
                                 <td><?php echo $user['login'] ?></td>
-                                <td><?php echo $user['age'] ?></td>
-                                <td><?php echo translateUserType($user['type']); ?></td>
-                                <td><a href="?action=user-edit&userId=<?php echo $user['id'];?>">Edytuj</a>
-                                    <a href="?action=user-delete&userId=<?php echo $user['id'];?>">Usuń</a>
-                                   <?php if ($user['type']=="reader"){?><a href="?action=borrowed-books&userId=<?php echo $user['id'];?>">Pożyczone (<?php echo $user['numOfBorrowedByUser'];?>)</a><?php }?></td>
+                                <td><?php echo $user['email'] ?></td>
+                                <td><?php echo $user['telefon'] ?></td>
+                                <td><?php echo $user['data_urodzenia'] ?></td>
+                                <td>
+                                    <a class="button" href="?action=user-edit&userId=<?php echo $user['id_czytelnik']; ?>">Edytuj</a>
+                                    <a class="button" href="?action=user-delete&userId=<?php echo $user['id_czytelnik']; ?>">Usuń</a>
+                                    <a class="button" href="?action=borrowed-books&userId=<?php echo $user['id_czytelnik']; ?>">Pożyczone</a>
+                                </td>
                             </tr>
                         <?php
                         } ?>

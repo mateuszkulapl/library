@@ -1,6 +1,51 @@
 <?php
 
 /**
+ * Dodaje alert do tabeli z alertami
+ *
+ * @param string $wiadomosć wyświetlana
+ * @param string $type rodzaj wiadomości (info/warning/success/error)
+ * @param boolean $showOnlyInDebugMode wiadomosc zostanie wyświetlona tylko w trybie debugowania
+ * @param boolean $backtrace
+ * @return void
+ */
+function addAlert($message, $type = "info", $showOnlyInDebugMode = false, $backtrace = null)
+{
+    require_once _ROOT_PATH . DIRECTORY_SEPARATOR . 'class'.DIRECTORY_SEPARATOR . 'Alert.php';
+    $newAlert = new Alert($message, $type, $showOnlyInDebugMode, $backtrace);
+    if (isset($_SESSION['alerts']))
+        $alerts = unserialize($_SESSION['alerts']);
+    else
+        $alerts = [];
+    array_push($alerts, $newAlert);
+    $_SESSION['alerts'] = serialize($alerts);
+}
+
+function renderAlerts()
+{
+    if (isset($_SESSION['alerts'])) {
+        require_once _ROOT_PATH . DIRECTORY_SEPARATOR . 'class'.DIRECTORY_SEPARATOR . 'Alert.php';
+        $alerts = unserialize($_SESSION['alerts']);
+        if (count($alerts) > 0) {
+?>
+            <div id="alerts">
+                <?php
+                foreach ($alerts as $index => $alert) {
+                    $alert->render($index);
+                }
+                ?>
+            </div>
+            <script>
+                addAllertCloseButtonListener();
+            </script>
+<?php
+        }
+        unset($_SESSION['alerts']);
+    }
+}
+
+
+/**
  *przekierowanie do strony logowania z opcjonalna wiadomoscia.
  *@param null|string $message wiadomosc wyswietlana na stronie logowania po przekierowaniu.
  *@param null|string $messageType typ wiadomosci powodujacy okreslony kolor (warning/alert/ok)
@@ -8,13 +53,30 @@
 function redirectToLoginPage($message = null, $messageType = null)
 {
     if ($message) {
-        $_SESSION['message'] = $message;
-        if ($messageType)
-            $_SESSION['messageType'] = $messageType;
-        session_write_close();
+        addAlert($message,$messageType);
     }
     header("HTTP/1.1 301 Moved Permanently");
     header("Location: index.php?action=login");
+    exit();
+}
+
+function redirectToBookPage($bookId, $message = null, $messageType = null)
+{
+    if ($message) {
+        addAlert($message,$messageType);
+    }
+    header("HTTP/1.1 301 Moved Permanently");
+    header("Location: index.php?action=book&bookId=$bookId");
+    exit();
+}
+
+function redirectToRezerwacjePage($userId, $message = null, $messageType = null)
+{
+    if ($message) {
+        addAlert($message,$messageType);
+    }
+    header("HTTP/1.1 301 Moved Permanently");
+    header("Location: index.php?action=borrowed-books&userId=$userId");
     exit();
 }
 
@@ -26,13 +88,9 @@ function redirectToLoginPage($message = null, $messageType = null)
 function redirectToHomePage403($message = null, $messageType = null)
 {
     if ($message) {
-        $_SESSION['message'] = $message;
-        if ($messageType)
-            $_SESSION['messageType'] = $messageType;
-        session_write_close();
+        addAlert($message,$messageType);
     } else {
-        $_SESSION['message'] = "Nie masz uprawnień do tej strony.";
-        $_SESSION['messageType'] = "error";
+        addAlert("Nie masz uprawnień do tej strony.","error");
     }
     header("HTTP/1.1 403 Forbidden");
     header("Location: index.php?action=home");
@@ -51,8 +109,9 @@ function getAllowedSites()
     if (isset($_SESSION['type'])) {
         if ($_SESSION['type'] == "admin") {
 
-
             array_push($allowedPages, array('page' => 'home', 'name' => 'Strona główna'));
+            // array_push($allowedPages, array('page' => 'books-list', 'name' => 'Lista książek'));
+            // array_push($allowedPages, array('page' => 'book-add', 'name' => 'Dodaj książkę'));
             array_push($allowedPages, array('page' => 'add-author', 'name' => 'Dodaj Autora'));
             array_push($allowedPages, array('page' => 'author-list', 'name' => 'Lista Autorów'));
             array_push($allowedPages, array('page' => 'publishinghouse-list', 'name' => 'Lista Wydawnictw'));
@@ -63,11 +122,10 @@ function getAllowedSites()
             array_push($allowedPages, array('page' => 'book-add', 'name' => 'Dodaj książkę'));
             array_push($allowedPages, array('page' => 'users-list', 'name' => 'Lista użytkowników'));
             array_push($allowedPages, array('page' => 'user-add', 'name' => 'Dodaj użytkownika'));
-
         } else {
             if ($_SESSION['type'] == "reader") {
                 array_push($allowedPages, array('page' => 'books-list', 'name' => 'Zobacz książki'));
-                array_push($allowedPages, array('page' => 'borrowed-books', 'name' => 'Wypożyczone książki'));
+                array_push($allowedPages, array('page' => 'borrowed-books', 'name' => 'Twoje książki'));
             }
         }
     }
@@ -103,52 +161,12 @@ function appendToSessionVariable($name, $text)
 function redirectToHomePage($message = null, $messageType = null)
 {
     if ($message) {
-        $_SESSION['message'] = $message;
-        if ($messageType)
-            $_SESSION['messageType'] = $messageType;
-        session_write_close();
+        addAlert($message,$messageType);
     }
     header("HTTP/1.1 301 Moved Permanently");
     header("Location: index.php?action=home");
     exit();
 }
-
-/**
- *przekierowanie do strony z lista uzytkownikow z opcjonalna wiadomoscia.
- *@param null|string $message wiadomosc wyswietlana na stronie logowania po przekierowaniu.
- *@param null|string $messageType typ wiadomosci powodujacy okreslony kolor (warning/alert/ok).
- */
-function redirectToUsersList($message = null, $messageType = null)
-{
-    if ($message) {
-        $_SESSION['message'] = $message;
-        if ($messageType)
-            $_SESSION['messageType'] = $messageType;
-        session_write_close();
-    }
-    header("HTTP/1.1 404 Not Found");
-    header("Location: index.php?action=users-list");
-    exit();
-}
-
-/**
- *przekierowanie do strony z lista ksiazek z opcjonalna wiadomoscia.
- *@param null|string $message wiadomosc wyswietlana na stronie logowania po przekierowaniu.
- *@param null|string $messageType typ wiadomosci powodujacy okreslony kolor (warning/alert/ok).
- */
-function redirectToBooksList($message = null, $messageType = null)
-{
-    if ($message) {
-        $_SESSION['message'] = $message;
-        if ($messageType)
-            $_SESSION['messageType'] = $messageType;
-        session_write_close();
-    }
-    header("HTTP/1.1 404 Not Found");
-    header("Location: index.php?action=books-list");
-    exit();
-}
-
 function redirectToGenreList($message = null, $messageType = null)
 {
     if ($message) {
@@ -188,6 +206,37 @@ function redirectToPublishingHouseList($message = null, $messageType = null)
     exit();
 }
 
+/**
+ *przekierowanie do strony z lista uzytkownikow z opcjonalna wiadomoscia.
+ *@param null|string $message wiadomosc wyswietlana na stronie logowania po przekierowaniu.
+ *@param null|string $messageType typ wiadomosci powodujacy okreslony kolor (warning/alert/ok).
+ */
+function redirectToUsersList($message = null, $messageType = null)
+{
+    if ($message) {
+        addAlert($message,$messageType);
+    }
+    header("HTTP/1.1 404 Not Found");
+    header("Location: index.php?action=users-list");
+    exit();
+}
+
+/**
+ *przekierowanie do strony z lista ksiazek z opcjonalna wiadomoscia.
+ *@param null|string $message wiadomosc wyswietlana na stronie logowania po przekierowaniu.
+ *@param null|string $messageType typ wiadomosci powodujacy okreslony kolor (warning/alert/ok).
+ */
+function redirectToBooksList($message = null, $messageType = null)
+{
+    if ($message) {
+        addAlert($message,$messageType);
+    }
+    header("HTTP/1.1 404 Not Found");
+    header("Location: index.php?action=books-list");
+    exit();
+}
+
+
 
 /**
  *przekierowanie do strony z lista wypozyczonych ksiazek z opcjonalna wiadomoscia.
@@ -197,10 +246,7 @@ function redirectToPublishingHouseList($message = null, $messageType = null)
 function redirectToBorrowedBooksList($message = null, $messageType = null)
 {
     if ($message) {
-        $_SESSION['message'] = $message;
-        if ($messageType)
-            $_SESSION['messageType'] = $messageType;
-        session_write_close();
+        addAlert($message,$messageType);
     }
     header("HTTP/1.1 404 Not Found");
     header("Location: index.php?action=borrowed-books");

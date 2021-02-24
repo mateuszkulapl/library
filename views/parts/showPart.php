@@ -22,8 +22,21 @@ function showHead($title = null, $description = null, $robots = "index")
 
         <meta name="robots" content="<?php echo $robots; ?>" />
         <link rel="stylesheet" href="./views/styles/style.css">
+        <script>
+            function addAllertCloseButtonListener() {
+                var closeButtons = document
+                    .getElementById("alerts")
+                    .getElementsByClassName("close");
+                for (var i = 0; i < closeButtons.length; i++) {
+                    closeButtons[i].addEventListener("click", function() {
+                        this.parentElement.classList.add("closed");
+                    });
+                }
+            }
+        </script>
     </head>
     <?php
+
 }
 /**
  *wyswietla header, jeśli co najmniej jeden parametr nie jest równy null
@@ -41,12 +54,15 @@ function showHeader($heading = null, $subHeading = null)
         </header>
     <?php
     }
+    renderAlerts();
 }
 
-function showButton($page,$active)
+function showButton($page, $active)
 {
     ?>
-    <a href="index.php?action=<?php echo$page['page'];?>" <?php if($active==$page['page']){echo "class=\"active\"";}?>><?php echo $page['name'];?></a>
+    <a href="index.php?action=<?php echo $page['page']; ?>" <?php if ($active == $page['page']) {
+                                                                echo "class=\"active\"";
+                                                            } ?>><?php echo $page['name']; ?></a>
     <?php
 }
 
@@ -56,14 +72,13 @@ function showButton($page,$active)
  */
 function showButtons($activePage)
 {
-    $allowedPages=getAllowedSites();
+    $allowedPages = getAllowedSites();
 
     if (sizeof($allowedPages) > 0) {
     ?><nav class="buttons">
             <?php
-            foreach($allowedPages as $page)
-            {
-                showButton($page,$activePage);
+            foreach ($allowedPages as $page) {
+                showButton($page, $activePage);
             }
             ?>
         </nav>

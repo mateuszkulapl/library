@@ -1,3 +1,37 @@
+Skip to content
+Search or jump to…
+
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@StanislavvS 
+Learn Git and GitHub without any code!
+Using the Hello World guide, you’ll start a branch, write comments, and open a pull request.
+
+
+mateuszkulapl
+/
+library
+1
+00
+Code
+Issues
+Pull requests
+Actions
+Projects
+Wiki
+Security
+Insights
+library/private/debug.log
+@StanislavvS
+StanislavvS Create repo
+Latest commit 62231f6 3 hours ago
+ History
+ 1 contributor
+84 lines (81 sloc)  4.68 KB
+  
 2021-01-17 13:14:07	can not create pdo connection. PDO create error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it.
 
 2021-01-17 13:24:50	can not create pdo connection. PDO create error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it.
@@ -81,4 +115,5 @@
 &lt;b&gt;Notice&lt;/b&gt;:  Undefined variable: wydwnictwoToEdit in &lt;b&gt;C:\xampp\htdocs\library-kategoria\views\edit-publishinghouse.php&lt;/b&gt; on line &lt;b&gt;23&lt;/b&gt;&lt;br /&gt;
 &lt;br /&gt;
 &lt;b&gt;Notice&lt;/b&gt;:  Trying to access array offset on value of type null in &lt;b&gt;C:\xampp\htdocs\library-kategoria\views\edit-publishinghouse.php&lt;/b&gt; on line &lt;b&gt;23&lt;/b&gt;&lt;br /&gt;
+
 
