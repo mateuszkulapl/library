@@ -464,40 +464,7 @@ function deletePublishingHouse($publishingHouseId)
  *@param int $userId ud uzytkownika dla ktorego w tabeli zostanie zwrocona liczba wypozyczonych ksiazek
  *@return false/string typ użytkownika.
  */
-function getAllBooks($userId=0)
-{
-    $dbc = getdbconnector();
-    $books = false;
-    if ($dbc != false) {
 
-        try {
-
-            $sql = 'SELECT books.id AS id, title, author, publishingHouse, year, inventory, books.image,
-            COUNT(borrows.id) as numOfBorrowed,
-            inventory-COUNT(borrows.id) as numOfAvailable,
-            (select count(*) from borrows where borrows.user_id = :userId AND borrows.book_id=books.id) as numOfBorrowedByUser
-            FROM books
-            LEFT JOIN BORROWS
-            ON BOOKS.id=borrows.book_id
-            GROUP BY books.id ORDER BY title ASC, year DESC';
-           
-
-            $stmt = $dbc->prepare($sql);
-            $stmt->bindValue(':userId', $userId);
-            if ($stmt->execute() == false) {
-                showDebugMessage("getAllBooks execute returned false: ");
-                $books = false;
-            } else {
-                $books = $stmt->fetchAll(PDO::FETCH_ASSOC); //pusta tablica, jesli nie ma uzytkownikow
-            }
-            $dbc = null;
-        } catch (PDOException $e) {
-            showDebugMessage("can not get all books from db. DB query error: " . $e->getMessage());
-            return false;
-        }
-    }
-    return $books;
-}
 
 
 function getAllGenres()

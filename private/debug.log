@@ -117,3 +117,4 @@ Latest commit 62231f6 3 hours ago
 &lt;b&gt;Notice&lt;/b&gt;:  Trying to access array offset on value of type null in &lt;b&gt;C:\xampp\htdocs\library-kategoria\views\edit-publishinghouse.php&lt;/b&gt; on line &lt;b&gt;23&lt;/b&gt;&lt;br /&gt;
 
 
+2021-02-24 23:45:10	getAllBooks execute returned false: 
