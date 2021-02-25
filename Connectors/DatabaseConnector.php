@@ -1305,33 +1305,7 @@ function insertAuthor($imie, $nazwisko) {
         return $done;
 }
 
-function insertEgzemplarz($bookId, $wycofany)
-{
-    $done = false;
 
-        $dbc = getdbconnector();
-
-        if ($dbc != false) {
-            try {
-                $sql = 'INSERT INTO "egzemplarz" ( "id_ksiazka", "wycofany") VALUES ( :bookId, :wycofany);'; 
-                $stmt = $dbc->prepare($sql);
-                $stmt->bindValue(':bookId', $bookId);
-                $stmt->bindValue(':wycofany', $wycofany,PDO::PARAM_BOOL);
-                if ($stmt->execute() == false) {
-                  
-                    showDebugMessage("INSERT INTO egzemplarz execute returned false: ");
-                    $done = false;
-                } else {
-                    $done = true;
-                }
-                $dbc = null;
-            } catch (PDOException $e) {
-                showDebugMessage("can not INSERT INTO egzemplarz. DB query error: " . $e->getMessage());
-                return false;
-            }
-        }
-    return $done;
-}
 function getHighestBookId() {
     $dbc = getdbconnector();
     $done = false;
