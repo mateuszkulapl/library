@@ -24,14 +24,13 @@
                     <input type="text" pattern="(\d{9})|(\+\d{11}$)" name="telefon" id="telefon" value="<?php echo $userToEdit['telefon']; ?>" required autocomplete="off">
                 </label><br>
                 <label>Hasło (uzupełnij, jeśli chcesz zmienić)<br>
-                    <input type="password" pattern="()|(^.{4,30}$)" maxlength="30" name="password"  title="Hasło od 4 do 30 znaków" id="password" autocomplete="new-password">
+                    <input type="password" pattern="()|(^.{4,30}$)" maxlength="30" name="password" title="Hasło od 4 do 30 znaków" id="password" autocomplete="new-password">
                 </label><br>
                 <label>Data urodzenia<br>
                     <input type="date" name="data_urodzenia" id="data_urodzenia" value="<?php echo $userToEdit['data_urodzenia']; ?>" required autocomplete="off">
                 </label><br>
                 <script type="text/javascript">
                     data_urodzenia.max = new Date().toISOString().split("T")[0];
-                    
                 </script>
                 <input type="hidden" name="userId" value="<?php echo $userToEdit['id_czytelnik']; ?>">
                 <input type="submit" value="Zapisz użytkownika">`

@@ -56,7 +56,7 @@ if (isset($_POST['id_autor'])) {
     if (isset($_GET['id_autor'])) {
         $authorToEdit = getAuthor($_GET['id_autor']);
         if ($authorToEdit == false) {
-            redirectToAutorList('Nie znaleziono autora', 'warning');
+            redirectToAutorList('Nie znaleziono autora', 'warning');//todo"
             exit();
         }
     } else {

@@ -16,8 +16,8 @@ function uploadFile($maxUploadSize = 1024 * 1024, $fileTitle, $allowedExtensions
             $nazwa_pliku = $_FILES['plik']['name'];
             $tymczasowa_nazwa_pliku = $_FILES['plik']['tmp_name'];
             $extension = getFileExtension($nazwa_pliku);
-            $miejsce_docelowe = uploadDir . $fileTitle.'.'.$extension;
-            if(file_exists($miejsce_docelowe)) {
+            $miejsce_docelowe = uploadDir . $fileTitle . '.' . $extension;
+            if (file_exists($miejsce_docelowe)) {
                 unlink($miejsce_docelowe);
             }
             if (in_array($extension, $allowedExtensions)) {
@@ -49,11 +49,11 @@ function editBook()
     $error = 0;
 
     if (isset($_POST['bookId']))
-    $id = htmlentities($_POST["bookId"], ENT_QUOTES, 'UTF-8');
-else {
-    $error += 1;
-    appendToSessionVariable('message', 'Wystapił błąd.<br>');
-}
+        $id = htmlentities($_POST["bookId"], ENT_QUOTES, 'UTF-8');
+    else {
+        $error += 1;
+        appendToSessionVariable('message', 'Wystapił błąd.<br>');
+    }
 
 
     if (isset($_POST['title']))
@@ -91,15 +91,15 @@ else {
         appendToSessionVariable('message', 'Nieprawidłowa liczba. <br>');
     }
     if ($error > 0) {
-        
+
         $_SESSION['messageType'] = "warning";
         return false;
     } else {
-        $uploadedFile = uploadFile(2 * 1024 * 1024,$_POST['title']);
+        $uploadedFile = uploadFile(2 * 1024 * 1024, $_POST['title']);
         if ($uploadedFile != null) {
-            $edited=updateBook($id, $title, $author, $publishingHouse, $year, $inventory, $uploadedFile, true);
+            $edited = updateBook($id, $title, $author, $publishingHouse, $year, $inventory, $uploadedFile, true);
         } else {
-            $edited=updateBook($id, $title, $author, $publishingHouse, $year, $inventory, null, false);
+            $edited = updateBook($id, $title, $author, $publishingHouse, $year, $inventory, null, false);
         }
     }
     return $edited;

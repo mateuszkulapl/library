@@ -11,7 +11,7 @@
  */
 function addAlert($message, $type = "info", $showOnlyInDebugMode = false, $backtrace = null)
 {
-    require_once _ROOT_PATH . DIRECTORY_SEPARATOR . 'class'.DIRECTORY_SEPARATOR . 'Alert.php';
+    require_once _ROOT_PATH . DIRECTORY_SEPARATOR . 'class' . DIRECTORY_SEPARATOR . 'Alert.php';
     $newAlert = new Alert($message, $type, $showOnlyInDebugMode, $backtrace);
     if (isset($_SESSION['alerts']))
         $alerts = unserialize($_SESSION['alerts']);
@@ -24,7 +24,7 @@ function addAlert($message, $type = "info", $showOnlyInDebugMode = false, $backt
 function renderAlerts()
 {
     if (isset($_SESSION['alerts'])) {
-        require_once _ROOT_PATH . DIRECTORY_SEPARATOR . 'class'.DIRECTORY_SEPARATOR . 'Alert.php';
+        require_once _ROOT_PATH . DIRECTORY_SEPARATOR . 'class' . DIRECTORY_SEPARATOR . 'Alert.php';
         $alerts = unserialize($_SESSION['alerts']);
         if (count($alerts) > 0) {
 ?>
@@ -53,7 +53,7 @@ function renderAlerts()
 function redirectToLoginPage($message = null, $messageType = null)
 {
     if ($message) {
-        addAlert($message,$messageType);
+        addAlert($message, $messageType);
     }
     header("HTTP/1.1 301 Moved Permanently");
     header("Location: index.php?action=login");
@@ -63,7 +63,7 @@ function redirectToLoginPage($message = null, $messageType = null)
 function redirectToBookPage($bookId, $message = null, $messageType = null)
 {
     if ($message) {
-        addAlert($message,$messageType);
+        addAlert($message, $messageType);
     }
     header("HTTP/1.1 301 Moved Permanently");
     header("Location: index.php?action=book&bookId=$bookId");
@@ -73,7 +73,7 @@ function redirectToBookPage($bookId, $message = null, $messageType = null)
 function redirectToRezerwacjePage($userId, $message = null, $messageType = null)
 {
     if ($message) {
-        addAlert($message,$messageType);
+        addAlert($message, $messageType);
     }
     header("HTTP/1.1 301 Moved Permanently");
     header("Location: index.php?action=borrowed-books&userId=$userId");
@@ -88,9 +88,9 @@ function redirectToRezerwacjePage($userId, $message = null, $messageType = null)
 function redirectToHomePage403($message = null, $messageType = null)
 {
     if ($message) {
-        addAlert($message,$messageType);
+        addAlert($message, $messageType);
     } else {
-        addAlert("Nie masz uprawnień do tej strony.","error");
+        addAlert("Nie masz uprawnień do tej strony.", "error");
     }
     header("HTTP/1.1 403 Forbidden");
     header("Location: index.php?action=home");
@@ -161,7 +161,7 @@ function appendToSessionVariable($name, $text)
 function redirectToHomePage($message = null, $messageType = null)
 {
     if ($message) {
-        addAlert($message,$messageType);
+        addAlert($message, $messageType);
     }
     header("HTTP/1.1 301 Moved Permanently");
     header("Location: index.php?action=home");
@@ -176,7 +176,7 @@ function redirectToHomePage($message = null, $messageType = null)
 function redirectToUsersList($message = null, $messageType = null)
 {
     if ($message) {
-        addAlert($message,$messageType);
+        addAlert($message, $messageType);
     }
     header("HTTP/1.1 404 Not Found");
     header("Location: index.php?action=users-list");
@@ -191,7 +191,7 @@ function redirectToUsersList($message = null, $messageType = null)
 function redirectToBooksList($message = null, $messageType = null)
 {
     if ($message) {
-        addAlert($message,$messageType);
+        addAlert($message, $messageType);
     }
     header("HTTP/1.1 404 Not Found");
     header("Location: index.php?action=books-list");
@@ -206,7 +206,7 @@ function redirectToBooksList($message = null, $messageType = null)
 function redirectToBorrowedBooksList($message = null, $messageType = null)
 {
     if ($message) {
-        addAlert($message,$messageType);
+        addAlert($message, $messageType);
     }
     header("HTTP/1.1 404 Not Found");
     header("Location: index.php?action=borrowed-books");

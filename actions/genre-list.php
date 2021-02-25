@@ -10,7 +10,3 @@ if(isset($_SESSION['type']) && $_SESSION['type'] =="reader")
 $isReader=true;
 $message = getMessage();
 $messageType = getMessageType();
-
-
-
-?>

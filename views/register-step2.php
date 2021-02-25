@@ -12,6 +12,7 @@
 
 
         <form id="form-register-step2" action="index.php?action=register-step3" method="POST" onsubmit="return validate();">
+            <input type="hidden" name="registerName" value=<?php echo $registerName; ?>>
             <label>Hasło<br>
                 <input type="password" minlength="5" data-isvalid="false" maxlength="30" name="password" id="password" required autocomplete="off">
             </label></br>
@@ -19,7 +20,7 @@
                 <input type="email" minlength="3" data-isvalid="false" maxlength="100" name="email" id="email" required>
             </label></br>
             <label>Telefon<br>
-                <input type="phone" data-isvalid="false" name="phone" id="phone" require>
+                <input type="phone" data-isvalid="false" name="phone" id="phone" required>
             </label></br>
             <label>Data urodzenia<br>
                 <input type="date" name="data_urodzenia" data-isvalid="false" id="data_urodzenia" required autocomplete="off">

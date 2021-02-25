@@ -24,12 +24,11 @@
            
     ?>
         <form action="index.php?action=book-add" method="POST" enctype="multipart/form-data">
-
         <label for ="isbn">Numer isbn <br>
         <input type="text" name="isbn"> <br>
         <label for="title">Tytuł</label> <br>
         <input type="text" name = "title"> <br>
-        <label for="author">Autorz:</label><br>
+        <label for="author">Autorzy:</label><br>
         <?php
 // var_dump($_POST);
     foreach($authorList as $author) {;
@@ -79,8 +78,6 @@ foreach($wydawnictwoList as $wydawnictwo) {;
         <label for="ilosc">Ilosc egzemplarzy</label> <br>
         <input name="ilosc" type="number">
             <br>
-              
-
             <input type="hidden" name="action" value="book-add">
             <input type="submit" value="Dodaj Książke"> 
 

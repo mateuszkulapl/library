@@ -7,7 +7,7 @@ $messageType = getMessageType();
 
 
 if (isset($_GET['id_kategoria'])) {
-    $deleted = deleteGenre($_GET['id_kategoria']);
+    $deleted = deleteGenre($_GET['id_kategoria']);//todo:
     if ($deleted == true)
         redirectToGenreList('Gatunek już nie istenieje', 'ok');
     else {

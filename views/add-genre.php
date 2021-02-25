@@ -14,13 +14,13 @@
 
 
 
-<form action="index.php?action=add-genre" method = "POST" multipart/from-data>
-    <label for="nazwa">Nazwa</label><br>
-    <input type="text" name="nazwa">   
-    <br>
-    <input type ="hidden" name = "action" value ="add-genre">
-    <input type="submit" value="Dodaj Gatunek"> 
-        </form> 
+        <form action="index.php?action=add-genre" method="POST" multipart/from-data>
+            <label for="nazwa">Nazwa</label><br>
+            <input type="text" name="nazwa">
+            <br>
+            <input type="hidden" name="action" value="add-genre">
+            <input type="submit" value="Dodaj Gatunek">
+        </form>
     </div>
 </body>
 

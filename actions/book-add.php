@@ -90,6 +90,7 @@ appendToSessionVariable('message', 'Nieprawidłowy opis. <br>');
         $highId = getHighestBookId();
         for($i = 0; $i < $ilosc; $i++) {
             insertEgzemplarz($highId["id_ksiazki"], false);
+
         }
         
 

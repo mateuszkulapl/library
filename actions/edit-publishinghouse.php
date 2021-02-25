@@ -1,34 +1,33 @@
-?php
+<?php
 redirectIfNotLoggedIn();
 redirectIfNotAdmin();
 
-function editPublishingHouse() {
+function editPublishingHouse()
+{
     $edited = false;
     $error = 0;
 
-    if(isset($_POST['id_wydawnictwo']))
-  {
-      $id = htmlentities($_POST['id_wydawnictwo'], ENT_QUOTES, 'UTF-8');
+    if (isset($_POST['id_wydawnictwo'])) {
+        $id = htmlentities($_POST['id_wydawnictwo'], ENT_QUOTES, 'UTF-8');
+    } else {
+        $error += 1;
+        appendToSessionVariable('message', 'Wystapił błąd. <br>');
+    }
 
-  }  else {
-      $error += 1;
-      appendToSessionVariable('message', 'Wystapił błąd. <br>');
-  }
+    if (isset($_POST['nazwa'])) {
+        $nazwa = htmlentities($_POST["nazwa"], ENT_QUOTES, 'UTF-8');
+    } else {
+        $error += 1;
+        appendToSessionVariable('message', 'Nieprawidłowa nazwa. <br>');
+    }
 
-  if(isset($_POST['nazwa'])) {
-      $nazwa = htmlentities($_POST["nazwa"], ENT_QUOTES, 'UTF-8');
-  }else {
-      $error += 1;
-      appendToSessionVariable('message', 'Nieprawidłowa nazwa. <br>');
-  }
-
-  if($error > 0) {
-      $_SESSION['messageType'] = "warning";
-      return false;
-  }else {
-      $edited = updatePublishingHouse($id, $nazwa);
-  }
-  return $edited;
+    if ($error > 0) {
+        $_SESSION['messageType'] = "warning";
+        return false;
+    } else {
+        $edited = updatePublishingHouse($id, $nazwa);
+    }
+    return $edited;
 }
 
 $message = getMessage();
@@ -54,4 +53,3 @@ if (isset($_POST['id_wydawnictwo'])) {
         exit();
     }
 }
-?>
