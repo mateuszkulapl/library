@@ -701,7 +701,7 @@ function getBookStats($id_ksiazka = 0)
  *@param bool $uploadedFile sciezka okladki
  *@return bool zwraca informacje czy zaktualizowano
  */
-function insertBook($title, $author, $publishingHouse, $year, $inventory, $uploadedFile)
+function insertBook($isbn, $kategoria, $title, $description, $publishingHouse, $year)
 {
 
     $dbc = getdbconnector();
@@ -709,21 +709,19 @@ function insertBook($title, $author, $publishingHouse, $year, $inventory, $uploa
     if ($dbc != false) {
 
         try {
-            $sql = 'INSERT INTO "books" ("title", "author", "publishingHouse", "year", "inventory", "available", "image")
-            VALUES (:title, :author, :publishingHouse, :year, :inventory, :inventory, :uploadedFile);';
+            $sql = 'INSERT INTO ksiazki (isbn, id_kategoria, tytul, opis,  id_wydawnictwa, rok_wydania)
+            VALUES (:isbn, :kategoria, :title, :description, :publishingHouse, :year);';
 
             $stmt = $dbc->prepare($sql);
 
+            $stmt->bindValue(':isbn', $isbn);
+            $stmt->bindValue(':kategoria', $kategoria);
             $stmt->bindValue(':title', $title);
-            $stmt->bindValue(':author', $author);
+            $stmt->bindValue(':description', $description);
             $stmt->bindValue(':publishingHouse', $publishingHouse);
             $stmt->bindValue(':year', $year, PDO::PARAM_INT);
-            $stmt->bindValue(':inventory', $inventory, PDO::PARAM_INT);
 
-            if ($uploadedFile != false)
-                $stmt->bindValue(':uploadedFile', $uploadedFile);
-            else
-                $stmt->bindValue(':uploadedFile', NULL, PDO::PARAM_INT);
+            // var_dump($stmt);
 
             if ($stmt->execute() == false) {
                 showDebugMessage("cannot insert book.");
@@ -1302,13 +1300,14 @@ function insertAuthor($imie, $nazwisko)
 }
 
 
-function getHighestBookId() {
+function getHighestBookId()
+{
 
     $dbc = getdbconnector();
     $done = false;
     if ($dbc != false) {
         try {
-            $sql = "SELECT * FROM ksiazki ORDER BY id_ksiazki DESC LIMIT  1";
+            $sql = "SELECT * FROM ksiazki ORDER BY id_ksiazka DESC LIMIT  1";
             $stmt = $dbc->prepare($sql);
             if ($stmt->execute() == false) {
                 showDebugMessage("getBook execute returned false: ");
@@ -1338,7 +1337,7 @@ function insertAutorKsiazki($id_ksiazka, $id_autor)
 
     if ($dbc != false) {
         try {
-            $sql = 'INSERT INTO autorzyksiazek ( id_ksiazka, id_author) VALUES ( :id_ksiazka, :id_autor);';
+            $sql = 'INSERT INTO autorzyksiazek ( id_ksiazka, id_autor) VALUES ( :id_ksiazka, :id_autor);';
             $stmt = $dbc->prepare($sql);
             $stmt->bindValue(':id_ksiazka', $id_ksiazka);
             $stmt->bindValue(':id_autor', $id_autor);
@@ -1485,6 +1484,31 @@ function deleteBookBorrows($bookId)
             $dbc = null;
         } catch (PDOException $e) {
             showDebugMessage("can not delete book borrows from db. DB query error: " . $e->getMessage());
+            return false;
+        }
+    }
+    return $deleted;
+}
+
+function deleteGenre($genreId)
+{
+    // deleteBookBorrows($bookId);
+    $dbc = getdbconnector();
+    $deleted = false;
+    if ($dbc != false) {
+        try {
+            $sql = 'DELETE FROM kategoria WHERE id_kategoria=:id'; //UPDATE books SET ACTIVE=0 WHERE...
+            $stmt = $dbc->prepare($sql);
+            $stmt->bindValue(':id', $genreId);
+            if ($stmt->execute() == false) {
+                showDebugMessage("deleteGenre execute returned false: ");
+                $deleted = false;
+            } else {
+                $deleted = true;
+            }
+            $dbc = null;
+        } catch (PDOException $e) {
+            showDebugMessage("can not delete book from db. DB query error: " . $e->getMessage());
             return false;
         }
     }

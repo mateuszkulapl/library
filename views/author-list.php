@@ -6,7 +6,7 @@
 <body>
   <?php showHeader("Lista autorów", "Dodaj autora książki"); ?>
   <?php
-  showButtons('genre-list');
+  showButtons('author-list');
   if ($message)
     showMessage($message, $messageType);
   ?>

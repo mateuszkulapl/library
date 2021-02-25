@@ -157,3 +157,18 @@
 2021-02-25 23:45:09	getAllBooks execute returned false: 
 2021-02-26 00:04:21	cannot insert book.
 
+2021-02-26 00:30:08	cannot insert book.
+2021-02-26 00:30:08	getBook execute returned false: 
+2021-02-26 00:30:09	INSERT INTO autorzyksiazek execute returned false: 
+2021-02-26 00:30:09	INSERT INTO autorzyksiazek execute returned false: 
+2021-02-26 00:30:09	INSERT INTO autorzyksiazek execute returned false: 
+2021-02-26 00:33:26	getBook execute returned false: 
+2021-02-26 00:33:27	INSERT INTO autorzyksiazek execute returned false: 
+2021-02-26 00:33:27	INSERT INTO autorzyksiazek execute returned false: 
+2021-02-26 00:33:27	INSERT INTO autorzyksiazek execute returned false: 
+2021-02-26 00:34:20	INSERT INTO autorzyksiazek execute returned false: 
+2021-02-26 00:34:20	INSERT INTO autorzyksiazek execute returned false: 
+2021-02-26 00:34:20	INSERT INTO autorzyksiazek execute returned false: 
+2021-02-26 00:35:12	INSERT INTO autorzyksiazek execute returned false: 
+2021-02-26 00:35:12	INSERT INTO autorzyksiazek execute returned false: 
+2021-02-26 00:35:12	INSERT INTO autorzyksiazek execute returned false: 

@@ -11,6 +11,10 @@
  */
 function addAlert($message, $type = "info", $showOnlyInDebugMode = false, $backtrace = null)
 {
+    if($type=="ok")
+    {
+        $type=="success";
+    }
     require_once _ROOT_PATH . DIRECTORY_SEPARATOR . 'class' . DIRECTORY_SEPARATOR . 'Alert.php';
     $newAlert = new Alert($message, $type, $showOnlyInDebugMode, $backtrace);
     if (isset($_SESSION['alerts']))
