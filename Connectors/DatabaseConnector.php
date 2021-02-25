@@ -799,6 +799,40 @@ function insertBorrow($bookId, $userId)
     return $borrowed;
 }
 
+/**
+ * Wstawianie egzemplarza
+ *
+ * @param int $bookId
+ * @param bool $wycofany
+ * @return bool wykonano
+ */
+function insertEgzemplarz($bookId, $wycofany)
+{
+    $done = false;
+
+        $dbc = getdbconnector();
+
+        if ($dbc != false) {
+            try {
+                $sql = 'INSERT INTO "egzemplarz" ( "id_ksiazka", "wycofany") VALUES ( :bookId, :wycofany);'; 
+                $stmt = $dbc->prepare($sql);
+                $stmt->bindValue(':bookId', $bookId);
+                $stmt->bindValue(':wycofany', $wycofany,PDO::PARAM_BOOL);
+                if ($stmt->execute() == false) {
+                    var_dump($stmt);
+                    showDebugMessage("INSERT INTO egzemplarz execute returned false: ");
+                    $done = false;
+                } else {
+                    $done = true;
+                }
+                $dbc = null;
+            } catch (PDOException $e) {
+                showDebugMessage("can not INSERT INTO egzemplarz. DB query error: " . $e->getMessage());
+                return false;
+            }
+        }
+    return $done;
+}
 
 
 /**

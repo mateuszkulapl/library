@@ -135,3 +135,16 @@
 2021-02-23 00:04:43	getUser execute returned false: 
 2021-02-23 00:04:53	get user query returned 0 row(s) for user id=1. 
 2021-02-23 00:07:00	getUser execute returned false: 
+2021-02-25 17:59:04	INSERT INTO egzemplarz execute returned false: 
+2021-02-25 18:00:07	INSERT INTO egzemplarz execute returned false: 
+2021-02-25 18:01:31	INSERT INTO egzemplarz execute returned false: 
+2021-02-25 18:03:30	INSERT INTO egzemplarz execute returned false: 
+2021-02-25 18:03:36	INSERT INTO egzemplarz execute returned false: 
+2021-02-25 18:05:45	INSERT INTO egzemplarz execute returned false: 
+2021-02-25 18:05:49	INSERT INTO egzemplarz execute returned false: 
+2021-02-25 18:07:29	INSERT INTO egzemplarz execute returned false: 
+2021-02-25 18:07:42	INSERT INTO egzemplarz execute returned false: 
+2021-02-25 18:09:03	INSERT INTO egzemplarz execute returned false: 
+2021-02-25 18:10:39	INSERT INTO egzemplarz execute returned false: 
+2021-02-25 18:12:03	INSERT INTO egzemplarz execute returned false: 
+2021-02-25 18:12:41	INSERT INTO egzemplarz execute returned false: 

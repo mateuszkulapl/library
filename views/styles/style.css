@@ -450,4 +450,8 @@ input[data-isvalid="true"] {
           box-shadow: 0 0 9px 4px #fff;
   margin: 4px 0px;
 }
+
+input {
+  outline: none;
+}
 /*# sourceMappingURL=style.css.map */

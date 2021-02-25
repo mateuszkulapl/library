@@ -2,7 +2,8 @@
 <?php ?>
 <html lang="pl">
 <?php showHead("Zaloguj", "zaloguj się na konto"); ?>
-
+<?php 
+?>
 <body>
     <?php showHeader("Zaloguj się", "Zaloguj się na swoje konto, aby uzyskać dostęp do aplikacji</br>lub utwórz nowe konto"); ?>
     <?php
