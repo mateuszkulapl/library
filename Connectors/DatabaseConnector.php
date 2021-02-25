@@ -407,6 +407,128 @@ function deleteBook($bookId)
     return $deleted;
 }
 
+function deleteAuthor($authorId)
+{
+    // deleteBookBorrows($bookId);
+    $dbc = getdbconnector();
+    $deleted = false;
+    if ($dbc != false) {
+        try {
+            $sql = 'DELETE FROM autorzy WHERE id_autor=:id'; //UPDATE books SET ACTIVE=0 WHERE...
+            $stmt = $dbc->prepare($sql);
+            $stmt->bindValue(':id', $authorId);
+            if ($stmt->execute() == false) {
+                showDebugMessage("deleteAuthor execute returned false: ");
+                $deleted = false;
+            } else {
+                $deleted = true;
+            }
+            $dbc = null;
+        } catch (PDOException $e) {
+            showDebugMessage("can not delete author from db. DB query error: " . $e->getMessage());
+            return false;
+        }
+    }
+    return $deleted;
+}
+
+function deletePublishingHouse($publishingHouseId)
+{
+    // deleteBookBorrows($bookId);
+    $dbc = getdbconnector();
+    $deleted = false;
+    if ($dbc != false) {
+        try {
+            $sql = 'DELETE FROM wydawnictwo WHERE id_wydawnictwo=:id'; //UPDATE books SET ACTIVE=0 WHERE...
+            $stmt = $dbc->prepare($sql);
+            $stmt->bindValue(':id',$publishingHouseId);
+            if ($stmt->execute() == false) {
+                showDebugMessage("delete PublishingHouse execute returned false: ");
+                $deleted = false;
+            } else {
+                $deleted = true;
+            }
+            $dbc = null;
+        } catch (PDOException $e) {
+            showDebugMessage("can not delete publishinghouse from db. DB query error: " . $e->getMessage());
+            return false;
+        }
+    }
+    return $deleted;
+}
+
+function getAllGenres()
+{
+    $dbc = getdbconnector();
+    $genres = false;
+    if($dbc != false) {
+            try {
+                $sql = 'SELECT * FROM kategoria ORDER BY nazwa';
+                $stmt = $dbc->prepare($sql);
+                if($stmt->execute()==false) {
+                    showDebugMessage("getAllGenres execute returned false: ");
+                    $genres = false;
+                } else {
+                    $genres = $stmt -> fetchAll(PDO::FETCH_ASSOC);
+                }
+                $dbc = null;
+            }catch (PDOException $e) {
+                showDebugMessage("can not get all genres from Db:". $e->getMessage());
+                return false;
+            }
+    }
+
+    return $genres;
+}
+
+function getAllPublishingHouses()
+{
+    $dbc = getdbconnector();
+    $genres = false;
+    if($dbc != false) {
+            try {
+                $sql = 'SELECT * FROM wydawnictwo ORDER BY nazwa';
+                $stmt = $dbc->prepare($sql);
+                if($stmt->execute()==false) {
+                    showDebugMessage("getAllPublishingHouses execute returned false: ");
+                    $genres = false;
+                } else {
+                    $genres = $stmt -> fetchAll(PDO::FETCH_ASSOC);
+                }
+                $dbc = null;
+            }catch (PDOException $e) {
+                showDebugMessage("can not get all publishingHouses from Db:". $e->getMessage());
+                return false;
+            }
+    }
+
+    return $genres;
+}
+
+function getAllAuthors()
+{
+    $dbc = getdbconnector();
+    $authors = false;
+    if($dbc != false) {
+            try {
+                $sql = 'SELECT * FROM autorzy ORDER BY nazwisko';
+                $stmt = $dbc->prepare($sql);
+                if($stmt->execute()==false) {
+                    showDebugMessage("getAllGenres execute returned false: ");
+                    $authors = false;
+                } else {
+                    $authors = $stmt -> fetchAll(PDO::FETCH_ASSOC);
+                }
+                $dbc = null;
+            }catch (PDOException $e) {
+                showDebugMessage("can not get all authors from Db:". $e->getMessage());
+                return false;
+            }
+    }
+
+    return $authors;
+}
+
 
 /**
  *pobieranie listy ksiazek
@@ -686,7 +808,83 @@ function updateBook($id, $title, $author, $publishingHouse, $year, $inventory, $
     }
     return $done;
 }
+function updateGenre($id, $nazwa) {
 
+    $dbc = getdbconnector();
+    $done = false;
+    if($dbc != false) {
+        try {
+            $sql = 'UPDATE kategoria SET nazwa = :nazwa WHERE id_kategoria = :id';
+            $stmt = $dbc -> prepare($sql);
+            $stmt-> bindValue(':id', $id);
+            $stmt -> bindValue(':nazwa', $nazwa);
+            if ($stmt->execute() == false) {
+                showDebugMessage("cannot update genre id: " . $id);
+            } else {
+                $done = true;
+            }
+        } catch (PDOException $e) {
+            showDebugMessage("can not update book. DB query error: " . $e->getMessage());
+        }
+        $dbc = null;
+        
+    }
+return $done;
+    
+}
+
+
+function updatePublishingHouse($id, $nazwa) {
+
+    $dbc = getdbconnector();
+    $done = false;
+    if($dbc != false) {
+        try {
+            $sql = 'UPDATE wydawnictwo SET nazwa = :nazwa WHERE id_wydawnictwo = :id';
+            $stmt = $dbc -> prepare($sql);
+            $stmt-> bindValue(':id', $id);
+            $stmt -> bindValue(':nazwa', $nazwa);
+            if ($stmt->execute() == false) {
+                showDebugMessage("cannot update publishinghouse id: " . $id);
+            } else {
+                $done = true;
+            }
+        } catch (PDOException $e) {
+            showDebugMessage("can not update publishinghouse. DB query error: " . $e->getMessage());
+        }
+        $dbc = null;
+        
+    }
+return $done;
+    
+}
+
+function updateAuthor($id, $imie, $nazwisko) {
+
+    $dbc = getdbconnector();
+    $done = false;
+    if($dbc != false) {
+        try {
+            $sql = 'UPDATE autorzy SET imie = :imie, nazwisko = :nazwisko WHERE id_autor = :id';
+            $stmt = $dbc -> prepare($sql);
+            $stmt-> bindValue(':id', $id);
+            $stmt -> bindValue(':imie', $imie);
+            $stmt -> bindValue(':nazwisko', $nazwisko);
+            if ($stmt->execute() == false) {
+                showDebugMessage("cannot update author id: " . $id);
+            } else {
+                $done = true;
+            }
+        } catch (PDOException $e) {
+            showDebugMessage("can not update author. DB query error: " . $e->getMessage());
+        }
+        $dbc = null;
+        
+    }
+   
+return $done;
+    
+}
 /**
  *pobieranie wszystkich danych ksiazki
  *@return false/string false jesli nie znaleziono/ user
@@ -727,7 +925,95 @@ function getBook($bookId)
     }
     return $bookDetails;
 }
+function getGenre($genreId)
+{
+    $dbc = getdbconnector();
+    $user = false;
+    if ($dbc != false) {
+        try {
+            $sql = 'SELECT * FROM kategoria WHERE id_kategoria=:id';
 
+            $stmt = $dbc->prepare($sql);
+            $stmt->bindValue(':id', $genreId);
+            if ($stmt->execute() == false) {
+                showDebugMessage("getGenre execute returned false: ");
+                $user = false;
+            } else {
+                $rowCount = $stmt->rowCount();
+                if ($rowCount == 1)
+                    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+                else {
+                    showDebugMessage('getGenre query returned ' . $rowCount . ' row(s) for book id=' . $bookId . '. ');
+                }
+            }
+            $dbc = null;
+        } catch (PDOException $e) {
+            showDebugMessage("can not getGenre from db. DB query error: " . $e->getMessage());
+            return false;
+        }
+    }
+    return $user;
+}
+
+function getPublishingHouse($wydawnictwoId)
+{
+    $dbc = getdbconnector();
+    $user = false;
+    if ($dbc != false) {
+        try {
+            $sql = 'SELECT * FROM wydawnictwo WHERE id_wydawnictwo=:id';
+
+            $stmt = $dbc->prepare($sql);
+            $stmt->bindValue(':id', $wydawnictwoId);
+            if ($stmt->execute() == false) {
+                showDebugMessage("getPublishingHouse execute returned false: ");
+                $user = false;
+            } else {
+                $rowCount = $stmt->rowCount();
+                if ($rowCount == 1)
+                    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+                else {
+                    showDebugMessage('getPublishingHouse query returned ' . $rowCount . ' row(s) for book id=' . $bookId . '. ');
+                }
+            }
+            $dbc = null;
+        } catch (PDOException $e) {
+            showDebugMessage("can not getPublishingHouse from db. DB query error: " . $e->getMessage());
+            return false;
+        }
+    }
+    return $user;
+}
+
+function getAuthor($authorId)
+{
+    $dbc = getdbconnector();
+    $user = false;
+    if ($dbc != false) {
+        try {
+            $sql = 'SELECT * FROM autorzy WHERE id_autor=:id';
+
+            $stmt = $dbc->prepare($sql);
+            $stmt->bindValue(':id', $authorId);
+            if ($stmt->execute() == false) {
+                showDebugMessage("getAutor execute returned false: ");
+                $user = false;
+            } else {
+                $rowCount = $stmt->rowCount();
+                if ($rowCount == 1)
+                    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+                else {
+                    showDebugMessage('getAutor query returned ' . $rowCount . ' row(s) for author id=' . $authorId . '. ');
+                }
+            }
+            $dbc = null;
+        } catch (PDOException $e) {
+            showDebugMessage("can not getAutor from db. DB query error: " . $e->getMessage());
+            return false;
+        }
+    }
+    return $user;
+}
 /**
  *pobieranie wszystkich egzemplarzy danej ksiazki
  *@return null/array null jesli nie znaleziono/ tablica egzemplarzy 
@@ -995,7 +1281,161 @@ function getRezerwacje($id_czytelnik = null, $id_ksiazka = null)
     }
     return $rezerwacje;
 }
+function insertAuthor($imie, $nazwisko) {
+    $dbc = getdbconnector();
+    $done = false;
 
+    if($dbc != false) {
+        try {
+            $sql = "INSERT INTO autorzy (imie, nazwisko)VALUES( :imie, :nazwisko)";
+            $stmt = $dbc->prepare($sql);
+            
+            $stmt-> bindValue(':imie', $imie);
+            $stmt -> bindValue(':nazwisko', $nazwisko);
+            if($stmt-> execute() == false) {
+                showDebugMessage("cannot insert author.");
+            }else {
+                $done = true;
+            }
+        } catch(PDOException $e) {
+            showDebugMessage("can not insert author. DB query error:". $e->getMessage());
+        }
+        $dbc = null;
+    }
+        return $done;
+}
+
+function insertEgzemplarz($bookId, $wycofany)
+{
+    $done = false;
+
+        $dbc = getdbconnector();
+
+        if ($dbc != false) {
+            try {
+                $sql = 'INSERT INTO "egzemplarz" ( "id_ksiazka", "wycofany") VALUES ( :bookId, :wycofany);'; 
+                $stmt = $dbc->prepare($sql);
+                $stmt->bindValue(':bookId', $bookId);
+                $stmt->bindValue(':wycofany', $wycofany,PDO::PARAM_BOOL);
+                if ($stmt->execute() == false) {
+                  
+                    showDebugMessage("INSERT INTO egzemplarz execute returned false: ");
+                    $done = false;
+                } else {
+                    $done = true;
+                }
+                $dbc = null;
+            } catch (PDOException $e) {
+                showDebugMessage("can not INSERT INTO egzemplarz. DB query error: " . $e->getMessage());
+                return false;
+            }
+        }
+    return $done;
+}
+function getHighestBookId() {
+    $dbc = getdbconnector();
+    $done = false;
+    if($dbc != false) {
+        try {
+            $sql = "SELECT * FROM ksiazki ORDER BY id_ksiazki DESC LIMIT  1";
+            $stmt = $dbc->prepare($sql);
+            if ($stmt->execute() == false) {
+                showDebugMessage("getBook execute returned false: ");
+                $highestBookId = null;
+            } else {
+                $rowCount = $stmt->rowCount();
+                if ($rowCount == 1)
+                    $highestBookId = $stmt->fetch(PDO::FETCH_ASSOC);
+                else {
+                    showDebugMessage('getBook query returned ' . $rowCount . ' row(s) for book id=' . $bookId . '. ');
+                }
+            }
+            $dbc = null;
+        }
+        
+        catch(PDOException $e) {
+            showDebugMessage("can not insert author. DB query error:". $e->getMessage());
+        }
+      
+    }
+   return $highestBookId;
+}
+
+
+function insertAutorKsiazki($id_ksiazka, $id_autor) {
+    $done = false;
+
+    $dbc = getdbconnector();
+
+    if ($dbc != false) {
+        try {
+            $sql = 'INSERT INTO autorzyksiazek ( id_ksiazka, id_author) VALUES ( :id_ksiazka, :id_autor);'; 
+            $stmt = $dbc->prepare($sql);
+            $stmt->bindValue(':id_ksiazka', $id_ksiazka);
+            $stmt->bindValue(':id_autor', $id_autor);
+            if ($stmt->execute() == false) {
+               
+                showDebugMessage("INSERT INTO autorzyksiazek execute returned false: ");
+                $done = false;
+            } else {
+                $done = true;
+            }
+            $dbc = null;
+        } catch (PDOException $e) {
+            showDebugMessage("can not INSERT INTO autorzyksiazek. DB query error: " . $e->getMessage());
+            return false;
+        }
+    }
+return $done;
+}
+
+function insertGenre($title) {
+    $dbc = getdbconnector();
+    $done= false;
+    if($dbc != false) {
+        try {
+            $sql = "INSERT INTO kategoria (nazwa)VALUES( :nazwa)";
+            $stmt = $dbc->prepare($sql);
+            
+            $stmt-> bindValue(':nazwa', $title);
+
+            if($stmt-> execute() == false) {
+                showDebugMessage("cannot insert book.");
+            }else {
+                $done = true;
+            }
+        } catch(PDOException $e) {
+            showDebugMessage("can not insert genre. DB query error:". $e->getMessage());
+        }
+        $dbc = null;
+    }
+        return $done;
+
+}
+
+function insertPublishingHouse($title) {
+    $dbc = getdbconnector();
+    $done= false;
+    if($dbc != false) {
+        try {
+            $sql = "INSERT INTO wydawnictwo (nazwa)VALUES( :nazwa)";
+            $stmt = $dbc->prepare($sql);
+            
+            $stmt-> bindValue(':nazwa', $title);
+
+            if($stmt-> execute() == false) {
+                showDebugMessage("cannot insert publishinghouse.");
+            }else {
+                $done = true;
+            }
+        } catch(PDOException $e) {
+            showDebugMessage("can not insert genre. DB query error:". $e->getMessage());
+        }
+        $dbc = null;
+    }
+        return $done;
+
+}
 
 
 /**

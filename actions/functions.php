@@ -110,6 +110,14 @@ function getAllowedSites()
         if ($_SESSION['type'] == "admin") {
 
             array_push($allowedPages, array('page' => 'home', 'name' => 'Strona główna'));
+            // array_push($allowedPages, array('page' => 'books-list', 'name' => 'Lista książek'));
+            // array_push($allowedPages, array('page' => 'book-add', 'name' => 'Dodaj książkę'));
+            array_push($allowedPages, array('page' => 'add-author', 'name' => 'Dodaj Autora'));
+            array_push($allowedPages, array('page' => 'author-list', 'name' => 'Lista Autorów'));
+            array_push($allowedPages, array('page' => 'publishinghouse-list', 'name' => 'Lista Wydawnictw'));
+            array_push($allowedPages, array('page' => 'add-publishinghouse', 'name' => 'Dodaj Wydawnictwo'));
+            array_push($allowedPages, array('page' => 'genre-list', 'name' => 'Lista Gatunków'));
+            array_push($allowedPages, array('page' => 'add-genre', 'name' => 'Dodaj Gatunek'));
             array_push($allowedPages, array('page' => 'books-list', 'name' => 'Lista książek'));
             array_push($allowedPages, array('page' => 'book-add', 'name' => 'Dodaj książkę'));
             array_push($allowedPages, array('page' => 'users-list', 'name' => 'Lista użytkowników'));
@@ -205,6 +213,44 @@ function redirectToBorrowedBooksList($message = null, $messageType = null)
     exit();
 }
 
+function redirectToGenreList($message = null, $messageType = null)
+{
+    if ($message) {
+        $_SESSION['message'] = $message;
+        if ($messageType)
+            $_SESSION['messageType'] = $messageType;
+        session_write_close();
+    }
+    header("HTTP/1.1 404 Not Found");
+    header("Location: index.php?action=genre-list");
+    exit();
+}
+
+function redirectToAuthorList($message = null, $messageType = null)
+{
+    if ($message) {
+        $_SESSION['message'] = $message;
+        if ($messageType)
+            $_SESSION['messageType'] = $messageType;
+        session_write_close();
+    }
+    header("HTTP/1.1 404 Not Found");
+    header("Location: index.php?action=author-list");
+    exit();
+}
+
+function redirectToPublishingHouseList($message = null, $messageType = null)
+{
+    if ($message) {
+        $_SESSION['message'] = $message;
+        if ($messageType)
+            $_SESSION['messageType'] = $messageType;
+        session_write_close();
+    }
+    header("HTTP/1.1 404 Not Found");
+    header("Location: index.php?action=publishinghouse-list");
+    exit();
+}
 
 
 /**
