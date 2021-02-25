@@ -407,3 +407,13 @@ input[data-isvalid="true"] {
 input {
   outline: none;
 }
+a.button {
+  display: block;
+}
+
+td>a.button {
+  margin: 2px;
+} 
+td>a.button {
+  padding: 2px;
+}

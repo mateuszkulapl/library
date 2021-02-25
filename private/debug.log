@@ -148,3 +148,9 @@
 2021-02-25 18:10:39	INSERT INTO egzemplarz execute returned false: 
 2021-02-25 18:12:03	INSERT INTO egzemplarz execute returned false: 
 2021-02-25 18:12:41	INSERT INTO egzemplarz execute returned false: 
+2021-02-25 22:52:32	deleteBookBorrows execute returned false: 
+2021-02-25 22:52:32	deleteBook execute returned false: 
+2021-02-25 22:52:32	can not delete book1
+2021-02-25 22:55:14	deleteUserBorrows execute returned false: 
+2021-02-25 22:55:14	deleteUser execute returned false: 
+2021-02-25 22:55:14	can not delete user

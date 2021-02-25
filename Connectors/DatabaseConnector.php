@@ -311,27 +311,25 @@ function updateUser($id, $name, $surname, $login, $password, $birthday, $type, $
  *@param bool $isPasswordHashed przeslane haslo jest zahaszowane
  *@return bool zwraca informacje czy zaktualizowano
  */
-function insertUser($name, $surname, $login, $password, $birthday, $type, $isPasswordHashed = false)
+function insertUser($login, $haslo, $email, $telefon, $data_urodzenia, $isPasswordHashed = false)
 {
     $dbc = getdbconnector();
     $done = false;
     if ($dbc != false) {
 
         if (!$isPasswordHashed)
-            $password = getHashed($password);
+            $haslo = getHashed($haslo);
         try {
-            $sql = 'INSERT INTO "users" VALUES (NULL, :name, :surname, :login, :password, :type, :birthday, "1");';
+            $sql = 'INSERT INTO "czytelnicy" (login,haslo,email,telefon,data_urodzenia)
+            VALUES (:login,:haslo,:email,:telefon,:data_urodzenia);';
 
             $stmt = $dbc->prepare($sql);
 
-            $stmt->bindValue(':name', $name);
-            $stmt->bindValue(':surname', $surname);
             $stmt->bindValue(':login', $login);
-            $stmt->bindValue(':birthday', $birthday);
-            $stmt->bindValue(':type', $type);
-            $stmt->bindValue(':birthday', $birthday);
-            $stmt->bindValue(':password', $password);
-
+            $stmt->bindValue(':haslo', $haslo);
+            $stmt->bindValue(':email', $email);
+            $stmt->bindValue(':telefon', $telefon);
+            $stmt->bindValue(':data_urodzenia', $data_urodzenia);
             if ($stmt->execute() == false) {
                 showDebugMessage("cannot insert user. login: " . $login);
             } else {
