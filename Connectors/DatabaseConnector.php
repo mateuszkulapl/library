@@ -1302,8 +1302,8 @@ function insertAuthor($imie, $nazwisko)
 }
 
 
-function getHighestBookId()
-{
+function getHighestBookId() {
+
     $dbc = getdbconnector();
     $done = false;
     if ($dbc != false) {

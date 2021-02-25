@@ -148,9 +148,12 @@
 2021-02-25 18:10:39	INSERT INTO egzemplarz execute returned false: 
 2021-02-25 18:12:03	INSERT INTO egzemplarz execute returned false: 
 2021-02-25 18:12:41	INSERT INTO egzemplarz execute returned false: 
-2021-02-25 22:52:32	deleteBookBorrows execute returned false: 
-2021-02-25 22:52:32	deleteBook execute returned false: 
-2021-02-25 22:52:32	can not delete book1
-2021-02-25 22:55:14	deleteUserBorrows execute returned false: 
-2021-02-25 22:55:14	deleteUser execute returned false: 
-2021-02-25 22:55:14	can not delete user
+2021-02-25 23:33:07	getAllBooks execute returned false: 
+2021-02-25 23:42:08	getAllBooks execute returned false: 
+2021-02-25 23:42:17	getBorrowedBooks execute returned false: 
+2021-02-25 23:42:17	getRezerwacje execute returned false: 
+2021-02-25 23:44:44	getBorrowedBooks execute returned false: 
+2021-02-25 23:44:44	getRezerwacje execute returned false: 
+2021-02-25 23:45:09	getAllBooks execute returned false: 
+2021-02-26 00:04:21	cannot insert book.
+
