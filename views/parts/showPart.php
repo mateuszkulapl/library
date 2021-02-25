@@ -29,11 +29,27 @@ function showHead($title = null, $description = null, $robots = "index")
                     .getElementsByClassName("close");
                 for (var i = 0; i < closeButtons.length; i++) {
                     closeButtons[i].addEventListener("click", function() {
-                        this.parentElement.classList.add("closed");
+                        $(this).parent().hide("slow");
+                        //this.parentElement.hide();
                     });
                 }
             }
         </script>
+        <script
+  src="https://code.jquery.com/jquery-3.5.1.js"
+  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+  crossorigin="anonymous"></script>
+  <script
+  src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+  integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
+  crossorigin="anonymous"></script>
+        <!-- Production -->
+        <script src="https://unpkg.com/@popperjs/core@2"></script>
+        <script src="https://unpkg.com/tippy.js@6"></script>
+        <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/scale.css" />
+<script>
+    var $=jQuery;
+</script>
     </head>
     <?php
 
@@ -103,6 +119,25 @@ function showMessage($message = null, $className = "warning")
             }
             ?>
         </div>
-<?php
+    <?php
     }
+}
+function showFooter()
+{
+    ?>
+    <script>
+        tippy('[data-tippy-content]', {
+            duration: 0,
+            arrow: true,
+            delay: [0, 500],
+            animation: 'shift-away',
+            allowHTML: true,
+            maxWidth: 350,
+            theme: 'light-border',
+            placement: 'right'
+        });
+    </script>
+<?php
+
+
 }
