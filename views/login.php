@@ -43,7 +43,9 @@
                         var errorDiv = document.querySelector(".errorDiv"),
                             regex = /^[a-z0-9]+$/,
                             str = document.getElementById("registerName").value;
-
+                            str=str=str.toLowerCase();
+                            document.getElementById("registerName").value=str;
+                            str = document.getElementById("registerName").value;
                         if ((str.length >= 3) && (str.length <= 30) && regex.test(str)) {
                             //errorDiv.innerHTML = "Prawidłowa nazwa użytkownika";
                             tippyregisterName.setContent('Login spełnia wymagania');
@@ -61,7 +63,7 @@
                             validRegisterName=false;
                             document.querySelector('#register-button').disabled = true;
                             //errorDiv.innerHTML = "Nazwa użytkownika powinna mieć od 3 do 30 znaków alfanumerycznych";
-                            tippyregisterName.setContent('Nazwa użytkownika powinna mieć od 3 do 30 znaków alfanumerycznych');
+                            tippyregisterName.setContent('Nazwa użytkownika powinna mieć od 3 do 30 znaków alfanumerycznych. Tylko małe litery.');
                             tippyregisterName.setProps({
                                 theme: 'error'
                             });

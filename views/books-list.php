@@ -72,10 +72,10 @@
                                 <td>
                                 <a href="<?php echo "?action=book&bookId=".$book['id_ksiazka']; ?>">Szczegóły</a>
                                 <?php if ($isAdmin) {
-                                    ?><a href="?action=book-edit&bookId=<?php echo $book['id_ksiazka']; ?>">Edytuj</a>
+                                    ?><!--<a href="?action=book-edit&bookId=<?php echo $book['id_ksiazka']; ?>">Edytuj</a>-->
                                     <?php
                                     }
-                                    if ($isAdmin) { ?><a href="?action=book-delete&bookId=<?php echo $book['id_ksiazka']; ?>">Usuń</a>
+                                    if ($isAdmin) { ?><!--<a href="?action=book-delete&bookId=<?php echo $book['id_ksiazka']; ?>">Usuń</a>-->
                                         <?php
                                     }
                                     /*if ($isReader && $bookStats['liczba_egzemplarzy_w_bibliotece'] > 0) {

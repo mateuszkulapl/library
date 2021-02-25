@@ -42,7 +42,7 @@
                                 <td><?php echo $user['data_urodzenia'] ?></td>
                                 <td>
                                     <a class="button" href="?action=user-edit&userId=<?php echo $user['id_czytelnik']; ?>">Edytuj</a>
-                                    <a class="button" href="?action=user-delete&userId=<?php echo $user['id_czytelnik']; ?>">Usuń</a>
+                                    <!-- <a class="button" href="?action=user-delete&userId=<?php echo $user['id_czytelnik']; ?>">Usuń</a> -->
                                     <a class="button" href="?action=borrowed-books&userId=<?php echo $user['id_czytelnik']; ?>">Pożyczone</a>
                                 </td>
                             </tr>

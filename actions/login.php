@@ -19,7 +19,7 @@ function login()
             if($userTypeFromFB !=false) {
                 $_SESSION['type']=$userTypeFromFB;
                 $_SESSION['userId'] = $userId;
-                redirectToHomePage("Zalogowano","ok");
+                redirectToHomePage("Zalogowano","success");
             } else {
                 echo "bledne";
                 redirectToLoginPage("Nieprawidłowy login lub hasło","error");
