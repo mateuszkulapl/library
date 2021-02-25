@@ -714,7 +714,7 @@ function getBookStats($id_ksiazka = 0)
  *@param bool $uploadedFile sciezka okladki
  *@return bool zwraca informacje czy zaktualizowano
  */
-function insertBook($title, $author, $publishingHouse, $year, $inventory, $uploadedFile)
+function insertBook($isbn, $kategoria, $title, $description, $publishingHouse, $year)
 {
 
     $dbc = getdbconnector();
@@ -722,21 +722,19 @@ function insertBook($title, $author, $publishingHouse, $year, $inventory, $uploa
     if ($dbc != false) {
 
         try {
-            $sql = 'INSERT INTO "books" ("title", "author", "publishingHouse", "year", "inventory", "available", "image")
-            VALUES (:title, :author, :publishingHouse, :year, :inventory, :inventory, :uploadedFile);';
+            $sql = 'INSERT INTO ksiazki (isbn, id_kategoria, tytul, opis,  id_wydawnictwa, rok_wydania)
+            VALUES (:isbn, :kategoria, :title, :description, :publishingHouse, :year);';
 
             $stmt = $dbc->prepare($sql);
 
+            $stmt->bindValue(':isbn', $isbn);
+            $stmt->bindValue(':kategoria', $kategoria);
             $stmt->bindValue(':title', $title);
-            $stmt->bindValue(':author', $author);
+            $stmt->bindValue(':description', $description);
             $stmt->bindValue(':publishingHouse', $publishingHouse);
             $stmt->bindValue(':year', $year, PDO::PARAM_INT);
-            $stmt->bindValue(':inventory', $inventory, PDO::PARAM_INT);
 
-            if ($uploadedFile != false)
-                $stmt->bindValue(':uploadedFile', $uploadedFile);
-            else
-                $stmt->bindValue(':uploadedFile', NULL, PDO::PARAM_INT);
+            // var_dump($stmt);
 
             if ($stmt->execute() == false) {
                 showDebugMessage("cannot insert book.");
@@ -773,8 +771,90 @@ function insertAuthor($imie, $nazwisko) {
         $dbc = null;
     }
         return $done;
+}
+
+function insertEgzemplarz($bookId, $wycofany)
+{
+    $done = false;
+
+        $dbc = getdbconnector();
+
+        if ($dbc != false) {
+            try {
+                $sql = 'INSERT INTO "egzemplarz" ( "id_ksiazka", "wycofany") VALUES ( :bookId, :wycofany);'; 
+                $stmt = $dbc->prepare($sql);
+                $stmt->bindValue(':bookId', $bookId);
+                $stmt->bindValue(':wycofany', $wycofany,PDO::PARAM_BOOL);
+                if ($stmt->execute() == false) {
+                  
+                    showDebugMessage("INSERT INTO egzemplarz execute returned false: ");
+                    $done = false;
+                } else {
+                    $done = true;
+                }
+                $dbc = null;
+            } catch (PDOException $e) {
+                showDebugMessage("can not INSERT INTO egzemplarz. DB query error: " . $e->getMessage());
+                return false;
+            }
+        }
+    return $done;
+}
+function getHighestBookId() {
+    $dbc = getdbconnector();
+    $done = false;
+    if($dbc != false) {
+        try {
+            $sql = "SELECT * FROM ksiazki ORDER BY id_ksiazki DESC LIMIT  1";
+            $stmt = $dbc->prepare($sql);
+            if ($stmt->execute() == false) {
+                showDebugMessage("getBook execute returned false: ");
+                $highestBookId = null;
+            } else {
+                $rowCount = $stmt->rowCount();
+                if ($rowCount == 1)
+                    $highestBookId = $stmt->fetch(PDO::FETCH_ASSOC);
+                else {
+                    showDebugMessage('getBook query returned ' . $rowCount . ' row(s) for book id=' . $bookId . '. ');
+                }
+            }
+            $dbc = null;
+        }
+        
+        catch(PDOException $e) {
+            showDebugMessage("can not insert author. DB query error:". $e->getMessage());
+        }
+      
+    }
+   return $highestBookId;
+}
 
 
+function insertAutorKsiazki($id_ksiazka, $id_autor) {
+    $done = false;
+
+    $dbc = getdbconnector();
+
+    if ($dbc != false) {
+        try {
+            $sql = 'INSERT INTO autorzyksiazek ( id_ksiazka, id_author) VALUES ( :id_ksiazka, :id_autor);'; 
+            $stmt = $dbc->prepare($sql);
+            $stmt->bindValue(':id_ksiazka', $id_ksiazka);
+            $stmt->bindValue(':id_autor', $id_autor);
+            if ($stmt->execute() == false) {
+               
+                showDebugMessage("INSERT INTO autorzyksiazek execute returned false: ");
+                $done = false;
+            } else {
+                $done = true;
+            }
+            $dbc = null;
+        } catch (PDOException $e) {
+            showDebugMessage("can not INSERT INTO autorzyksiazek. DB query error: " . $e->getMessage());
+            return false;
+        }
+    }
+return $done;
 }
 
 function insertGenre($title) {
@@ -1336,7 +1416,51 @@ function getRezerwacje($id_czytelnik = null, $id_ksiazka = null)
 }
 
 
+// function getAutorzyKsiążek()
+// {
+//     $dbc = getdbconnector();
+//     $autorzyKsiazek = false;
+//     if ($dbc != false) {
 
+//         try {
+//             $sql = 'SELECT autorzyksiazek.id_autor,autorzyksiazek.id_ksiazka, autorzy.imie, autorzy.nazwisko
+//             FROM autorzyksiazek
+//             LEFT JOIN ksiazki
+//             ON rezerwacja.id_ksiazka=ksiazki.id_ksiazka
+//             LEFT JOIN czytelnicy
+//             ON rezerwacja.id_czytelnik=czytelnicy.id_czytelnik 
+//             WHERE';
+
+//             if ($id_czytelnik != null) {
+//                 $sql .= " rezerwacja.id_czytelnik=:id_czytelnik AND";
+//             }
+//             $sql .= ' rezerwacja.usuniety!=true';
+
+//             if ($id_ksiazka != null) {
+//                 $sql .= " AND rezerwacja.id_ksiazka=:id_ksiazka ";
+//             }
+//             $sql .= ' ORDER BY rezerwacja.id_rezerwacja ASC';
+//             $stmt = $dbc->prepare($sql);
+//             if ($id_czytelnik != null) {
+//                 $stmt->bindValue(':id_czytelnik', $id_czytelnik);
+//             }
+//             if ($id_ksiazka != null) {
+//                 $stmt->bindValue(':id_ksiazka', $id_ksiazka);
+//             }
+
+//             if ($stmt->execute() == false) {
+//                 showDebugMessage("getRezerwacje execute returned false: ");
+//             } else {
+//                 $rezerwacje = $stmt->fetchAll(PDO::FETCH_ASSOC); //pusta tablica, jesli nie ma rezerwacji
+//             }
+//             $dbc = null;
+//         } catch (PDOException $e) {
+//             showDebugMessage("can not get rezerwacje books from db. DB query error: " . $e->getMessage());
+//             return false;
+//         }
+//     }
+//     return $rezerwacje;
+// }
 
 
 

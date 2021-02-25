@@ -118,3 +118,87 @@ Latest commit 62231f6 3 hours ago
 
 
 2021-02-24 23:45:10	getAllBooks execute returned false: 
+2021-02-25 09:13:39	cannot insert book.
+2021-02-25 09:16:02	cannot insert book.
+2021-02-25 09:51:32	cannot insert book.
+2021-02-25 10:36:12	cannot insert book.
+2021-02-25 15:04:37	cannot insert book.
+2021-02-25 15:14:51	cannot insert book.
+2021-02-25 15:16:06	cannot insert book.
+2021-02-25 15:16:55	cannot insert book.
+2021-02-25 15:20:27	cannot insert book.
+2021-02-25 15:23:23	cannot insert book.
+2021-02-25 15:25:41	cannot insert book.
+2021-02-25 15:26:37	cannot insert book.
+2021-02-25 15:27:03	cannot insert book.
+2021-02-25 15:31:23	cannot insert book.
+2021-02-25 15:33:29	cannot insert book.
+2021-02-25 15:36:43	cannot insert book.
+2021-02-25 15:36:57	cannot insert book.
+2021-02-25 15:39:38	cannot insert book.
+2021-02-25 16:09:42	cannot insert book.
+2021-02-25 16:13:07	cannot insert book.
+2021-02-25 16:17:48	cannot insert book.
+2021-02-25 16:19:26	cannot insert book.
+2021-02-25 16:20:27	cannot insert book.
+2021-02-25 16:27:50	cannot insert book.
+2021-02-25 16:28:31	cannot insert book.
+2021-02-25 16:29:21	cannot insert book.
+2021-02-25 16:31:35	cannot insert book.
+2021-02-25 16:35:47	cannot insert book.
+2021-02-25 16:35:52	cannot insert book.
+2021-02-25 16:36:03	cannot insert book.
+2021-02-25 16:37:08	cannot insert book.
+2021-02-25 16:37:33	cannot insert book.
+2021-02-25 17:00:46	getBook execute returned false: 
+2021-02-25 17:01:32	getBook execute returned false: 
+2021-02-25 17:02:59	getBook execute returned false: 
+2021-02-25 17:05:03	getBook execute returned false: 
+2021-02-25 17:05:19	getBook execute returned false: 
+2021-02-25 17:05:49	getBook execute returned false: 
+2021-02-25 17:17:48	cannot insert book.
+2021-02-25 17:18:19	cannot insert book.
+2021-02-25 17:19:11	cannot insert book.
+2021-02-25 17:19:35	cannot insert book.
+2021-02-25 17:20:38	cannot insert book.
+2021-02-25 17:20:54	cannot insert book.
+2021-02-25 17:23:22	cannot insert book.
+2021-02-25 17:24:57	cannot insert book.
+2021-02-25 17:27:02	cannot insert book.
+2021-02-25 17:28:24	cannot insert book.
+2021-02-25 17:29:50	cannot insert book.
+2021-02-25 17:35:02	cannot insert book.
+2021-02-25 17:35:17	cannot insert book.
+2021-02-25 17:39:12	cannot insert book.
+2021-02-25 17:39:31	cannot insert book.
+2021-02-25 17:39:47	cannot insert book.
+2021-02-25 17:42:14	cannot insert book.
+2021-02-25 17:43:17	cannot insert book.
+2021-02-25 17:46:18	cannot insert book.
+2021-02-25 17:47:09	cannot insert book.
+2021-02-25 17:48:42	cannot insert book.
+2021-02-25 17:48:42	cannot insert book.
+2021-02-25 17:51:22	cannot insert book.
+2021-02-25 17:51:22	cannot insert book.
+2021-02-25 17:56:19	cannot insert book.
+2021-02-25 17:56:19	cannot insert book.
+2021-02-25 19:04:02	INSERT INTO autorzyksiazek execute returned false: 
+2021-02-25 19:04:03	INSERT INTO autorzyksiazek execute returned false: 
+2021-02-25 19:04:03	INSERT INTO autorzyksiazek execute returned false: 
+2021-02-25 19:04:03	INSERT INTO autorzyksiazek execute returned false: 
+2021-02-25 19:04:03	INSERT INTO autorzyksiazek execute returned false: 
+2021-02-25 19:05:58	INSERT INTO autorzyksiazek execute returned false: 
+2021-02-25 19:05:58	INSERT INTO autorzyksiazek execute returned false: 
+2021-02-25 19:05:58	INSERT INTO autorzyksiazek execute returned false: 
+2021-02-25 19:05:58	INSERT INTO autorzyksiazek execute returned false: 
+2021-02-25 19:05:58	INSERT INTO autorzyksiazek execute returned false: 
+2021-02-25 19:07:50	INSERT INTO autorzyksiazek execute returned false: 
+2021-02-25 19:07:50	INSERT INTO autorzyksiazek execute returned false: 
+2021-02-25 19:07:50	INSERT INTO autorzyksiazek execute returned false: 
+2021-02-25 19:07:50	INSERT INTO autorzyksiazek execute returned false: 
+2021-02-25 19:07:50	INSERT INTO autorzyksiazek execute returned false: 
+2021-02-25 19:10:38	INSERT INTO autorzyksiazek execute returned false: 
+2021-02-25 19:10:38	INSERT INTO autorzyksiazek execute returned false: 
+2021-02-25 19:10:38	INSERT INTO autorzyksiazek execute returned false: 
+2021-02-25 19:10:38	INSERT INTO autorzyksiazek execute returned false: 
+2021-02-25 19:10:38	INSERT INTO autorzyksiazek execute returned false: 
