@@ -16,7 +16,7 @@ function uploadFile($maxUploadSize = 1024 * 1024, $fileTitle, $allowedExtensions
             $nazwa_pliku = $_FILES['plik']['name'];
             $tymczasowa_nazwa_pliku = $_FILES['plik']['tmp_name'];
             $extension = getFileExtension($nazwa_pliku);
-            $miejsce_docelowe = uploadDir . $fileTitle.'.'.$extension;
+            $miejsce_docelowe = uploadDir . $fileTitle . '.' . $extension;
             if (in_array($extension, $allowedExtensions)) {
                 if ($wielkosc_pliku <= 0) {
                     $_SESSION['message'] = 'Plik jest pusty.';
@@ -82,7 +82,7 @@ function addBook()
         $_SESSION['messageType'] = "warning";
         return false;
     } else {
-        $uploadedFile = uploadFile(2 * 1024 * 1024,$_POST['title']);
+        $uploadedFile = uploadFile(2 * 1024 * 1024, $_POST['title']);
         if ($uploadedFile != null) {
             insertBook($title, $author, $publishingHouse, $year, $inventory, $uploadedFile);
         } else {

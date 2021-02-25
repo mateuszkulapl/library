@@ -42,26 +42,26 @@
                             <tr>
                                 <td><?php echo ++$index; ?></td>
                                 <td><?php echo $book['tytul'] ?></td>
-                                
-                                <td><?php 
-                                // $authors=getBookAuthors($book['id_ksiazka']); 
-                                // $authorsString="";
-                                
-                                // foreach ($authors as $author) {
-                                //     $authorsString.=$author['imie']." ".$author['nazwisko'].", ";
-                                // }
-                                // $authorsString=trim($authorsString,', ');
 
-                                $authorsString=$book['autorzy'];
-                                echo ($authorsString);                                
-                                ?></td>
+                                <td><?php
+                                    // $authors=getBookAuthors($book['id_ksiazka']); 
+                                    // $authorsString="";
+
+                                    // foreach ($authors as $author) {
+                                    //     $authorsString.=$author['imie']." ".$author['nazwisko'].", ";
+                                    // }
+                                    // $authorsString=trim($authorsString,', ');
+
+                                    $authorsString = $book['autorzy'];
+                                    echo ($authorsString);
+                                    ?></td>
 
                                 <td><?php echo $book['kategoria'] ?></td>
                                 <td><?php echo $book['rok_wydania'] ?></td>
                                 <td><?php echo $book['wydawnictwo'] ?></td>
                                 <?php
 
-/*
+                                /*
 ?>
                                 <td><?php echo "Dostępne: 
                                 ".$bookStats['liczba_egzemplarzy_w_bibliotece']." z ".$bookStats['liczba_egzemplarzy'];
@@ -70,13 +70,15 @@
 */
                                 ?>
                                 <td>
-                                <a href="<?php echo "?action=book&bookId=".$book['id_ksiazka']; ?>">Szczegóły</a>
-                                <?php if ($isAdmin) {
-                                    ?><!--<a href="?action=book-edit&bookId=<?php echo $book['id_ksiazka']; ?>">Edytuj</a>-->
+                                    <a href="<?php echo "?action=book&bookId=" . $book['id_ksiazka']; ?>">Szczegóły</a>
+                                    <?php if ($isAdmin) {
+                                    ?>
+                                        <!--<a href="?action=book-edit&bookId=<?php echo $book['id_ksiazka']; ?>">Edytuj</a>-->
                                     <?php
                                     }
-                                    if ($isAdmin) { ?><!--<a href="?action=book-delete&bookId=<?php echo $book['id_ksiazka']; ?>">Usuń</a>-->
-                                        <?php
+                                    if ($isAdmin) { ?>
+                                        <!--<a href="?action=book-delete&bookId=<?php echo $book['id_ksiazka']; ?>">Usuń</a>-->
+                                    <?php
                                     }
                                     /*if ($isReader && $bookStats['liczba_egzemplarzy_w_bibliotece'] > 0) {
                                         if ($book['numOfBorrowedByUser'] < 1) {

@@ -58,7 +58,7 @@ showHead($title, ""); ?>
                     $authorsString = trim($authorsString, ' ');
                     $authorsString = trim($authorsString, '</br>');
                     $authorsString = trim($authorsString, ' ');
-                    
+
                     $authorsString = trim($authorsString, '</br>');
                     $authorsString = trim($authorsString, '<br>');
                     //$authorsString=$bookDetails['autorzy']
@@ -192,10 +192,10 @@ showHead($title, ""); ?>
                             foreach ($bookRezerwacje as $rezerwacja) {
                                 echo "<tr>";
                                 echo "<td>" . $rezerwacja['id_rezerwacja'] . "</td>";
-                                echo '<td><a href="?action=user-profile&userId='.$rezerwacja['id_czytelnik'].'">'.$rezerwacja['login'] .'</a></td>';
+                                echo '<td><a href="?action=user-profile&userId=' . $rezerwacja['id_czytelnik'] . '">' . $rezerwacja['login'] . '</a></td>';
                                 echo "<td>";
                             ?>
-                                <a class="button" href="?action=cancel-book&id_rezerwacja=<?php echo $rezerwacja['id_rezerwacja']; ?>&userId=<?php echo $rezerwacja['id_czytelnik']; ?>&returnToBook=1&bookId=<?php echo $bookId;?>">Anuluj rezerwację</a>
+                                <a class="button" href="?action=cancel-book&id_rezerwacja=<?php echo $rezerwacja['id_rezerwacja']; ?>&userId=<?php echo $rezerwacja['id_czytelnik']; ?>&returnToBook=1&bookId=<?php echo $bookId; ?>">Anuluj rezerwację</a>
                             <?php
                                 echo "</td>";
                                 echo "</tr>";

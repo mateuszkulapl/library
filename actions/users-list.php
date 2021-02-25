@@ -2,6 +2,6 @@
 redirectIfNotLoggedIn();
 redirectIfNotAdmin();
 
-$usersList=getAllUsers();
+$usersList = getAllUsers();
 $message = getMessage();
 $messageType = getMessageType();

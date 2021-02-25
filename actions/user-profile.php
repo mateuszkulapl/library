@@ -10,10 +10,9 @@ if (isset($_GET['userId'])) {
 } else {
     $userId = $_SESSION['userId'];
 }
-$userData=getUser($userId);
+$userData = getUser($userId);
 
-if($userData==false)
-{
+if ($userData == false) {
     redirectToHomePage("Nie znaleziono użytkownika");
 }
 $message = getMessage();

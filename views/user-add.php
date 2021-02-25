@@ -14,7 +14,7 @@
     <div class="center">
         <form action="index.php?action=user-add" method="POST">
             <label>Imie<br>
-                <input type="text" name="name" id="name"  required autofocus autocomplete="off">
+                <input type="text" name="name" id="name" required autofocus autocomplete="off">
             </label><br>
             <label>Nazwisko<br>
                 <input type="text" name="surname" id="surname" required autocomplete="off">

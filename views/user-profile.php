@@ -43,11 +43,11 @@ showHead($title, ""); ?>
                 </tr>
                 <tr>
                     <td>Książki użytkownika</td>
-                    <td><a class="button" href="?action=borrowed-books&userId=<?php echo $userId;?>">Zobacz</a></td>
+                    <td><a class="button" href="?action=borrowed-books&userId=<?php echo $userId; ?>">Zobacz</a></td>
                 </tr>
             </table>
 
-            <?php
+        <?php
 
         } else {
             "Wystąpił błąd. Nie znaleziono użytkownika";

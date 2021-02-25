@@ -14,13 +14,13 @@
 
 
 
-<form action="index.php?action=add-publishinghouse" method = "POST" multipart/from-data>
-    <label for="nazwa">Nazwa</label><br>
-    <input type="text" name="nazwa">   
-    <br>
-    <input type ="hidden" name = "action" value ="add-publishinghouse">
-    <input type="submit" value="Dodaj Wydawnictwo"> 
-        </form> 
+        <form action="index.php?action=add-publishinghouse" method="POST" multipart/from-data>
+            <label for="nazwa">Nazwa</label><br>
+            <input type="text" name="nazwa">
+            <br>
+            <input type="hidden" name="action" value="add-publishinghouse">
+            <input type="submit" value="Dodaj Wydawnictwo">
+        </form>
     </div>
 </body>
 

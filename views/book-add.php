@@ -13,7 +13,7 @@
     <div class="center">
 
         <form action="index.php?action=book-add" method="POST" enctype="multipart/form-data">
-`            <input type="file" name="plik" accept="image/jpeg,image/jpg" /><br>
+            ` <input type="file" name="plik" accept="image/jpeg,image/jpg" /><br>
             <label>Tytuł<br>
                 <input type="text" name="title" id="title" required>
             </label><br>
@@ -24,7 +24,7 @@
                 <input type="text" name="publishingHouse" id="publishingHouse" required>
             </label><br>
             <label>Rok wydania<br>
-                <input type="number" name="year" id="year" value="<?php echo date("Y",time());?>" required>
+                <input type="number" name="year" id="year" value="<?php echo date("Y", time()); ?>" required>
             </label><br>
             <label>Liczba<br>
                 <input type="number" name="inventory" id="inventory" min=0 required>
