@@ -2,6 +2,7 @@ body {
   background: #fff;
   color: #000;
   margin: 0px;
+  font-size: 18px;
 }
 
 header {
@@ -386,4 +387,74 @@ table.min-width {
 a.button {
   text-align: center;
 }
-/*# sourceMappingURL=style.css.map */
+
+.two-column > .center {
+  margin: 0px auto;
+}
+
+.two-column {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+*:disabled,
+input:disabled {
+  -webkit-filter: grayscale(1);
+  filter: grayscale(1);
+  cursor: not-allowed;
+}
+
+div.errorDiv {
+  width: 200px;
+  min-height: 20px;
+}
+
+.tippy-box[data-theme~="error"] {
+  background-color: red;
+  color: white;
+}
+
+.tippy-box[data-theme~="success"] {
+  background-color: green;
+  color: white;
+}
+
+.tippy-box {
+  font-size: 16px;
+}
+
+body#register-step2 {
+  background: #1a237e;
+  color: #fff;
+}
+
+body#register-step2 input {
+  font-size: 20px;
+}
+
+body#register-step2 label {
+  font-size: 26px;
+  max-width: 100%;
+}
+
+body#register-step2 input {
+  width: 300px;
+  max-width: 100%;
+}
+
+input[data-isvalid="false"] {
+  border: 3px solid red;
+  -webkit-box-shadow: 0 0 9px 4px #fff;
+  box-shadow: 0 0 9px 4px #fff;
+  margin: 4px 0px;
+}
+
+input[data-isvalid="true"] {
+  border: 3px solid green;
+  -webkit-box-shadow: 0 0 9px 4px #fff;
+  box-shadow: 0 0 9px 4px #fff;
+  margin: 4px 0px;
+}

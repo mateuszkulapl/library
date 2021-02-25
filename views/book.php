@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<?php require_once(_ROOT_PATH . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'parts' . DIRECTORY_SEPARATOR  . 'showPart.php'); ?>
+<?php ?>
 <html lang="pl">
 <?php showHead("Wyświetl zdjęcie", "Zobacz zdjęcie", "noindex"); ?>
 
