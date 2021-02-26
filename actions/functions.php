@@ -207,13 +207,16 @@ function redirectToBooksList($message = null, $messageType = null)
  *@param null|string $message wiadomosc wyswietlana na stronie logowania po przekierowaniu.
  *@param null|string $messageType typ wiadomosci powodujacy okreslony kolor (warning/alert/ok).
  */
-function redirectToBorrowedBooksList($message = null, $messageType = null)
+function redirectToBorrowedBooksList($userId=null, $message = null, $messageType = null)
 {
     if ($message) {
         addAlert($message, $messageType);
     }
     header("HTTP/1.1 404 Not Found");
+    if($userId==null)
     header("Location: index.php?action=borrowed-books");
+    else
+    header("Location: index.php?action=borrowed-books&userId=$userId");
     exit();
 }
 

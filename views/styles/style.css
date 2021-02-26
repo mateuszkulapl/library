@@ -462,4 +462,12 @@ a.button {
 td > a.button {
   margin: 2px;
 }
+
+td > a.button {
+  padding: 2px;
+}
+
+table#list th {
+  width: 1%;
+}
 /*# sourceMappingURL=style.css.map */

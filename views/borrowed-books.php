@@ -6,7 +6,7 @@
 <body>
     <?php
     if ($user != null)
-        showHeader("Książki wypożyczone przez użytkownika<br>" . $user['login']);
+        showHeader("Książki użytkownika " . $user['login']);
     else
         showHeader("Wypożyczone książki"); ?>
 
@@ -17,7 +17,7 @@
 
     ?>
     <div class="center">
-        <h3>Wypożyczone książki</h3>
+        <h2>Wypożyczone książki</h2>
         <?php
         if ($booksList == false) {
             echo "Brak książek.";
@@ -33,20 +33,23 @@
                         <th>Autorzy</th>
                         <th>Wydawnictwo</th>
                         <th>Rok wydania</th>
-                        <th>Akcja</th>
+                        <th>Gatunek</th>
+
+                        <th>Akcje</th>
                     </thead>
                     <tbody>
                         <?php
                         $index = 0;
-                        foreach ($booksList as $book) {;
+                        foreach ($booksList as $book) {
                         ?>
                             <tr>
                                 <td><?php echo ++$index; ?></td>
-                                <td><?php echo $book['title'] ?></td>
-                                <td><?php echo str_replace(", ", "<br>", $book['author']); ?></td>
-                                <td><?php echo $book['publishingHouse'] ?></td>
-                                <td><?php echo $book['year'] ?></td>
-                                <td><a href="?action=book-return&borrowId=<?php echo $book['id']; ?>">Oddaj</a></td>
+                                <td><?php echo $book['tytul'] ?></td>
+                                <td><?php echo $book['autorzy']  ?></td>
+                                <td><?php echo $book['wydawnictwo'] ?></td>
+                                <td><?php echo $book['rok_wydania'] ?></td>
+                                <td><?php echo $book['kategoria'] ?></td>
+                                <td><a class="button" href="?action=book&bookId=<?php echo $book['id_ksiazka']; ?>">Szczegóły</a></td>
                             </tr>
                         <?php
                         } ?>
@@ -58,7 +61,7 @@
         ?>
 
         </br>
-        <h3>Zarezerwowane książki</h3>
+        <h2>Zarezerwowane książki</h2>
         <?php
 
         if ($rezerwacje == false) {
@@ -68,26 +71,39 @@
                 echo "Brak książek.";
             } else {
         ?>
-                <table id="list" class=" list min-width */full-width*/ simple-border th-small-pd">
+                <table id="list" class=" list full-width simple-border th-small-pd">
                     <thead class="invert">
                         <th>Lp</th>
                         <th>Tytuł</th>
-                        <th>Akcja</th>
+                        <th>Autorzy</th>
+                        <th>Wydawnictwo</th>
+                        <th>Rok wydania</th>
+                        <th>Gatunek</th>
+
+                        <th>Akcje</th>
                     </thead>
                     <tbody>
                         <?php
                         $index = 0;
                         foreach ($rezerwacje as $rezerwacja) {
-
                         ?>
                             <tr>
                                 <td><?php echo ++$index; ?></td>
                                 <td><?php echo $rezerwacja['tytul'] ?></td>
-                                <td>
-                                    <a class="button" href="?action=book&bookId=<?php echo $rezerwacja['id_ksiazka']; ?>">Sczegóły książki</a>
-                                    <a class="button" href="?action=cancel-book&id_rezerwacja=<?php echo $rezerwacja['id_rezerwacja']; ?>&userId=<?php echo $rezerwacja['id_czytelnik']; ?>">Anuluj rezerwację</a>
-                                    <!--todo:anuluj <a href="?action=book-return&borrowId=<?php echo $book['id']; ?>">Oddaj</a>-->
-                                </td>
+                                <td><?php echo $rezerwacja['autorzy']  ?></td>
+                                <td><?php echo $rezerwacja['wydawnictwo'] ?></td>
+                                <td><?php echo $rezerwacja['rok_wydania'] ?></td>
+                                <td><?php echo $rezerwacja['kategoria'] ?></td>
+                                <td><a class="button" href="?action=book&bookId=<?php echo $book['id_ksiazka']; ?>">Szczegóły</a>
+                                <a class="button" href="?action=cancel-book&id_rezerwacja=<?php echo $rezerwacja['id_rezerwacja']; ?>&userId=<?php echo $rezerwacja['id_czytelnik']; ?>">Anuluj rezerwację</a>
+
+                                <?php
+                                if ($_SESSION['type'] == 'admin') : ?>
+                                    <a class="button" href="?action=rent-book&id_rezerwacja=<?php echo $rezerwacja['id_rezerwacja']; ?>&userId=<?php echo $rezerwacja['id_czytelnik']; ?>&bookId=<?php echo $rezerwacja['id_ksiazka']; ?>&returnTo=borrowed">Wydaj książkę</a>
+                                <?php
+                                endif;
+                                ?>
+
                             </tr>
                         <?php
                         } ?>

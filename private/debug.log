@@ -172,3 +172,12 @@
 2021-02-26 00:35:12	INSERT INTO autorzyksiazek execute returned false: 
 2021-02-26 00:35:12	INSERT INTO autorzyksiazek execute returned false: 
 2021-02-26 00:35:12	INSERT INTO autorzyksiazek execute returned false: 
+2021-02-26 02:40:57	INSERT INTO wypozyczenia execute returned false: 
+2021-02-26 02:41:18	INSERT INTO wypozyczenia execute returned false: 
+2021-02-26 02:41:45	INSERT INTO wypozyczenia execute returned false: 
+2021-02-26 02:42:08	INSERT INTO wypozyczenia execute returned false: 
+2021-02-26 03:19:25	getBorrowedBooks execute returned false: 
+2021-02-26 03:19:35	getBorrowedBooks execute returned false: 
+2021-02-26 03:29:29	getRezerwacje execute returned false: 
+2021-02-26 03:29:52	getRezerwacje execute returned false: 
+2021-02-26 03:30:21	getRezerwacje execute returned false: 

@@ -8,7 +8,7 @@ $messageType = getMessageType();
 if (isset($_GET['borrowId'])) {
     $deleted = deleteBorrow($_GET['borrowId']);
     if ($deleted == true)
-        redirectToBorrowedBooksList('Oddano', 'ok');
+        //redirectToBorrowedBooksList('Oddano', 'ok');
     else {
         if ($deleted == false) {
             showDebugMessage("can not return book" . $_GET["bookId"]);
@@ -17,5 +17,5 @@ if (isset($_GET['borrowId'])) {
             showDebugMessage("error while returning book");
     }
 }
-redirectToBorrowedBooksList();
+//redirectToBorrowedBooksList();
 exit();
