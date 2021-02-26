@@ -144,6 +144,7 @@ showHead($title, ""); ?>
                             <th>Wypożyczona</th>
                             <th>Data wypożyczenia</th>
                             <th>Wypożyczono przez</th>
+                            <th>Akcje</th>
                         </thead>
                         <tbody>
                             <?php
@@ -171,13 +172,20 @@ showHead($title, ""); ?>
                                 else {
                             ?>
                                     <a href="?action=user-profile&userId= <?php echo $egzemplarz['id_czytelnik']; ?>"><?php echo $egzemplarz['login']; ?></a>
-                            <?php
+                                <?php
 
                                 }
                                 echo "</td><!--data wypozyczenia-->";
+                                ?>
 
+                                <td>
+                                    <?php
+                                    if ($egzemplarz['id_wypozyczenie'] == null) : ?>
+                                        <a class="button" href="?action=delete-egzemplarz&id_egzemplarza=<?php echo $egzemplarz['id_egzemplarza']; ?>&bookId=<?php echo $bookId; ?>">Wycofaj z obiegu</a>
+                                    <?php endif; ?>
+                                </td>
 
-                                echo "</tr>";
+                            <?php echo "</tr>";
                             }
                             ?>
                         </tbody>

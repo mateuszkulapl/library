@@ -1175,7 +1175,33 @@ function zwrocWypozyczenie($id_wypozyczenie,$id_pracownicy){
     return $returned;
 }
 
+function wycofajEgzemplarz($id_egzemplarza){
 
+    $returned = false;
+    $dbc = getdbconnector();
+
+    if ($dbc != false) {
+        try {
+            $sql = 'UPDATE egzemplarz SET wycofany=true WHERE id_egzemplarza=:id_egzemplarza';
+            $stmt = $dbc->prepare($sql);
+            $stmt->bindValue(':id_egzemplarza', $id_egzemplarza);
+            
+    
+            if ($stmt->execute() == false) {
+                showDebugMessage("UPDATE egzemplarz execute returned false: ");
+                $returned = false;
+            } else {
+                $returned = true;
+            }
+            $dbc = null;
+        } catch (PDOException $e) {
+            showDebugMessage("can not UPDATE egzemplarz. DB query error: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    return $returned;
+}
 
 /**
  * Wstawianie egzemplarza

@@ -34,7 +34,7 @@ function renderAlerts()
         $alerts = unserialize($_SESSION['alerts']);
         if (count($alerts) > 0) {
 ?>
-            <div id="alerts">
+            <div id="alerts" style="display:none">
                 <?php
                 foreach ($alerts as $index => $alert) {
                     $alert->render($index);
@@ -42,6 +42,7 @@ function renderAlerts()
                 ?>
             </div>
             <script>
+                $( "#alerts" ).show( "slow", function() {  });
                 addAllertCloseButtonListener();
             </script>
 <?php
