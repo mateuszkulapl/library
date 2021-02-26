@@ -16,12 +16,21 @@ function addAuthor()
     if ($error > 0) {
         $_SESSION['messageType'] = 'warning';
         return false;
+    }  elseif(ctype_space($imie) || ctype_space($nazwisko) || ctype_digit($imie) == true ||ctype_space($nazwisko) ) {
+        addAlert("Nieprawidłowe dane dla autora", "warning");
     } else {
-        insertAuthor($imie, $nazwisko);
+        insertAuthor(trim($imie), trim($nazwisko));
+        $added = true;
     }
+
+    
     if ($added) {
-        $_SESSION['message'] = "Dodano autora.";
-        $_SESSION['messageType'] = "ok";
+
+        addAlert("Dodano autora", "ok");
+        redirectToAuthorList();
+
+        // $_SESSION['message'] = "Dodano autora.";
+        // $_SESSION['messageType'] = "ok";
     }
 }
 

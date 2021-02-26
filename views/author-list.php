@@ -41,7 +41,7 @@
                 <td>
                   <?php if ($isAdmin) {
                   ?><a href="?action=edit-author&id_autor=<?php echo $author['id_autor']; ?>">Edytuj</a>
-                    <a href="?action=delete-author&id_autor=<?php echo $author['id_autor']; ?>">Usuń</a>
+                  
                   <?php
                   } ?>
 

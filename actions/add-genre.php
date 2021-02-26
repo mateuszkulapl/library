@@ -16,11 +16,23 @@ function addGenre()
         $_SESSION['messageType'] = 'warning';
         return false;
     } else {
-        insertGenre($nazwa);
+
+    $genre = checkForGenre(trim(strtolower($nazwa)));
+     
+    if($genre == null && ctype_digit($nazwa) == false && ctype_space($nazwa)==false) {
+        insertGenre(trim(strtolower($nazwa)));
+        $added = true;
+    } else {
+        addAlert("Nie można dodać dwóch gatunku o podwojnej nazwie lub nieprawidłowych danych", "warning");
+    }
+        
     }
     if ($added) {
-        $_SESSION['message'] = "Dodano gatunek.";
-        $_SESSION['messageType'] = "ok";
+
+        addAlert("Dodano gatunek", "ok");
+        redirectToGenreList();
+        // $_SESSION['message'] = "Dodano gatunek.";
+        // $_SESSION['messageType'] = "ok";
     }
 }
 if (isset($_POST['action']) && $_POST['action'] == 'add-genre') {

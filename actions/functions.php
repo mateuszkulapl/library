@@ -59,7 +59,7 @@ function renderAlerts()
  */
 function redirectToLoginPage($message = null, $messageType = null)
 {
-    if ($message) {
+    if ($message!=null) {
         addAlert($message, $messageType);
     }
     header("HTTP/1.1 301 Moved Permanently");

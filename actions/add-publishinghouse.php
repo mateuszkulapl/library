@@ -16,11 +16,23 @@ function addPublishigHouse()
         $_SESSION['messageType'] = 'warning';
         return false;
     } else {
-        insertPublishingHouse($nazwa);
+        $wydawnictwo = checkForWydawnictwo(trim(strtolower($nazwa)));
+       if($wydawnictwo == null && ctype_digit($nazwa) == false && ctype_space($nazwa)==false) {
+        insertPublishingHouse(trim(strtolower($nazwa)));
+        $added = true;
+       }
+       else {
+        addAlert("Nie można dodać dodac wyawnictwa o podwójnej nazwie lub nie prawidłowych danych", "warning");
+       }
+        
     }
     if ($added) {
-        $_SESSION['message'] = "Dodano gatunek.";
-        $_SESSION['messageType'] = "ok";
+        // $_SESSION['message'] = "Dodano gatunek.";
+        // $_SESSION['messageType'] = "ok";
+
+        addAlert("Dodano wydawnictwo", "ok");
+        // redirectToPublishingHouseList();
+
     }
 }
 if (isset($_POST['action']) && $_POST['action'] == 'add-publishinghouse') {

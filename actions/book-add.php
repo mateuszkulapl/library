@@ -20,6 +20,8 @@ function addBook()
     $error = 0;
     if (isset($_POST['title']))
         $title = htmlentities($_POST["title"], ENT_QUOTES, 'UTF-8');
+        
+        
     else {
         $error += 1;
         appendToSessionVariable('message', 'Nieprawidłowy tytuł.<br>');
@@ -84,23 +86,33 @@ function addBook()
         $_SESSION['messageType'] = "warning";
         return false;
     } else {
+     
 
-        insertBook($isbn, $kategoria, $title, $description, $publishingHouse, $year);
-        $highId = getHighestBookId();
-        for ($i = 0; $i < $ilosc; $i++) {
-            insertEgzemplarz($highId["id_ksiazka"], false);
-        }
 
-        foreach ($authorList as $autor) {
 
-            insertAutorKsiazki($highId["id_ksiazka"], $autor);
-        }
+if($year  <= 0 || $ilosc <= 0  || ctype_digit($isbn) == false ||ctype_space($title) || ctype_space($description) || ctype_space($isbn)) {
+    addAlert("Nie udało się dodać ksiażki", "warning");
+} else {
+    $added = true;
+    insertBook($isbn, $kategoria,trim($title), trim($description), $publishingHouse, $year);
+    $highId = getHighestBookId();
+    for ($i = 0; $i < $ilosc; $i++) {
+        insertEgzemplarz($highId["id_ksiazka"], false);
     }
-    if ($added) {
-        addAlert("Dodano książkę.", 'ok');
-        // $_SESSION['message'] = 'Dodano książkę.';
-        // $_SESSION['messageType'] = 'ok';
+
+    foreach ($authorList as $autor) {
+
+        insertAutorKsiazki($highId["id_ksiazka"], $autor);
     }
+}
+if ($added) {
+    addAlert("Dodano książkę.", 'ok');
+    redirectToBooksList();
+    // $_SESSION['message'] = 'Dodano książkę.';
+    // $_SESSION['messageType'] = 'ok';
+}
+}
+       
 }
 
 if (isset($_POST['action']) && $_POST['action'] == 'book-add')

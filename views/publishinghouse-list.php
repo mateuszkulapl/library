@@ -39,7 +39,7 @@
                 <td>
                   <?php if ($isAdmin) {
                   ?><a href="?action=edit-publishinghouse&id_wydawnictwo=<?php echo $publishingHouse['id_wydawnictwo']; ?>">Edytuj</a>
-                    <a href="?action=delete-publishinghouse&id_wydawnictwo=<?php echo $publishingHouse['id_wydawnictwo']; ?>">Usuń</a>
+
                   <?php
                   } ?>
 

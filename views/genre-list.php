@@ -39,7 +39,6 @@
                 <td>
                   <?php if ($isAdmin) {
                   ?><a href="?action=edit-genre&id_kategoria=<?php echo $genre['id_kategoria']; ?>">Edytuj</a>
-                    <a href="?action=delete-genre&id_kategoria=<?php echo $genre['id_kategoria']; ?>">Usuń</a>
                   <?php
                   } ?>
 

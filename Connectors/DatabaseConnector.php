@@ -1042,6 +1042,55 @@ function getEgzemplarze($bookId, $wyswietlWycofane = false, $ukryjWypozyczone = 
     }
     return $egzemplarze;
 }
+function checkForGenre($nazwa) {
+
+    $genre = null;
+    $dbc = getdbconnector();
+    $done = false;
+    if ($dbc != false) {
+        try {
+            $sql = "SELECT * FROM kategoria WHERE nazwa =:nazwa";
+            $stmt = $dbc->prepare($sql);
+$stmt->bindValue(':nazwa', $nazwa);
+            if ($stmt->execute() == false) {
+                showDebugMessage("checkForGenre execute returned false: ");
+
+            } else {
+                $rowCount = $stmt->rowCount();
+                    $genre = $stmt->fetch(PDO::FETCH_ASSOC);
+            }
+            $dbc = null;
+        } catch (PDOException $e) {
+            showDebugMessage("can not insert author. DB query error:" . $e->getMessage());
+        }
+    }
+    return $genre;
+}
+
+function checkForWydawnictwo($nazwa) {
+
+    $wydawnictwo = null;
+    $dbc = getdbconnector();
+    $done = false;
+    if ($dbc != false) {
+        try {
+            $sql = "SELECT * FROM wydawnictwo WHERE nazwa =:nazwa";
+            $stmt = $dbc->prepare($sql);
+$stmt->bindValue(':nazwa', $nazwa);
+            if ($stmt->execute() == false) {
+                showDebugMessage("checkForGenre execute returned false: ");
+
+            } else {
+                $rowCount = $stmt->rowCount();
+                    $wydawnictwo = $stmt->fetch(PDO::FETCH_ASSOC);
+            }
+            $dbc = null;
+        } catch (PDOException $e) {
+            showDebugMessage("can not insert author. DB query error:" . $e->getMessage());
+        }
+    }
+    return $wydawnictwo;
+}
 
 
 /**
