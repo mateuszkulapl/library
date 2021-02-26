@@ -122,6 +122,19 @@ showHead($title, ""); ?>
             ?>
             <?php
             if ($_SESSION['type'] == 'admin') {
+
+                //dodawanie egzemplarza start
+                ?>
+                <h3>Dodaj egzemplarze</h3>
+                
+                <form action="?action=insert-egzemplarz" method="post">
+                <input type="hidden" name="bookId" value=<?php echo $bookId;?>>
+                <input type="number" name="numberOfNew" id="numberOfNew" min=0></br>
+                <button type="submit">Dodaj</button>
+                </form>
+
+                <?php
+                //dodawanie egzemplarza end
                 if ($bookEgzemplarze) {
             ?>
                     <h2>Egzemplarze (<?php echo count($bookEgzemplarze); ?> szt.)</h2>
@@ -144,9 +157,6 @@ showHead($title, ""); ?>
                                 else
                                     echo "Tak";
                                 echo "</td><!--wypozyczona-->";
-
-
-
                                 echo "<td><!--data wypozyczenia-->";
                                 if ($egzemplarz['id_wypozyczenie'] == null)
                                     echo "-";
@@ -172,11 +182,11 @@ showHead($title, ""); ?>
 
                 <?php
                 } else {
-
                 ?>
                     <h2>Brak egzemplarzy</h2>
                 <?php
                 }
+
                 if ($bookRezerwacje) {
                 ?>
                     <h2>Rezerwacje</h2>
