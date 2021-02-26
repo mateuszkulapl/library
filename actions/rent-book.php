@@ -54,7 +54,8 @@ if($id_egzemplarza)
     }
     else
     {
-        $message.='<a href="action=borrowed-books?userId='.$userId.'">Zobacz książki użytkownika</a>';
+        //$message.='<a href="action=borrowed-books?userId='.$userId.'">Zobacz książki użytkownika</a>';
+        redirectToBorrowedBooksList($userId);
     }
 }
 

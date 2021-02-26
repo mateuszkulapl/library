@@ -5,7 +5,6 @@ session_start();
 require_once(_ROOT_PATH . DIRECTORY_SEPARATOR . 'Connectors' . DIRECTORY_SEPARATOR . 'DatabaseConnector.php');
 require_once(_ROOT_PATH . DIRECTORY_SEPARATOR . 'private' . DIRECTORY_SEPARATOR . 'debug.php');
 
-
 /*
 home - strona glowna z menu
 login - formularz logowania
@@ -18,7 +17,8 @@ $actions = array(
     'home', 'login', 'logout', 'book', 'book-add', 'logout', '404', 'contact', 'users-list',
     'user-edit', 'user-add', 'user-delete', 'books-list', 'book-delete', 'book-edit', 'book-borrow', 'borrowed-books', 'book-return', 'cancel-book',
     'genre-list', 'add-genre', 'delete-genre', 'edit-genre', 'add-author', 'author-list', 'edit-author', 'delete-author', 'wycofaj-egzemplarz',
-    'delete-egzemplarz', 'egzemplarz-list', 'add-publishinghouse', 'delete-publishinghouse', 'edit-publishinghouse', 'publishinghouse-list', 'register-step2', 'book-book', 'cancel-book', 'register-step2', 'register-step3', 'user-profile', 'insert-egzemplarz', 'rent-book'
+    'delete-egzemplarz', 'egzemplarz-list', 'add-publishinghouse', 'delete-publishinghouse', 'edit-publishinghouse', 'publishinghouse-list', 'register-step2',
+    'book-book', 'cancel-book', 'register-step2', 'register-step3', 'user-profile', 'insert-egzemplarz', 'rent-book','return-book'
 );
 
 if (isset($_GET['action'])) //sprawdzenie czy w url jest parametr action

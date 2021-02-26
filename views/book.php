@@ -7,7 +7,7 @@ if ($bookDetails && $bookDetails["tytul"]) {
     $title = $bookDetails["tytul"];
 };
 showHead($title, ""); ?>
- 
+
 <body>
 
     <?php
@@ -124,19 +124,19 @@ showHead($title, ""); ?>
             if ($_SESSION['type'] == 'admin') {
 
                 //dodawanie egzemplarza start
-                ?>
+            ?>
                 <h3>Dodaj egzemplarze</h3>
-                
+
                 <form action="?action=insert-egzemplarz" method="post">
-                <input type="hidden" name="bookId" value=<?php echo $bookId;?>>
-                <input type="number" name="numberOfNew" id="numberOfNew" min=0></br>
-                <button type="submit">Dodaj</button>
+                    <input type="hidden" name="bookId" value=<?php echo $bookId; ?>>
+                    <input type="number" name="numberOfNew" id="numberOfNew" min=0></br>
+                    <button type="submit">Dodaj</button>
                 </form>
 
                 <?php
                 //dodawanie egzemplarza end
                 if ($bookEgzemplarze) {
-            ?>
+                ?>
                     <h2>Egzemplarze (<?php echo count($bookEgzemplarze); ?> szt.)</h2>
                     <table class="egz-info">
                         <thead>
@@ -168,8 +168,12 @@ showHead($title, ""); ?>
                                 echo "<td><!--osoba wypozyczenia-->";
                                 if ($egzemplarz['login'] == null)
                                     echo "-";
-                                else
-                                    echo $egzemplarz['login'];
+                                else {
+                            ?>
+                                    <a href="?action=user-profile&userId= <?php echo $egzemplarz['id_czytelnik']; ?>"><?php echo $egzemplarz['login']; ?></a>
+                            <?php
+
+                                }
                                 echo "</td><!--data wypozyczenia-->";
 
 
@@ -193,15 +197,17 @@ showHead($title, ""); ?>
 
                     <table class="egz-info">
                         <thead>
-                            <th>Id</th>
+                            <th>Lp.</th>
                             <th>Użytkownik</th>
                             <th>Akcje</th>
                         </thead>
                         <tbody>
                             <?php
+                            $liczba_porz = 0;
                             foreach ($bookRezerwacje as $rezerwacja) {
+                                $liczba_porz++;
                                 echo "<tr>";
-                                echo "<td>" . $rezerwacja['id_rezerwacja'] . "</td>";
+                                echo "<td>" . $liczba_porz . "</td>";
                                 echo '<td><a href="?action=user-profile&userId=' . $rezerwacja['id_czytelnik'] . '">' . $rezerwacja['login'] . '</a></td>';
                                 echo "<td>";
                             ?>

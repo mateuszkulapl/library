@@ -1147,6 +1147,36 @@ function usunRezerwacje($id_rezerwacja)
 }
 
 
+
+function zwrocWypozyczenie($id_wypozyczenie,$id_pracownicy){
+    $returned = false;
+    $dbc = getdbconnector();
+
+    if ($dbc != false) {
+        try {
+            $sql = 'UPDATE wypozyczenia SET data_oddania=current_date, id_pracownik_oddanie=id_pracownik_oddanie WHERE id_wypozyczenie=:id_wypozyczenie';
+            $stmt = $dbc->prepare($sql);
+            $stmt->bindValue(':id_wypozyczenie', $id_wypozyczenie);
+            
+            $stmt->bindValue(':id_pracownik_oddanie', $id_pracownicy);
+            if ($stmt->execute() == false) {
+                showDebugMessage("UPDATE wypozyczenia execute returned false: ");
+                $returned = false;
+            } else {
+                $returned = true;
+            }
+            $dbc = null;
+        } catch (PDOException $e) {
+            showDebugMessage("can not UPDATE wypozyczenia. DB query error: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    return $returned;
+}
+
+
+
 /**
  * Wstawianie egzemplarza
  *
@@ -1254,7 +1284,7 @@ function getBorrowedBooks($id_czytelnik = null)
     $books = false;
     if ($dbc != false) {
         try {
-            $sql = 'SELECT wypozyczenia.id_wypozyczenie, ksiazki.tytul,ksiazki.id_ksiazka, czytelnicy.login, wydawnictwo.nazwa AS wydawnictwo,
+            $sql = 'SELECT wypozyczenia.id_wypozyczenie,wypozyczenia.id_egzemplarza, wypozyczenia.data_wypozyczenia,ksiazki.tytul,ksiazki.id_ksiazka, czytelnicy.login, czytelnicy.id_czytelnik, wydawnictwo.nazwa AS wydawnictwo,
             ksiazki.rok_wydania,
             kategoria.nazwa AS kategoria,
             (SELECT string_agg(autorzy.nazwisko, \', \') AS autorzy FROM autorzyksiazek LEFT JOIN autorzy ON autorzyksiazek.id_autor=autorzy.id_autor WHERE autorzyksiazek.id_ksiazka=ksiazki.id_ksiazka) AS autorzy
@@ -1295,7 +1325,7 @@ function getBorrowedBooks($id_czytelnik = null)
  *pobieranie listy rezerwacji dla wszystkich użytkowników lub jednego
  *@return false/string typ użytkownika.
  */
-function getRezerwacje($id_czytelnik = null, $id_ksiazka = null)
+function getRezerwacje($id_czytelnik = null, $id_ksiazka = null, $limit=null)
 {
     $dbc = getdbconnector();
     $rezerwacje = false;
@@ -1324,6 +1354,11 @@ function getRezerwacje($id_czytelnik = null, $id_ksiazka = null)
                 $sql .= " AND rezerwacja.id_ksiazka=:id_ksiazka ";
             }
             $sql .= ' ORDER BY rezerwacja.id_rezerwacja ASC';
+
+            if ($limit != null) {
+                $sql .= " LMIT $limit";
+            }
+
             $stmt = $dbc->prepare($sql);
             
             if ($id_czytelnik != null) {

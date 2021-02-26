@@ -21,6 +21,7 @@ showHead($title, ""); ?>
         <?php
         if ($userData) {
         ?>
+        <h2>Dane użytkownika</h2>
             <table class="book-info">
                 <tr>
                     <td>Login</td>
@@ -74,6 +75,10 @@ showHead($title, ""); ?>
                         </tbody>
                     </table>
                 <?php
+                }
+                else
+                {
+                    echo '<h2>Brak dostępnych egzemplarzy</h2>';
                 }
         ?>
     </div>

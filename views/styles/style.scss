@@ -420,3 +420,54 @@ td>a.button {
 table#list th {
   width: 1%;
 }
+.author-name-block {
+  border: 1px solid #BDBDBD;
+  margin: 4px;
+  padding: 2px;
+  word-break: keep-all;
+  display: inline-block;
+}
+label.author-name {
+  margin: 0px;
+}
+
+.two-buttons {
+  display: flex;
+}
+
+.two-buttons>.button {
+  width: 40%;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6em;
+  text-shadow: 0px 0px 20px black;
+  box-shadow: 4px 4px 4px black;
+  text-transform: uppercase;
+}
+
+.two-buttons>.button.green {
+  background: #43a047;
+}
+
+.two-buttons>.button.red {
+  background: #f44336;
+}
+
+.two-buttons>.button.red:hover {
+  background: red;
+  box-shadow: none;
+  transition: .2s;
+  box-shadow: 7px 7px 4px black;
+}
+.two-buttons>.button.green:hover {
+  background: green;
+  box-shadow: none;
+  transition: .2s;
+  box-shadow: 7px 7px 4px black;
+}
+.alert.info .message a {
+  color: #dfe6ff;
+}

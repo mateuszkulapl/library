@@ -11,6 +11,7 @@
  */
 function addAlert($message, $type = "info", $showOnlyInDebugMode = false, $backtrace = null)
 {
+
     if($type=="ok")
     {
         $type=="success";
@@ -23,6 +24,7 @@ function addAlert($message, $type = "info", $showOnlyInDebugMode = false, $backt
         $alerts = [];
     array_push($alerts, $newAlert);
     $_SESSION['alerts'] = serialize($alerts);
+    //var_dump($_SESSION);exit();
 }
 
 function renderAlerts()
@@ -212,6 +214,7 @@ function redirectToBorrowedBooksList($userId=null, $message = null, $messageType
     if ($message) {
         addAlert($message, $messageType);
     }
+    var_dump($_SESSION);
     header("HTTP/1.1 404 Not Found");
     if($userId==null)
     header("Location: index.php?action=borrowed-books");

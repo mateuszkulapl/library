@@ -470,4 +470,77 @@ td > a.button {
 table#list th {
   width: 1%;
 }
+
+.author-name-block {
+  border: 1px solid #BDBDBD;
+  margin: 4px;
+  padding: 2px;
+  word-break: keep-all;
+  display: inline-block;
+}
+
+label.author-name {
+  margin: 0px;
+}
+
+.two-buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.two-buttons > .button {
+  width: 40%;
+  height: 200px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  font-size: 1.6em;
+  text-shadow: 0px 0px 20px black;
+  -webkit-box-shadow: 4px 4px 4px black;
+          box-shadow: 4px 4px 4px black;
+  text-transform: uppercase;
+}
+
+.two-buttons > .button.green {
+  background: #43a047;
+}
+
+.two-buttons > .button.red {
+  background: #f44336;
+}
+
+.two-buttons > .button.red:hover {
+  background: red;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  -webkit-transition: .2s;
+  transition: .2s;
+  -webkit-box-shadow: 7px 7px 4px black;
+          box-shadow: 7px 7px 4px black;
+}
+
+.two-buttons > .button.green:hover {
+  background: green;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  -webkit-transition: .2s;
+  transition: .2s;
+  -webkit-box-shadow: 7px 7px 4px black;
+          box-shadow: 7px 7px 4px black;
+}
+
+.alert.info .message a {
+  color: #dfe6ff;
+}
 /*# sourceMappingURL=style.css.map */
