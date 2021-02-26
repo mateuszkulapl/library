@@ -7,7 +7,7 @@ if ($bookDetails && $bookDetails["tytul"]) {
     $title = $bookDetails["tytul"];
 };
 showHead($title, ""); ?>
-
+ 
 <body>
 
     <?php
